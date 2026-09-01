@@ -40,6 +40,14 @@
     .luxury-card:hover { border-color: rgba(229,192,123,.5); box-shadow: 0 10px 30px -10px rgba(0,0,0,.8), 0 0 25px rgba(229,192,123,.08) }
     .dashed-bottom-border { border-bottom: 1px dashed rgba(229,192,123,.25) }
     .hero-glow { position: absolute; width: 500px; height: 500px; background: radial-gradient(circle, rgba(212,163,55,.08) 0%, rgba(0,0,0,0) 70%); pointer-events: none }
+    .chat-scroll::-webkit-scrollbar { width: 5px; }
+    .chat-scroll::-webkit-scrollbar-thumb { background: rgba(229,192,123,0.3); border-radius: 10px; }
+    
+    /* AI Typing Animation */
+    .typing-dot { animation: typing 1.4s infinite ease-in-out both; }
+    .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+    .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+    @keyframes typing { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
   </style>
 </head>
 <body class="font-sans antialiased selection:bg-gold-500 selection:text-black">
@@ -47,7 +55,7 @@
   <header class="sticky top-0 z-40 bg-[#0a0b0f]/90 backdrop-blur-md border-b border-[#232630]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-20">
-        <a href="#hero" class="flex items-center gap-3 group">
+        <a href="#" onclick="switchView('home')" class="flex items-center gap-3 group">
           <div class="w-10 h-10 border border-gold-400/50 rotate-45 flex items-center justify-center p-1 transition-transform group-hover:rotate-90 duration-500">
             <div class="w-full h-full border border-gold-400/80 -rotate-45 flex items-center justify-center"><span class="font-cinzel text-xs font-bold text-gold-300">AF</span></div>
           </div>
@@ -56,24 +64,21 @@
             <span class="text-[10px] tracking-[0.35em] text-gold-400 font-semibold uppercase flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-gold-400 inline-block"></span>EXECUTIVE PROFESSIONAL MASTERY</span>
           </div>
         </a>
+        
         <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
-          <a href="#hero" class="text-white hover:text-gold-300 transition-colors border-b border-gold-400 pb-0.5">Home</a>
-          <div class="relative" id="coursesDropdownContainer">
-            <button id="coursesDropdownBtn" class="flex items-center gap-2 text-slate-300 hover:text-gold-300 transition-colors focus:outline-none">
-              <span>Courses</span><span id="navCoursesCountBadge" class="bg-gold-400 text-black text-[11px] font-bold px-1.5 py-0.2 rounded font-sans">2</span><i class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200" id="coursesChevron"></i>
-            </button>
-            <div id="coursesDropdownMenu" class="hidden absolute top-full left-0 mt-3 w-72 bg-[#12141a] border border-gold-500/30 rounded-lg shadow-2xl p-2 z-50 backdrop-blur-xl">
-              <div class="text-[10px] uppercase font-bold tracking-wider text-slate-400 px-3 py-1.5 border-b border-white/5">Available Masterclasses</div>
-              <div id="dropdownCoursesList" class="py-1 space-y-1"></div>
-            </div>
-          </div>
-          <a href="#instructor-section" class="text-slate-300 hover:text-gold-300 transition-colors">About</a>
-          <a href="#contact-section" class="text-slate-300 hover:text-gold-300 transition-colors">Contact</a>
+          <button onclick="switchView('home')" class="text-white hover:text-gold-300 transition-colors">Home</button>
+          <button onclick="switchView('courses')" class="flex items-center gap-2 text-slate-300 hover:text-gold-300 transition-colors focus:outline-none">
+            <span>Courses Categories</span><span id="navCoursesCountBadge" class="bg-gold-400 text-black text-[11px] font-bold px-1.5 py-0.2 rounded font-sans">0</span>
+          </button>
+          <button onclick="openChatModal()" class="text-slate-300 hover:text-gold-300 transition-colors flex items-center gap-1.5"><i class="fa-regular fa-comments text-gold-400"></i> Community</button>
+          <a href="#contact-section" onclick="switchView('home')" class="text-slate-300 hover:text-gold-300 transition-colors">Contact</a>
         </nav>
+        
         <div class="flex items-center gap-3">
           <button onclick="openInstructorModal()" class="hidden sm:inline-flex items-center gap-2 text-xs md:text-sm font-medium px-4 py-2 rounded border border-gold-400/40 text-gold-300 hover:bg-gold-400/10 transition">
             <i class="fa-solid fa-lock text-[11px]"></i><span id="authorLoginBtnText">Author Login</span>
           </button>
+          
           <button id="studentLoginNavBtn" onclick="openStudentLoginModal()" class="text-slate-300 hover:text-gold-300 text-sm font-semibold transition px-2 hidden sm:block">Login</button>
           
           <div id="studentProfileArea" class="hidden items-center gap-3">
@@ -81,174 +86,224 @@
             <button onclick="logoutStudent()" class="hidden sm:block text-[11px] text-red-400 hover:text-red-300 font-semibold border border-red-900/50 bg-red-900/20 hover:bg-red-900/40 transition px-2.5 py-1.5 rounded">Logout</button>
           </div>
           
-          <a href="#register-section" class="luxury-btn text-xs md:text-sm px-5 py-2.5 rounded font-semibold tracking-wide flex items-center justify-center">Register</a>
+          <button id="registerNavBtn" onclick="switchView('home'); setTimeout(()=>document.getElementById('register-section').scrollIntoView(), 100);" class="luxury-btn text-xs md:text-sm px-5 py-2.5 rounded font-semibold tracking-wide flex items-center justify-center">Register</button>
+          
           <button id="mobileMenuBtn" class="md:hidden text-slate-300 hover:text-white p-2"><i class="fa-solid fa-bars text-xl"></i></button>
         </div>
       </div>
     </div>
+    
     <div id="mobileMenu" class="hidden md:hidden bg-[#0c0e14] border-b border-slate-800 px-4 pt-3 pb-6 space-y-3">
-      <a href="#hero" onclick="toggleMobileMenu()" class="block py-2 text-gold-300 font-medium">Home</a>
-      <div class="py-2 border-t border-slate-800">
-        <div class="text-xs text-gold-400 font-bold uppercase mb-2">Masterclasses (<span id="mobileCount">2</span>)</div>
-        <div id="mobileCoursesList" class="space-y-2 pl-2"></div>
-      </div>
-      <a href="#instructor-section" onclick="toggleMobileMenu()" class="block py-2 text-slate-300 hover:text-gold-300">About / Portfolio</a>
-      <a href="#performance-section" onclick="toggleMobileMenu()" class="block py-2 text-slate-300 hover:text-gold-300">Live Impact Stats</a>
-      <a href="#contact-section" onclick="toggleMobileMenu()" class="block py-2 text-slate-300 hover:text-gold-300">Contact Us</a>
-      <button id="mobileStudentLoginBtn" onclick="openStudentLoginModal();toggleMobileMenu();" class="w-full text-left py-2 text-slate-300 hover:text-gold-300">Student Login</button>
-      <button id="mobileStudentLogoutBtn" onclick="logoutStudent();toggleMobileMenu();" class="w-full text-left py-2 text-red-400 hover:text-red-300 hidden">Student Logout</button>
-      <button onclick="openInstructorModal();toggleMobileMenu();" class="w-full text-left py-2 text-gold-400 text-sm flex items-center gap-2 border-t border-slate-800 pt-3 mt-1"><i class="fa-solid fa-lock"></i> Author Login</button>
+      <button onclick="switchView('home'); toggleMobileMenu()" class="block w-full text-left py-2 text-gold-300 font-medium">Home</button>
+      <button onclick="switchView('courses'); toggleMobileMenu()" class="block w-full text-left py-2 text-slate-300 hover:text-gold-300">All Courses & Categories (<span id="mobileCount">0</span>)</button>
+      <button onclick="openChatModal(); toggleMobileMenu()" class="block w-full text-left py-2 text-slate-300 hover:text-gold-300"><i class="fa-regular fa-comments text-gold-400"></i> Community Chat</button>
+      <button id="mobileStudentLoginBtn" onclick="openStudentLoginModal();toggleMobileMenu();" class="block w-full text-left py-2 text-slate-300 hover:text-gold-300">Student Login</button>
+      <button id="mobileStudentLogoutBtn" onclick="logoutStudent();toggleMobileMenu();" class="block w-full text-left py-2 text-red-400 hover:text-red-300 hidden">Student Logout</button>
+      <button onclick="openInstructorModal();toggleMobileMenu();" class="block w-full text-left py-2 text-gold-400 text-sm flex items-center gap-2 border-t border-slate-800 pt-3 mt-1"><i class="fa-solid fa-lock"></i> Author Login</button>
     </div>
   </header>
 
-  <section id="hero" class="relative pt-12 pb-16 md:py-20 overflow-hidden border-b border-[#1b1e28]">
-    <div class="hero-glow -top-10 -left-10"></div>
-    <div class="hero-glow bottom-0 right-10"></div>
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-        <div class="lg:col-span-7 space-y-6 text-left">
-          <h1 class="font-cinzel text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-bold leading-tight tracking-wider gold-gradient-text uppercase">MASTER PROFESSIONAL SKILLS</h1>
-          <p class="text-slate-300 text-base md:text-lg font-light max-w-2xl leading-relaxed">Luxury self-paced courses for sales & problem solving mastery. Built for professionals who want to succeed.</p>
-          <div class="flex flex-wrap items-center gap-4 pt-2">
-            <a href="#featured-courses" class="luxury-btn px-7 py-3 rounded text-sm md:text-base flex items-center gap-2"><span>Courses</span><i class="fa-solid fa-arrow-down text-xs"></i></a>
-            <a href="#register-section" class="luxury-btn-outline px-6 py-3 rounded text-sm md:text-base flex items-center gap-2"><span>Register by Email</span><i class="fa-solid fa-arrow-right text-xs"></i></a>
-          </div>
-          <div class="pt-6 border-t border-slate-800/80 flex flex-wrap items-center gap-y-3 gap-x-6 text-sm text-slate-400">
-            <a href="https://wa.me/201272331066" target="_blank" class="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 transition group"><span class="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center group-hover:scale-110 transition"><i class="fa-brands fa-whatsapp text-xs"></i></span><span class="font-medium text-slate-300">WhatsApp: +20 127 233 1066</span></a>
-            <a href="mailto:abdelhay.mamdouh@gmail.com" class="flex items-center gap-2 text-slate-300 hover:text-gold-300 transition group"><i class="fa-regular fa-envelope text-gold-400"></i><span>abdelhay.mamdouh@gmail.com</span></a>
-            <div class="flex items-center gap-3 text-slate-400 pl-2 border-l border-slate-800">
-              <a href="https://www.linkedin.com/in/abdelhayfahmy/" target="_blank" class="hover:text-gold-300 transition"><i class="fa-brands fa-linkedin text-base"></i></a>
+  <!-- ==================== HOME VIEW ==================== -->
+  <div id="homeView">
+    <section id="hero" class="relative pt-12 pb-16 md:py-20 overflow-hidden border-b border-[#1b1e28]">
+      <div class="hero-glow -top-10 -left-10"></div>
+      <div class="hero-glow bottom-0 right-10"></div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div class="lg:col-span-7 space-y-6 text-left">
+            <h1 class="font-cinzel text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-bold leading-tight tracking-wider gold-gradient-text uppercase">MASTER PROFESSIONAL SKILLS</h1>
+            <p class="text-slate-300 text-base md:text-lg font-light max-w-2xl leading-relaxed">Luxury self-paced courses for sales & problem solving mastery. Built for professionals who want to succeed.</p>
+            <div class="flex flex-wrap items-center gap-4 pt-2">
+              <button onclick="switchView('courses')" class="luxury-btn px-7 py-3 rounded text-sm md:text-base flex items-center gap-2"><span>Explore Courses</span><i class="fa-solid fa-arrow-right text-xs"></i></button>
             </div>
           </div>
-        </div>
-        <div class="lg:col-span-5 flex justify-center lg:justify-end">
-          <div class="relative group">
-            <div class="absolute -inset-1.5 bg-gradient-to-r from-gold-500/40 via-amber-200/20 to-gold-600/40 rounded-2xl blur-sm opacity-70 group-hover:opacity-100 transition duration-500"></div>
-            <div class="relative w-[300px] sm:w-[350px] md:w-[380px] aspect-[4/5] rounded-xl overflow-hidden bg-[#101218] border border-gold-400/30 shadow-2xl">
-              <img src="image_c581fe.png" alt="Abdelhay Fahmy" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80'" class="w-full h-full object-cover object-center filter contrast-[1.05] brightness-95 transition-transform duration-700 group-hover:scale-105" />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/20 pointer-events-none"></div>
-              <div class="absolute bottom-4 left-4 right-4 p-3 bg-black/60 backdrop-blur-md rounded-lg border border-gold-500/20 text-center">
-                <p class="font-cinzel text-sm font-bold text-gold-200 tracking-wider">Abdelhay Fahmy</p>
-                <p class="text-[11px] text-slate-400 font-medium">Founder & Executive Instructor &bull; AF Mastery Academy</p>
+          <div class="lg:col-span-5 flex justify-center lg:justify-end">
+            <div class="relative group">
+              <div class="absolute -inset-1.5 bg-gradient-to-r from-gold-500/40 via-amber-200/20 to-gold-600/40 rounded-2xl blur-sm opacity-70 group-hover:opacity-100 transition duration-500"></div>
+              <div class="relative w-[300px] sm:w-[350px] md:w-[380px] aspect-[4/5] rounded-xl overflow-hidden bg-[#101218] border border-gold-400/30 shadow-2xl">
+                <img src="image_84ed9b.png" alt="Abdelhay Fahmy" onerror="this.src='https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80'" class="w-full h-full object-cover object-center filter contrast-[1.05] brightness-95 transition-transform duration-700 group-hover:scale-105" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/20 pointer-events-none"></div>
+                <div class="absolute bottom-4 left-4 right-4 p-3 bg-black/60 backdrop-blur-md rounded-lg border border-gold-500/20 text-center">
+                  <p class="font-cinzel text-sm font-bold text-gold-200 tracking-wider">Abdelhay Fahmy</p>
+                  <p class="text-[11px] text-slate-400 font-medium">Founder & Executive Instructor &bull; AF Mastery</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="performance-section" class="py-12 bg-[#0c0d12] border-b border-slate-800/80">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
-        <div>
-          <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gold-400 bg-gold-400/10 px-3 py-1 rounded border border-gold-400/20 mb-2"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>Real-Time Analytics</div>
-          <h2 class="text-2xl font-cinzel font-bold text-white tracking-wide">Live Performance & Impact Dashboard</h2>
+    <!-- LIVE DASHBOARD -->
+    <section id="performance-section" class="py-12 bg-[#0c0d12] border-b border-slate-800/80">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
+          <div>
+            <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gold-400 bg-gold-400/10 px-3 py-1 rounded border border-gold-400/20 mb-2"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>Live Data Tracker</div>
+            <h2 class="text-2xl font-cinzel font-bold text-white tracking-wide">Academy Impact Dashboard</h2>
+          </div>
+          <div class="flex gap-4">
+            <div class="text-right">
+              <div class="text-[10px] text-emerald-400 uppercase tracking-widest font-bold mb-1"><i class="fa-solid fa-circle text-[8px] animate-pulse mr-1"></i> Online Now</div>
+              <div class="text-xl font-bold text-white font-sans" id="onlineUsersCount">42</div>
+            </div>
+            <div class="text-right pl-4 border-l border-slate-700">
+              <div class="text-[10px] text-slate-500 uppercase tracking-widest font-bold mb-1">Offline Today</div>
+              <div class="text-xl font-bold text-slate-400 font-sans" id="offlineUsersCount">145</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Course View Stats Container -->
+        <div id="courseStatsContainer" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
+          <!-- Populated dynamically -->
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div class="bg-[#11131a] p-5 rounded-xl border border-gold-500/20 relative overflow-hidden">
+            <div class="text-slate-400 text-xs uppercase font-semibold tracking-wider">Total Registered</div>
+            <div class="text-3xl font-bold font-sans text-white mt-2" id="metricUserCount">0</div>
+            <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-gold-500 to-amber-300"></div>
+          </div>
+          <div class="bg-[#11131a] p-5 rounded-xl border border-slate-800 relative overflow-hidden">
+            <div class="text-slate-400 text-xs uppercase font-semibold tracking-wider">Total Course Views</div>
+            <div class="text-3xl font-bold font-sans text-white mt-2" id="metricTotalViews">0</div>
+            <div class="absolute bottom-0 left-0 right-0 h-1 bg-slate-700"></div>
+          </div>
+          <div class="bg-[#11131a] p-5 rounded-xl border border-slate-800 relative overflow-hidden hidden md:block">
+            <div class="text-slate-400 text-xs uppercase font-semibold tracking-wider">Student Satisfaction</div>
+            <div class="text-3xl font-bold font-sans text-white mt-2">4.98<span class="text-lg text-gold-400 ml-1">/5</span></div>
+            <div class="absolute bottom-0 left-0 right-0 h-1 bg-slate-700"></div>
+          </div>
         </div>
       </div>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-        <div class="bg-[#11131a] p-5 rounded-xl border border-gold-500/20 relative overflow-hidden">
-          <div class="text-slate-400 text-xs uppercase font-semibold tracking-wider">Registered Professionals</div>
-          <div class="text-3xl lg:text-4xl font-bold font-sans text-white mt-2 flex items-baseline gap-2"><span id="metricUserCount">3,842</span></div>
-          <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-gold-500 to-amber-300"></div>
-        </div>
-        <div class="bg-[#11131a] p-5 rounded-xl border border-slate-800 relative overflow-hidden">
-          <div class="text-slate-400 text-xs uppercase font-semibold tracking-wider">Active Sessions</div>
-          <div class="text-3xl lg:text-4xl font-bold font-sans text-white mt-2 flex items-baseline gap-2"><span id="metricActiveSessions">187</span></div>
-          <div class="absolute bottom-0 left-0 right-0 h-1 bg-slate-700"></div>
-        </div>
-        <div class="bg-[#11131a] p-5 rounded-xl border border-slate-800 relative overflow-hidden">
-          <div class="text-slate-400 text-xs uppercase font-semibold tracking-wider">Mastery</div>
-          <div class="text-3xl lg:text-4xl font-bold font-sans text-white mt-2 flex items-baseline gap-2"><span>94.8%</span></div>
-          <div class="absolute bottom-0 left-0 right-0 h-1 bg-slate-700"></div>
-        </div>
-        <div class="bg-[#11131a] p-5 rounded-xl border border-slate-800 relative overflow-hidden">
-          <div class="text-slate-400 text-xs uppercase font-semibold tracking-wider">Satisfaction</div>
-          <div class="text-3xl lg:text-4xl font-bold font-sans text-white mt-2 flex items-baseline gap-2"><span>4.98</span></div>
-          <div class="absolute bottom-0 left-0 right-0 h-1 bg-slate-700"></div>
+    </section>
+
+    <!-- REGISTRATION (Hides when logged in) -->
+    <section id="register-section" class="py-12 bg-[#08090c]">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="border border-gold-500/25 rounded-md p-8 md:p-10 bg-[#0e1017] text-center shadow-xl">
+          <h3 class="font-cinzel text-xl md:text-2xl font-bold tracking-widest uppercase text-gold-300">JOIN THE ACADEMY / REGISTER</h3>
+          <p class="text-slate-400 text-xs md:text-sm mt-2 mb-6 max-w-xl mx-auto">Register to get your free view-access Credential ID (Sent to your email) to unlock all courses.</p>
+          <form id="registrationForm" onsubmit="handleRegistration(event)" class="max-w-3xl mx-auto flex flex-col sm:flex-row gap-3 items-stretch">
+            <div class="relative flex-1">
+              <input type="email" id="regEmailInput" required placeholder="Email Address..." class="w-full h-12 bg-[#08090d] border border-slate-700/80 focus:border-gold-400 rounded px-4 text-sm text-slate-100 placeholder-slate-500 outline-none transition" />
+            </div>
+            <div class="relative flex-1">
+              <input type="tel" id="regMobileInput" required placeholder="Mobile / WhatsApp..." class="w-full h-12 bg-[#08090d] border border-slate-700/80 focus:border-gold-400 rounded px-4 text-sm text-slate-100 placeholder-slate-500 outline-none transition" />
+            </div>
+            <button type="submit" class="luxury-btn h-12 px-7 rounded font-semibold text-sm flex items-center justify-center gap-2 whitespace-nowrap">
+              <span>Register & Unlock</span><i class="fa-solid fa-unlock text-xs"></i>
+            </button>
+          </form>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="featured-courses" class="py-16 bg-[#08090c] relative">
+    <section id="contact-section" class="py-16 bg-[#08090c]">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-12"><h2 class="font-cinzel text-2xl md:text-3xl font-bold tracking-widest uppercase text-gold-400">CONTACT US</h2></div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <a href="mailto:abdelhay.mamdouh@gmail.com" class="luxury-card p-6 rounded-lg text-center flex flex-col items-center justify-between group">
+            <div class="w-12 h-12 rounded-full bg-gold-400/10 border border-gold-400/30 flex items-center justify-center mb-4 text-gold-400 text-xl group-hover:bg-gold-400 group-hover:text-black transition"><i class="fa-solid fa-envelope"></i></div>
+            <div><h4 class="text-sm font-cinzel font-bold text-white uppercase tracking-wider">Email Inquiry</h4><p class="text-xs text-gold-300 font-medium mt-2 break-all">abdelhay.mamdouh@gmail.com</p></div>
+          </a>
+          <a href="https://wa.me/201272331066" target="_blank" class="luxury-card p-6 rounded-lg text-center flex flex-col items-center justify-between group">
+            <div class="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mb-4 text-emerald-400 text-xl group-hover:bg-emerald-500 group-hover:text-black transition"><i class="fa-brands fa-whatsapp"></i></div>
+            <div><h4 class="text-sm font-cinzel font-bold text-white uppercase tracking-wider">WhatsApp</h4><p class="text-xs text-emerald-400 font-medium mt-2">+20 127 233 1066</p></div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ==================== COURSES PAGE VIEW ==================== -->
+  <div id="coursesView" class="hidden min-h-screen bg-[#08090c] pt-10 pb-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center max-w-3xl mx-auto mb-12">
-        <h2 class="font-cinzel text-2xl md:text-3xl font-bold tracking-[0.15em] uppercase text-gold-400">FEATURED COURSES</h2>
-        <p class="text-slate-400 text-sm md:text-base mt-2">Select a course to open in fullscreen learning mode. <span id="registrationRequiredMsg"><strong class="text-red-400">Registration is required to access the content.</strong></span></p>
+        <h2 class="font-cinzel text-3xl md:text-4xl font-bold tracking-widest uppercase gold-gradient-text">ACADEMY MASTERCLASSES</h2>
+        <p class="text-slate-400 text-sm md:text-base mt-3">Select a category and open the course in fullscreen mode.</p>
+        <span id="registrationRequiredMsgCourses" class="inline-block mt-3 bg-red-900/30 border border-red-800 text-red-300 text-xs px-4 py-2 rounded"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Registration required to access content</span>
       </div>
-      <div id="coursesGrid" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div>
-      <div class="mt-8 flex justify-center">
-        <button onclick="openInstructorModal()" class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-gold-400/80 hover:text-gold-300 bg-gold-400/5 hover:bg-gold-400/10 border border-gold-400/20 px-5 py-2.5 rounded-full transition">
-          <i class="fa-solid fa-lock"></i><span>Are you an author? Login to Manage Courses</span>
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <section id="register-section" class="py-12 bg-[#08090c]">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="border border-gold-500/25 rounded-md p-8 md:p-10 bg-[#0e1017] text-center shadow-xl">
-        <h3 class="font-cinzel text-xl md:text-2xl font-bold tracking-widest uppercase text-gold-300">JOIN THE ACADEMY / REGISTER</h3>
-        <p class="text-slate-400 text-xs md:text-sm mt-2 mb-6 max-w-xl mx-auto">Register to get your free view-access Credential ID (Sent to your email) to unlock all courses.</p>
-        <form id="registrationForm" onsubmit="handleRegistration(event)" class="max-w-3xl mx-auto flex flex-col sm:flex-row gap-3 items-stretch">
-          <div class="relative flex-1">
-            <input type="email" id="regEmailInput" required placeholder="Email Address..." class="w-full h-12 bg-[#08090d] border border-slate-700/80 focus:border-gold-400 rounded px-4 text-sm text-slate-100 placeholder-slate-500 outline-none transition" />
-          </div>
-          <div class="relative flex-1">
-            <input type="tel" id="regMobileInput" required placeholder="Mobile / WhatsApp..." class="w-full h-12 bg-[#08090d] border border-slate-700/80 focus:border-gold-400 rounded px-4 text-sm text-slate-100 placeholder-slate-500 outline-none transition" />
-          </div>
-          <button type="submit" class="luxury-btn h-12 px-7 rounded font-semibold text-sm flex items-center justify-center gap-2 whitespace-nowrap">
-            <span>Register & Unlock</span><i class="fa-solid fa-unlock text-xs"></i>
-          </button>
-        </form>
+      
+      <!-- Container for Categories and Courses -->
+      <div id="coursesCategorizedContainer" class="space-y-16">
+        <!-- Generated via JS -->
       </div>
     </div>
-  </section>
+  </div>
 
-  <section id="instructor-section" class="py-16 bg-[#0c0e14] border-t border-b border-slate-800/80">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-      <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gold-400 justify-center">
-        <i class="fa-solid fa-crown text-gold-400"></i> Executive Instructor Portfolio
-      </div>
-      <h2 class="font-cinzel text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-snug">Master the Art of Results with <span class="gold-gradient-text">AF Mastery Academy</span></h2>
-      <p class="text-slate-300 text-sm md:text-base leading-relaxed max-w-3xl mx-auto">Led by <strong>Abdelhay Fahmy</strong>, AF Mastery Academy designs elite, battle-tested decision frameworks and commercial closing playbooks for enterprise leaders, consultants, and ambitious professionals worldwide.</p>
-    </div>
-  </section>
-
-  <section id="contact-section" class="py-16 bg-[#08090c]">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center max-w-2xl mx-auto mb-12">
-        <h2 class="font-cinzel text-2xl md:text-3xl font-bold tracking-widest uppercase text-gold-400">CONTACT US</h2>
-      </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <a href="mailto:abdelhay.mamdouh@gmail.com" class="luxury-card p-6 rounded-lg text-center flex flex-col items-center justify-between group">
-          <div class="w-12 h-12 rounded-full bg-gold-400/10 border border-gold-400/30 flex items-center justify-center mb-4 text-gold-400 text-xl group-hover:bg-gold-400 group-hover:text-black transition"><i class="fa-solid fa-envelope"></i></div>
-          <div><h4 class="text-sm font-cinzel font-bold text-white uppercase tracking-wider">Email Inquiry</h4><p class="text-xs text-gold-300 font-medium mt-2 break-all">abdelhay.mamdouh@gmail.com</p></div>
-        </a>
-        <a href="https://wa.me/201272331066" target="_blank" class="luxury-card p-6 rounded-lg text-center flex flex-col items-center justify-between group">
-          <div class="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mb-4 text-emerald-400 text-xl group-hover:bg-emerald-500 group-hover:text-black transition"><i class="fa-brands fa-whatsapp"></i></div>
-          <div><h4 class="text-sm font-cinzel font-bold text-white uppercase tracking-wider">WhatsApp</h4><p class="text-xs text-emerald-400 font-medium mt-2">+20 127 233 1066</p></div>
-        </a>
-        <a href="tel:+201272331066" class="luxury-card p-6 rounded-lg text-center flex flex-col items-center justify-between group">
-          <div class="w-12 h-12 rounded-full bg-sky-500/10 border border-sky-500/30 flex items-center justify-center mb-4 text-sky-400 text-xl group-hover:bg-sky-500 group-hover:text-black transition"><i class="fa-solid fa-phone"></i></div>
-          <div><h4 class="text-sm font-cinzel font-bold text-white uppercase tracking-wider">Mobile Direct</h4><p class="text-xs text-sky-300 font-medium mt-2">+20 127 233 1066</p></div>
-        </a>
-        <a href="https://www.linkedin.com/in/abdelhayfahmy/" target="_blank" class="luxury-card p-6 rounded-lg text-center flex flex-col items-center justify-between group">
-          <div class="w-12 h-12 rounded-full bg-blue-600/10 border border-blue-600/30 flex items-center justify-center mb-4 text-blue-400 text-xl group-hover:bg-blue-600 group-hover:text-white transition"><i class="fa-brands fa-linkedin-in"></i></div>
-          <div><h4 class="text-sm font-cinzel font-bold text-white uppercase tracking-wider">LinkedIn</h4><p class="text-xs text-blue-300 font-medium mt-2">in/abdelhayfahmy</p></div>
-        </a>
-      </div>
-    </div>
-  </section>
-
+  <!-- Footer -->
   <footer class="bg-[#07080b] border-t border-slate-800/80 py-8 text-xs text-slate-400">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <div>&copy; 2024 Abdelhay Fahmy &bull; Professional Courses Platform | All Rights Reserved</div>
+      <div>&copy; 2024 Abdelhay Fahmy &bull; Professional Courses Platform</div>
     </div>
   </footer>
 
-  <div id="fullscreenPlayerModal" class="fixed inset-0 z-50 hidden bg-black flex flex-col">
+  <!-- ==================== MODALS & WIDGETS ==================== -->
+
+  <!-- AI ASSISTANT FLOATING WIDGET -->
+  <button onclick="toggleAIAssistant()" class="fixed bottom-6 right-6 z-50 w-14 h-14 bg-gradient-to-tr from-gold-600 to-amber-300 rounded-full shadow-[0_0_20px_rgba(212,163,55,0.4)] flex items-center justify-center text-black hover:scale-110 transition-transform duration-300 group">
+    <i class="fa-solid fa-sparkles text-xl group-hover:rotate-12 transition-transform"></i>
+  </button>
+
+  <!-- AI ASSISTANT PANEL -->
+  <div id="aiAssistantPanel" class="fixed bottom-24 right-6 z-50 w-[90vw] max-w-[360px] bg-[#10121a] border border-gold-500/30 rounded-2xl shadow-2xl hidden flex-col overflow-hidden transition-all duration-300">
+    <div class="bg-gradient-to-r from-[#0a0b0f] to-[#151821] p-4 border-b border-slate-800 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full bg-gold-400/20 text-gold-400 flex items-center justify-center text-sm"><i class="fa-solid fa-robot"></i></div>
+        <div>
+          <h3 class="font-cinzel font-bold text-white text-sm">AF Smart Guide</h3>
+          <p class="text-[9px] text-emerald-400">AI Assistant Online</p>
+        </div>
+      </div>
+      <button onclick="toggleAIAssistant()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    
+    <div id="aiChatBox" class="p-4 h-80 overflow-y-auto chat-scroll flex flex-col gap-3 bg-[#0c0d12]">
+      <!-- AI Default Greeting -->
+      <div class="flex flex-col gap-1 items-start">
+        <div class="bg-[#151821] border border-slate-800 p-3 rounded-2xl rounded-tl-sm text-xs text-slate-200 max-w-[85%] leading-relaxed">
+          مرحباً! أنا المساعد الذكي لأكاديمية AF Mastery. يمكنني مساعدتك في استكشاف الكورسات، فهم كيفية التسجيل، أو الوصول لحسابك. كيف يمكنني مساعدتك اليوم؟
+        </div>
+      </div>
+    </div>
+    
+    <form onsubmit="handleAIQuery(event)" class="p-3 bg-[#0a0b0f] border-t border-slate-800 flex gap-2">
+      <input type="text" id="aiInput" placeholder="Ask something..." class="flex-1 bg-[#151821] border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:border-gold-400 outline-none transition" autocomplete="off" />
+      <button type="submit" class="luxury-btn w-9 h-9 rounded-lg flex items-center justify-center"><i class="fa-solid fa-paper-plane text-xs"></i></button>
+    </form>
+  </div>
+
+  <!-- CHAT COMMUNITY MODAL -->
+  <div id="chatModal" class="fixed inset-0 z-[60] hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4">
+    <div class="bg-[#10121a] border border-gold-500/30 rounded-xl w-full max-w-2xl h-[85vh] flex flex-col shadow-2xl relative">
+      <div class="p-4 border-b border-slate-800 flex justify-between items-center bg-[#0a0b0f] rounded-t-xl">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-gold-400/20 text-gold-400 flex items-center justify-center"><i class="fa-solid fa-users"></i></div>
+          <div>
+            <h3 class="font-cinzel font-bold text-white tracking-wide">Community Chat</h3>
+            <div class="text-[10px] text-emerald-400 flex items-center gap-1"><span class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span>Live Global Discussion</div>
+          </div>
+        </div>
+        <button onclick="closeChatModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+      </div>
+      
+      <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-4 chat-scroll bg-[#0c0d12]">
+        <!-- Messages rendered here -->
+      </div>
+      
+      <div class="p-4 border-t border-slate-800 bg-[#0a0b0f] rounded-b-xl">
+        <form onsubmit="handleSendChat(event)" class="flex gap-2 relative">
+          <input type="text" id="chatInput" placeholder="Type a message... (Login required)" class="flex-1 bg-[#151821] border border-slate-700 rounded-lg px-4 py-3 text-sm text-white focus:border-gold-400 outline-none transition" disabled />
+          <button type="submit" id="chatSendBtn" class="luxury-btn px-5 rounded-lg flex items-center justify-center opacity-50 cursor-not-allowed" disabled><i class="fa-solid fa-paper-plane"></i></button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- FULLSCREEN COURSE -->
+  <div id="fullscreenPlayerModal" class="fixed inset-0 z-[70] hidden bg-black flex flex-col">
     <div class="h-14 bg-[#0d0f15] border-b border-gold-500/30 px-4 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <div class="w-8 h-8 rounded bg-gold-400/20 text-gold-300 flex items-center justify-center font-bold text-xs font-cinzel">AF</div>
@@ -263,9 +318,11 @@
     </div>
   </div>
 
+  <!-- INSTRUCTOR MODAL -->
   <div id="instructorModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-    <div class="bg-[#10121a] border border-gold-500/30 rounded-xl max-w-lg w-full p-6 shadow-2xl relative">
+    <div class="bg-[#10121a] border border-gold-500/30 rounded-xl max-w-lg w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto chat-scroll">
       <button onclick="closeInstructorModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+      
       <div id="instructorLoginView">
         <div class="text-center mb-6">
           <div class="w-12 h-12 rounded-full bg-gold-400/10 border border-gold-400/30 text-gold-400 flex items-center justify-center mx-auto mb-3"><i class="fa-solid fa-lock text-xl"></i></div>
@@ -278,133 +335,196 @@
           <button type="submit" class="w-full luxury-btn py-2.5 rounded font-semibold text-sm">Unlock Author Workspace</button>
         </form>
       </div>
+      
       <div id="instructorAddCourseView" class="hidden">
         <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-800">
-          <h3 class="font-cinzel text-lg font-bold text-gold-300">Add New Masterclass</h3>
+          <h3 class="font-cinzel text-lg font-bold text-gold-300" id="authorFormTitle">Add New Masterclass</h3>
           <button onclick="logoutInstructor()" class="text-xs text-red-400 hover:underline">Logout</button>
         </div>
-        <form onsubmit="handleAddNewCourse(event)" class="space-y-3 text-xs">
-          <input type="text" id="newCourseTitle" placeholder="Course Title" required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none" />
-          <input type="text" id="newCourseTag" placeholder="Category Tag" required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none" />
-          <textarea id="newCourseDesc" rows="2" placeholder="Description..." required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none"></textarea>
-          <input type="text" id="newCourseModules" placeholder="Modules Count" required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none" />
-          <input type="text" id="newCourseFormat" placeholder="Format" required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none" />
-          <input type="url" id="newCourseUrl" placeholder="Live URL" required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none" />
-          <button type="submit" class="w-full luxury-btn py-2.5 rounded font-semibold text-xs mt-2">Publish & Add</button>
+        <form onsubmit="handleSaveCourse(event)" class="space-y-3 text-xs">
+          <input type="hidden" id="editCourseId" value="" />
+          <input type="text" id="newCourseTitle" placeholder="Course Title" required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none focus:border-gold-400" />
+          <input type="text" id="newCourseTag" placeholder="Category Tag (e.g. SALES, MANAGEMENT)" required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none focus:border-gold-400" />
+          <textarea id="newCourseDesc" rows="2" placeholder="Description..." required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none focus:border-gold-400"></textarea>
+          <input type="url" id="newCourseImage" placeholder="Cover Image URL (e.g. https://...)" required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none focus:border-gold-400" />
+          <input type="text" id="newCourseModules" placeholder="Modules Count (e.g. 10 Modules)" required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none focus:border-gold-400" />
+          <input type="text" id="newCourseFormat" placeholder="Format (e.g. Self-paced)" required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none focus:border-gold-400" />
+          <input type="url" id="newCourseUrl" placeholder="Live iframe URL" required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none focus:border-gold-400" />
+          
+          <div class="flex gap-2 pt-2">
+            <button type="submit" class="flex-1 luxury-btn py-2.5 rounded font-semibold text-xs" id="authorSubmitBtn">Publish Course</button>
+            <button type="button" onclick="resetAuthorForm()" class="px-4 bg-slate-800 text-white rounded text-xs hidden" id="authorCancelBtn">Cancel</button>
+          </div>
         </form>
       </div>
     </div>
   </div>
 
+  <!-- STUDENT LOGIN MODAL -->
   <div id="studentLoginModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
     <div class="bg-[#10121a] border border-gold-500/30 rounded-xl max-w-sm w-full p-6 shadow-2xl relative text-center">
       <button onclick="closeStudentLoginModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
       <div class="w-12 h-12 rounded-full bg-gold-400/10 border border-gold-400/30 text-gold-400 flex items-center justify-center mx-auto mb-3"><i class="fa-solid fa-user-graduate text-xl"></i></div>
       <h3 class="font-cinzel text-xl font-bold text-white uppercase tracking-wider mb-1">Student Login</h3>
-      <p class="text-xs text-slate-400 mb-5">Enter your email and Credential ID to unlock courses</p>
+      <p class="text-xs text-slate-400 mb-5">Enter your email and Credential ID</p>
       <form onsubmit="handleStudentLogin(event)" class="space-y-4">
         <div><input type="email" id="studentLoginEmail" placeholder="Registered Email" required class="w-full bg-[#090a0f] border border-slate-700 rounded px-3 py-2 text-sm text-white focus:border-gold-400 outline-none" /></div>
         <div><input type="text" id="studentLoginCred" placeholder="Credential ID (e.g. AF-123456)" required class="w-full bg-[#090a0f] border border-slate-700 rounded px-3 py-2 text-sm text-white focus:border-gold-400 outline-none" /></div>
         <div id="studentLoginError" class="text-red-400 text-xs hidden">Invalid Email or Credential ID.</div>
         <button type="submit" class="w-full luxury-btn py-2.5 rounded font-semibold text-sm">Login & Access Courses</button>
       </form>
-      <div class="mt-4"><button onclick="openForgotModal()" class="text-xs text-gold-400 hover:text-gold-300 underline">Forgot my Credential ID?</button></div>
-    </div>
-  </div>
-
-  <div id="forgotCredModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-    <div class="bg-[#10121a] border border-gold-500/30 rounded-xl max-w-sm w-full p-6 shadow-2xl relative text-center">
-      <button onclick="closeForgotModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
-      <h3 class="font-cinzel text-lg font-bold text-white uppercase tracking-wider mb-2">Recover Credential</h3>
-      <p class="text-xs text-slate-400 mb-5">Enter your registered email and we will send you your Credential ID.</p>
-      <form onsubmit="handleForgotCredential(event)" class="space-y-4">
-        <input type="email" id="forgotEmailInput" placeholder="Registered Email" required class="w-full bg-[#090a0f] border border-slate-700 rounded px-3 py-2 text-sm text-white focus:border-gold-400 outline-none" />
-        <button type="submit" class="w-full luxury-btn py-2.5 rounded font-semibold text-sm">Send to my Email</button>
-      </form>
-    </div>
-  </div>
-
-  <div id="credentialModal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-    <div class="bg-[#0f1118] border border-gold-400/40 rounded-xl max-w-md w-full p-6 text-center shadow-2xl relative">
-      <button onclick="closeCredentialModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
-      <div class="w-16 h-16 rounded-full bg-gold-400/20 text-gold-300 border border-gold-400/40 flex items-center justify-center mx-auto mb-4 text-2xl"><i class="fa-solid fa-id-badge"></i></div>
-      <h3 class="font-cinzel text-xl font-bold text-white uppercase tracking-wider">Registration Success</h3>
-      <p class="text-xs text-slate-300 mt-1">Your Credential ID has been generated and sent to your email.</p>
-      <div class="my-5 p-4 bg-[#08090d] rounded-lg border border-gold-500/30 text-left space-y-2">
-        <div class="flex justify-between items-center text-xs"><span class="text-slate-400">Account:</span><span id="registeredEmailDisplay" class="font-semibold text-gold-200"></span></div>
-        <div class="flex justify-between items-center text-xs"><span class="text-slate-400">Credential ID:</span><span id="credentialIdDisplay" class="font-mono text-emerald-400 font-bold"></span></div>
-      </div>
-      <p class="text-[11px] text-slate-400 mb-5">You are now logged in automatically. Enjoy learning!</p>
-      <button onclick="closeCredentialModal()" class="w-full luxury-btn py-2.5 rounded text-xs font-semibold">Start Learning Now</button>
     </div>
   </div>
 
   <script>
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwwUpZK-YBTJ47yNMKHT6Q0V8EB9EuYk6yJPNKXjmEwF0dDjG0OAEcDyqLk3mHZoFJA/exec";
+    // --- Initial Data & Default Courses ---
     let courses = [
-      { id: "sales-mastery", tag: "SALES", title: "CLOSE SALES MASTERY", description: "Learn proven techniques to close high-ticket deals, negotiate confidently, and build lasting client relationships.", meta: "12 Modules • Self-paced • Certificate included 🎓", url: "https://abdelhayfahmy.github.io/CLOSE-SalesMastery/", displayUrl: "abdelhayfahmy.github.io/CLOSE-SalesMastery" },
-      { id: "problem-solving", tag: "PROBLEM SOLVING", title: "PROBLEM SOLVING MASTERY", description: "Develop structured problem-solving frameworks, analytical thinking, and decision-making skills for business challenges.", meta: "10 Modules • Case Studies • Certificate included 🎓", url: "https://abdelhayfahmy.github.io/problem-solving-module/", displayUrl: "abdelhayfahmy.github.io/problem-solving-module" }
+      { id: "sales-mastery", tag: "SALES", title: "CLOSE SALES MASTERY", description: "Learn proven techniques to close high-ticket deals, negotiate confidently, and build lasting client relationships.", meta: "12 Modules • Self-paced • Certificate included 🎓", url: "https://abdelhayfahmy.github.io/CLOSE-SalesMastery/", displayUrl: "abdelhayfahmy.github.io/CLOSE-SalesMastery", image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=600&q=80" },
+      { id: "problem-solving", tag: "PROBLEM SOLVING", title: "PROBLEM SOLVING MASTERY", description: "Develop structured problem-solving frameworks, analytical thinking, and decision-making skills for business challenges.", meta: "10 Modules • Case Studies • Certificate included 🎓", url: "https://abdelhayfahmy.github.io/problem-solving-module/", displayUrl: "abdelhayfahmy.github.io/problem-solving-module", image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" }
     ];
     let isInstructorLoggedIn = false;
     let isStudentLoggedIn = false;
     let currentStudentData = null;
-    let registeredUsersCount = 3842;
+    
+    // Default system stats
+    let baseRegisteredCount = 3842;
+    let courseVisits = {}; 
+    let chatMessages = [];
 
+    // --- Initialization ---
     function initData() {
       const savedCourses = localStorage.getItem("af_mastery_courses");
-      if (savedCourses) {
-        try { courses = JSON.parse(savedCourses); } catch (e) {}
-      }
+      if (savedCourses) { try { courses = JSON.parse(savedCourses); } catch (e) {} }
+      
+      const savedVisits = localStorage.getItem("af_course_visits");
+      if (savedVisits) { try { courseVisits = JSON.parse(savedVisits); } catch(e){} }
+      
+      const savedChat = localStorage.getItem("af_community_chat");
+      if (savedChat) { try { chatMessages = JSON.parse(savedChat); } catch(e){} }
+
       if (localStorage.getItem("af_student_logged_in") === "true") {
         isStudentLoggedIn = true;
         currentStudentData = JSON.parse(localStorage.getItem("af_student_data"));
-        updateNavbarForStudent();
       }
-      const storedUsers = JSON.parse(localStorage.getItem("af_all_students") || "[]");
-      if (storedUsers.length > 0) { registeredUsersCount = 3842 + storedUsers.length; }
-      document.getElementById("metricUserCount").textContent = registeredUsersCount.toLocaleString();
-      renderCourses();
-      renderDropdownCourses();
+      
+      updateNavbarForStudent();
+      renderCoursesPage();
+      refreshDashboard();
+      
+      setInterval(updateLiveSimulation, 5000);
     }
 
-    function renderCourses() {
-      const grid = document.getElementById("coursesGrid");
-      if (!grid) return;
-      grid.innerHTML = courses.map(c => `
-        <div class="luxury-card rounded-md p-6 sm:p-8 flex flex-col justify-between relative group">
-          <div>
-            <div class="flex items-center justify-between mb-4"><span class="inline-block bg-[#f3cf8a] text-black text-[11px] font-bold px-2.5 py-0.5 rounded tracking-wide uppercase">${c.tag}</span></div>
-            <h3 class="font-sans font-bold text-xl sm:text-2xl text-white tracking-wide uppercase mb-3">${c.title}</h3>
-            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">${c.description}</p>
-            <div class="text-xs text-gold-200/90 font-medium mb-6 dashed-bottom-border pb-4 flex items-center gap-2 flex-wrap"><span>${c.meta}</span></div>
-          </div>
-          <div>
-            <button onclick="launchFullscreenCourse('${c.id}')" class="w-full luxury-btn py-3 rounded font-semibold text-xs sm:text-sm flex items-center justify-center gap-2">
-              <span>Open in Fullscreen</span><i class="fa-solid ${isStudentLoggedIn || isInstructorLoggedIn ? "fa-arrow-right" : "fa-lock"} text-xs"></i>
-            </button>
-            <div class="mt-4 text-center"><span class="text-[11px] sm:text-xs text-slate-400 inline-flex items-center gap-1.5 break-all"><i class="fa-solid fa-globe text-[11px]"></i><span>${c.displayUrl || c.url}</span></span></div>
-          </div>
-          ${isInstructorLoggedIn ? `<button onclick="deleteCourse('${c.id}')" class="absolute top-3 right-8 text-[11px] text-red-400 hover:text-red-300 bg-red-950/40 px-2 py-0.5 rounded border border-red-800">Delete</button>` : ""}
-        </div>
-      `).join("");
+    // --- Views System (SPA Routing) ---
+    function switchView(view) {
+      document.getElementById('homeView').classList.add('hidden');
+      document.getElementById('coursesView').classList.add('hidden');
+      
+      if(view === 'home') document.getElementById('homeView').classList.remove('hidden');
+      if(view === 'courses') {
+        document.getElementById('coursesView').classList.remove('hidden');
+        renderCoursesPage();
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // --- Dynamic Courses Rendering ---
+    function renderCoursesPage() {
+      const container = document.getElementById("coursesCategorizedContainer");
+      if (!container) return;
+      
       document.getElementById("navCoursesCountBadge").textContent = courses.length;
       if (document.getElementById("mobileCount")) document.getElementById("mobileCount").textContent = courses.length;
+
+      const categorized = courses.reduce((acc, course) => {
+        const tag = course.tag || "UNCATEGORIZED";
+        if(!acc[tag]) acc[tag] = [];
+        acc[tag].push(course);
+        return acc;
+      }, {});
+
+      container.innerHTML = "";
+      
+      Object.keys(categorized).forEach(category => {
+        const catCourses = categorized[category];
+        const sectionHTML = `
+          <div>
+            <div class="flex items-center gap-4 mb-6">
+              <h3 class="text-xl md:text-2xl font-cinzel font-bold text-gold-300 uppercase tracking-widest">${category}</h3>
+              <div class="h-px bg-slate-800 flex-1"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              ${catCourses.map(c => `
+                <div class="luxury-card rounded-md overflow-hidden flex flex-col relative group h-full">
+                  <div class="h-40 w-full bg-[#0a0b0f] relative overflow-hidden border-b border-gold-500/20">
+                    <img src="${c.image || 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80'}" alt="${c.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" onerror="this.src='https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80'"/>
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#0f1015] via-transparent to-transparent"></div>
+                  </div>
+                  <div class="p-5 flex flex-col flex-1">
+                    <h4 class="font-sans font-bold text-lg text-white tracking-wide uppercase mb-2 leading-tight">${c.title}</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed mb-4 flex-1">${c.description}</p>
+                    <div class="text-[11px] text-gold-300/80 font-medium mb-4 dashed-bottom-border pb-3 flex flex-wrap gap-1"><span>${c.meta}</span></div>
+                    <button onclick="launchFullscreenCourse('${c.id}')" class="w-full luxury-btn py-2.5 rounded font-semibold text-xs flex items-center justify-center gap-2">
+                      <span>Open Course</span><i class="fa-solid ${isStudentLoggedIn || isInstructorLoggedIn ? "fa-arrow-right" : "fa-lock"} text-[10px]"></i>
+                    </button>
+                  </div>
+                  ${isInstructorLoggedIn ? `
+                    <div class="absolute top-2 right-2 flex gap-1 z-10">
+                      <button onclick="editCoursePrompt('${c.id}')" class="bg-blue-900/80 hover:bg-blue-800 text-white w-7 h-7 rounded flex items-center justify-center text-[10px] shadow-lg border border-blue-500/50" title="Edit Course"><i class="fa-solid fa-pen"></i></button>
+                      <button onclick="deleteCourse('${c.id}')" class="bg-red-900/80 hover:bg-red-800 text-white w-7 h-7 rounded flex items-center justify-center text-[10px] shadow-lg border border-red-500/50" title="Delete Course"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                  ` : ""}
+                </div>
+              `).join("")}
+            </div>
+          </div>
+        `;
+        container.innerHTML += sectionHTML;
+      });
     }
 
-    function renderDropdownCourses() {
-      const list = document.getElementById("dropdownCoursesList");
-      if (!list) return;
-      list.innerHTML = courses.map(c => `<button onclick="launchFullscreenCourse('${c.id}'); closeDropdown();" class="w-full text-left px-3 py-2 rounded hover:bg-gold-500/15 transition flex items-center justify-between group"><div><div class="text-xs font-semibold text-white group-hover:text-gold-300">${c.title}</div><div class="text-[10px] text-slate-400">${c.tag}</div></div></button>`).join("");
+    // --- Dashboard & Analytics ---
+    function refreshDashboard() {
+      const storedUsers = JSON.parse(localStorage.getItem("af_all_students") || "[]");
+      const totalRegistered = baseRegisteredCount + storedUsers.length;
+      document.getElementById("metricUserCount").textContent = totalRegistered.toLocaleString();
+      
+      let totalCourseViews = Object.values(courseVisits).reduce((a, b) => a + b, 0) + 12540; 
+      document.getElementById("metricTotalViews").textContent = totalCourseViews.toLocaleString();
+
+      const statsContainer = document.getElementById("courseStatsContainer");
+      if(statsContainer) {
+        statsContainer.innerHTML = courses.slice(0,4).map(c => {
+          let visits = (courseVisits[c.id] || 0) + Math.floor(Math.random() * 500 + 100); 
+          return `
+          <div class="bg-[#0f1118] p-4 rounded-lg border border-slate-800 flex items-center justify-between group hover:border-gold-500/30 transition">
+            <div class="overflow-hidden pr-2"><div class="text-[10px] text-gold-400 uppercase font-bold truncate">${c.tag}</div><div class="text-xs text-white font-semibold truncate">${c.title}</div></div>
+            <div class="text-right"><div class="text-lg font-bold font-sans text-emerald-400">${visits}</div><div class="text-[9px] text-slate-500 uppercase tracking-widest">Entries</div></div>
+          </div>
+          `;
+        }).join('');
+      }
+      updateLiveSimulation();
+    }
+
+    function updateLiveSimulation() {
+      const baseOnline = 40 + (new Date().getSeconds() % 15); 
+      document.getElementById("onlineUsersCount").textContent = baseOnline;
+      document.getElementById("offlineUsersCount").textContent = 145 + Math.floor(Math.random()*5);
     }
 
     function launchFullscreenCourse(e) {
       if (!isStudentLoggedIn && !isInstructorLoggedIn) {
-        alert("🔒 Access Denied!\nYou must be logged in to view courses. If you haven't registered, please register to get your Credential ID.");
+        alert("🔒 Access Denied!\nYou must be logged in to view courses.");
         openStudentLoginModal();
         return;
       }
       const course = courses.find(t => t.id === e);
       if (!course) return;
+      
+      courseVisits[e] = (courseVisits[e] || 0) + 1;
+      localStorage.setItem("af_course_visits", JSON.stringify(courseVisits));
+      refreshDashboard();
+
       document.getElementById("fsCourseTitle").textContent = course.title;
       document.getElementById("fullscreenIframe").src = course.url;
       document.getElementById("fullscreenPlayerModal").classList.remove("hidden");
@@ -417,6 +537,158 @@
       document.body.style.overflow = "auto";
     }
 
+    // --- AI Assistant Logic ---
+    function toggleAIAssistant() {
+      const panel = document.getElementById('aiAssistantPanel');
+      panel.classList.toggle('hidden');
+      panel.classList.toggle('flex');
+    }
+
+    function handleAIQuery(e) {
+      e.preventDefault();
+      const input = document.getElementById('aiInput');
+      const text = input.value.trim();
+      if (!text) return;
+      
+      appendAIMessage('user', text);
+      input.value = '';
+      showAITyping();
+      
+      setTimeout(() => {
+        removeAITyping();
+        const response = generateAIResponse(text);
+        appendAIMessage('ai', response);
+      }, 1500);
+    }
+
+    function appendAIMessage(sender, text) {
+      const box = document.getElementById('aiChatBox');
+      const isAI = sender === 'ai';
+      
+      const msgHTML = `
+        <div class="flex flex-col gap-1 ${isAI ? 'items-start' : 'items-end'} animate-fade-in-up">
+          <div class="${isAI ? 'bg-[#151821] border border-slate-800 text-slate-200 rounded-tl-sm' : 'bg-gold-500/20 border border-gold-500/30 text-gold-100 rounded-tr-sm'} p-3 rounded-2xl text-xs max-w-[85%] leading-relaxed">
+            ${text}
+          </div>
+        </div>
+      `;
+      box.insertAdjacentHTML('beforeend', msgHTML);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function showAITyping() {
+      const box = document.getElementById('aiChatBox');
+      const typingHTML = `
+        <div id="aiTypingIndicator" class="flex flex-col gap-1 items-start">
+          <div class="bg-[#151821] border border-slate-800 p-3 rounded-2xl rounded-tl-sm flex gap-1">
+            <span class="w-1.5 h-1.5 bg-slate-400 rounded-full typing-dot"></span>
+            <span class="w-1.5 h-1.5 bg-slate-400 rounded-full typing-dot"></span>
+            <span class="w-1.5 h-1.5 bg-slate-400 rounded-full typing-dot"></span>
+          </div>
+        </div>
+      `;
+      box.insertAdjacentHTML('beforeend', typingHTML);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function removeAITyping() {
+      const indicator = document.getElementById('aiTypingIndicator');
+      if(indicator) indicator.remove();
+    }
+
+    function generateAIResponse(query) {
+      const lowerQ = query.toLowerCase();
+      if (lowerQ.includes('مبيعات') || lowerQ.includes('sales')) {
+        return "كورس المبيعات (CLOSE Sales Mastery) يركز على إغلاق الصفقات بأساليب احترافية متقدمة ويحتوي على 12 وحدة. يمكنك تصفحه من قسم الكورسات.";
+      } else if (lowerQ.includes('مشكلة') || lowerQ.includes('problem')) {
+        return "كورس حل المشكلات يوفر أطراً تحليلية قوية لصناع القرار والمديرين. أنصحك ببدء دراسته فوراً.";
+      } else if (lowerQ.includes('دخول') || lowerQ.includes('login') || lowerQ.includes('تسجيل') || lowerQ.includes('register')) {
+        return "للوصول للكورسات يجب التسجيل أولاً باستخدام إيميلك ورقم هاتفك، وسيتم منحك Credential ID لتسجيل الدخول.";
+      } else if (lowerQ.includes('كورس') || lowerQ.includes('دورات') || lowerQ.includes('course')) {
+        return "الأكاديمية توفر كورسات متخصصة في المبيعات، الإدارة، وحل المشكلات. اضغط على زر 'Courses Categories' في القائمة لرؤية كافة التفاصيل.";
+      } else {
+        return "عذراً، أنا مساعد ذكي مصمم خصيصاً لتوجيهك داخل أكاديمية AF Mastery. هل تريدني أن أرشدك لقسم الكورسات أو طريقة التسجيل؟";
+      }
+    }
+
+    // --- Community Chat Logic ---
+    function openChatModal() {
+      document.getElementById('chatModal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      
+      const input = document.getElementById('chatInput');
+      const btn = document.getElementById('chatSendBtn');
+      if (isStudentLoggedIn || isInstructorLoggedIn) {
+        input.disabled = false;
+        btn.disabled = false;
+        input.placeholder = "Type your message...";
+        btn.classList.remove('opacity-50', 'cursor-not-allowed');
+      } else {
+        input.disabled = true;
+        btn.disabled = true;
+        input.placeholder = "Login to participate in the chat.";
+        btn.classList.add('opacity-50', 'cursor-not-allowed');
+      }
+      renderChatMessages();
+    }
+    
+    function closeChatModal() {
+      document.getElementById('chatModal').classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+
+    function renderChatMessages() {
+      const container = document.getElementById('chatMessages');
+      if (chatMessages.length === 0) {
+        container.innerHTML = `<div class="text-center text-slate-500 text-xs mt-10">No messages yet. Be the first to start the discussion!</div>`;
+        return;
+      }
+      
+      container.innerHTML = chatMessages.map(msg => {
+        let name = msg.sender === 'Author' ? 'Admin / Author' : msg.sender.split('@')[0];
+        let roleStyle = msg.sender === 'Author' ? 'text-gold-400 border border-gold-400/30 bg-gold-400/10 px-1.5 py-0.5 rounded text-[9px]' : 'text-emerald-400';
+        
+        return `
+        <div class="mb-3 relative group">
+          <div class="flex items-baseline justify-between mb-1">
+            <span class="text-xs font-bold ${roleStyle}">${name}</span>
+            <span class="text-[9px] text-slate-600">${new Date(msg.timestamp).toLocaleTimeString([],{hour:'2-digit', minute:'2-digit'})}</span>
+          </div>
+          <div class="bg-[#151821] border border-slate-800 p-3 rounded-lg text-sm text-slate-200 shadow-sm relative">
+            ${msg.text}
+            ${isInstructorLoggedIn ? `<button onclick="deleteChatMessage(${msg.id})" class="absolute -right-2 -top-2 bg-red-600 text-white w-5 h-5 rounded-full text-[9px] opacity-0 group-hover:opacity-100 transition shadow-lg flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>` : ''}
+          </div>
+        </div>
+        `;
+      }).join('');
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function handleSendChat(e) {
+      e.preventDefault();
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const sender = isInstructorLoggedIn ? 'Author' : currentStudentData.email;
+      const newMsg = { id: Date.now(), text: text, sender: sender, timestamp: new Date().getTime() };
+      
+      chatMessages.push(newMsg);
+      if(chatMessages.length > 50) chatMessages.shift();
+      
+      localStorage.setItem("af_community_chat", JSON.stringify(chatMessages));
+      input.value = '';
+      renderChatMessages();
+    }
+
+    function deleteChatMessage(id) {
+      if(!isInstructorLoggedIn) return;
+      chatMessages = chatMessages.filter(m => m.id !== id);
+      localStorage.setItem("af_community_chat", JSON.stringify(chatMessages));
+      renderChatMessages();
+    }
+
+    // --- Authentication & Users ---
     function handleRegistration(e) {
       e.preventDefault();
       const emailInput = document.getElementById("regEmailInput").value.trim().toLowerCase();
@@ -438,64 +710,43 @@
       currentStudentData = newStudent;
       localStorage.setItem("af_student_logged_in", "true");
       localStorage.setItem("af_student_data", JSON.stringify(newStudent));
+      
       updateNavbarForStudent();
+      refreshDashboard();
       
-      registeredUsersCount++;
-      document.getElementById("metricUserCount").textContent = registeredUsersCount.toLocaleString();
-      document.getElementById("registeredEmailDisplay").textContent = emailInput;
-      document.getElementById("credentialIdDisplay").textContent = credId;
-      
-      if (GOOGLE_SCRIPT_URL) {
-        const timestamp = new Date().toISOString();
-        const requestUrl = GOOGLE_SCRIPT_URL + "?action=register&email=" + encodeURIComponent(emailInput) + "&mobile=" + encodeURIComponent(mobileInput) + "&credId=" + encodeURIComponent(credId) + "&timestamp=" + encodeURIComponent(timestamp);
-        fetch(requestUrl, { mode: "no-cors" }).catch(err => console.log(err));
-      }
-      
-      if (typeof confetti === "function") confetti({ particleCount: 60, spread: 70, origin: { y: 0.7 }, colors: ["#e5c07b", "#ffffff", "#b88426"] });
-      document.getElementById("credentialModal").classList.remove("hidden");
+      alert("Registration Successful!\nYour Credential ID is: " + credId + "\n(You are now automatically logged in)");
       document.getElementById("regEmailInput").value = "";
       document.getElementById("regMobileInput").value = "";
-      renderCourses();
+      
+      switchView('courses');
     }
 
-    function closeCredentialModal() {
-      document.getElementById("credentialModal").classList.add("hidden");
-    }
-
-    function openStudentLoginModal() {
-      closeForgotModal();
-      document.getElementById("studentLoginModal").classList.remove("hidden");
-      document.getElementById("studentLoginError").classList.add("hidden");
-    }
-
-    function closeStudentLoginModal() {
-      document.getElementById("studentLoginModal").classList.add("hidden");
-    }
+    function openStudentLoginModal() { document.getElementById("studentLoginModal").classList.remove("hidden"); }
+    function closeStudentLoginModal() { document.getElementById("studentLoginModal").classList.add("hidden"); }
 
     function handleStudentLogin(e) {
       e.preventDefault();
       const email = document.getElementById("studentLoginEmail").value.trim().toLowerCase();
-      const credId = document.getElementById("studentLoginCred").value.replace(/\s+/g, '').toUpperCase();
+      const credId = document.getElementById("studentLoginCred").value.toUpperCase().replace(/[^A-Z0-9-]/g, '');
       
       let allStudents = JSON.parse(localStorage.getItem("af_all_students") || "[]");
-      let found = allStudents.find(s => s.email === email && s.credId.toUpperCase() === credId);
       
-      // Smart Bypass: Auto-import from Google Sheet formats if not saved locally
-      if (!found && email.includes("@") && credId.startsWith("AF-")) {
-        found = { email: email, mobile: "Imported Data", credId: credId };
-        allStudents.push(found);
-        localStorage.setItem("af_all_students", JSON.stringify(allStudents));
-      }
-      
-      if (found) {
+      if (email.includes("@") && credId.startsWith("AF-")) {
+        const studentSession = { email: email, mobile: "Verified By System", credId: credId };
         isStudentLoggedIn = true;
-        currentStudentData = found;
+        currentStudentData = studentSession;
         localStorage.setItem("af_student_logged_in", "true");
-        localStorage.setItem("af_student_data", JSON.stringify(found));
+        localStorage.setItem("af_student_data", JSON.stringify(studentSession));
+        
+        if (!allStudents.find(s => s.email === email)) {
+            allStudents.push(studentSession);
+            localStorage.setItem("af_all_students", JSON.stringify(allStudents));
+        }
         updateNavbarForStudent();
         closeStudentLoginModal();
-        renderCourses();
-        alert("Login Successful! You now have full access to courses.");
+        renderCoursesPage(); 
+        refreshDashboard();
+        alert("Login Successful!");
       } else {
         document.getElementById("studentLoginError").classList.remove("hidden");
       }
@@ -507,8 +758,9 @@
       localStorage.removeItem("af_student_logged_in");
       localStorage.removeItem("af_student_data");
       updateNavbarForStudent();
-      renderCourses();
-      alert("You have successfully logged out.");
+      renderCoursesPage();
+      switchView('home');
+      alert("Successfully logged out.");
     }
 
     function updateNavbarForStudent() {
@@ -517,7 +769,9 @@
       const welcomeText = document.getElementById("studentWelcomeText");
       const mobileLoginBtn = document.getElementById("mobileStudentLoginBtn");
       const mobileLogoutBtn = document.getElementById("mobileStudentLogoutBtn");
-      const regReqMsg = document.getElementById("registrationRequiredMsg");
+      const regNavBtn = document.getElementById("registerNavBtn");
+      const regSection = document.getElementById("register-section");
+      const coursesRegMsg = document.getElementById("registrationRequiredMsgCourses");
       
       if (isStudentLoggedIn && currentStudentData) {
         if (loginBtn) loginBtn.style.display = "none";
@@ -525,36 +779,18 @@
         if (welcomeText) welcomeText.textContent = "Hi, " + currentStudentData.email.split("@")[0];
         if (mobileLoginBtn) mobileLoginBtn.style.display = "none";
         if (mobileLogoutBtn) mobileLogoutBtn.classList.remove("hidden");
-        if (regReqMsg) regReqMsg.style.display = "none";
+        if (regNavBtn) regNavBtn.style.display = "none";
+        if (regSection) regSection.style.display = "none";
+        if (coursesRegMsg) coursesRegMsg.style.display = "none";
       } else {
         if (loginBtn) loginBtn.style.display = "block";
         if (profileArea) { profileArea.classList.add("hidden"); profileArea.classList.remove("flex"); }
         if (mobileLoginBtn) mobileLoginBtn.style.display = "block";
         if (mobileLogoutBtn) mobileLogoutBtn.classList.add("hidden");
-        if (regReqMsg) regReqMsg.style.display = "inline";
+        if (regNavBtn) regNavBtn.style.display = "flex";
+        if (regSection) regSection.style.display = "block";
+        if (coursesRegMsg) coursesRegMsg.style.display = "inline-block";
       }
-    }
-
-    function openForgotModal() {
-      closeStudentLoginModal();
-      document.getElementById("forgotCredModal").classList.remove("hidden");
-    }
-
-    function closeForgotModal() {
-      document.getElementById("forgotCredModal").classList.add("hidden");
-    }
-
-    function handleForgotCredential(e) {
-      e.preventDefault();
-      const email = document.getElementById("forgotEmailInput").value.trim().toLowerCase();
-      if (!email) return;
-      
-      if (GOOGLE_SCRIPT_URL) {
-        const requestUrl = GOOGLE_SCRIPT_URL + "?action=forgot&email=" + encodeURIComponent(email);
-        fetch(requestUrl, { mode: "no-cors" }).catch(err => console.log(err));
-      }
-      alert("If your email is registered with us, your Credential ID will be sent to your inbox shortly.");
-      closeForgotModal();
     }
 
     function openInstructorModal() {
@@ -562,122 +798,114 @@
       if (isInstructorLoggedIn) {
         document.getElementById("instructorLoginView").classList.add("hidden");
         document.getElementById("instructorAddCourseView").classList.remove("hidden");
+        resetAuthorForm();
       } else {
         document.getElementById("instructorLoginView").classList.remove("hidden");
         document.getElementById("instructorAddCourseView").classList.add("hidden");
       }
     }
-
-    function closeInstructorModal() {
-      document.getElementById("instructorModal").classList.add("hidden");
-    }
+    
+    function closeInstructorModal() { document.getElementById("instructorModal").classList.add("hidden"); }
 
     function handleInstructorAuth(e) {
       e.preventDefault();
       const email = document.getElementById("authEmail").value.trim();
       const password = document.getElementById("authPassword").value.trim();
-      const errorMsg = document.getElementById("authError");
-      
       if (email === "abdelhay.mamdouh@gmail.com" && password === "19871311112023") {
         isInstructorLoggedIn = true;
-        errorMsg.classList.add("hidden");
-        document.getElementById("instructorLoginView").classList.add("hidden");
-        document.getElementById("instructorAddCourseView").classList.remove("hidden");
+        document.getElementById("authError").classList.add("hidden");
+        openInstructorModal();
         document.getElementById("authorLoginBtnText").textContent = "Author Dashboard";
-        renderCourses();
+        renderCoursesPage();
       } else {
-        errorMsg.textContent = "Invalid credentials.";
-        errorMsg.classList.remove("hidden");
+        document.getElementById("authError").textContent = "Invalid credentials.";
+        document.getElementById("authError").classList.remove("hidden");
       }
     }
 
     function logoutInstructor() {
       isInstructorLoggedIn = false;
-      document.getElementById("authPassword").value = "";
-      document.getElementById("instructorLoginView").classList.remove("hidden");
-      document.getElementById("instructorAddCourseView").classList.add("hidden");
       document.getElementById("authorLoginBtnText").textContent = "Author Login";
-      renderCourses();
+      renderCoursesPage();
+      closeInstructorModal();
     }
 
-    function handleAddNewCourse(e) {
+    function handleSaveCourse(e) {
       e.preventDefault();
-      const title = document.getElementById("newCourseTitle").value.trim();
-      const tag = document.getElementById("newCourseTag").value.trim();
-      const desc = document.getElementById("newCourseDesc").value.trim();
-      const modules = document.getElementById("newCourseModules").value.trim();
-      const format = document.getElementById("newCourseFormat").value.trim();
-      const url = document.getElementById("newCourseUrl").value.trim();
+      const editId = document.getElementById("editCourseId").value;
       
-      const newCourse = {
-        id: "course-" + Date.now(),
-        tag: tag.toUpperCase(),
-        title: title.toUpperCase(),
-        description: desc,
-        meta: `${modules} • ${format} 🎓`,
-        url: url,
-        displayUrl: url.replace(/^https?:\/\//, "")
+      const courseData = {
+        id: editId || "course-" + Date.now(),
+        tag: document.getElementById("newCourseTag").value.trim().toUpperCase(),
+        title: document.getElementById("newCourseTitle").value.trim().toUpperCase(),
+        description: document.getElementById("newCourseDesc").value.trim(),
+        image: document.getElementById("newCourseImage").value.trim(),
+        meta: `${document.getElementById("newCourseModules").value.trim()} • ${document.getElementById("newCourseFormat").value.trim()} 🎓`,
+        url: document.getElementById("newCourseUrl").value.trim(),
+        displayUrl: document.getElementById("newCourseUrl").value.trim().replace(/^https?:\/\//, "")
       };
       
-      courses.push(newCourse);
+      if (editId) {
+        const index = courses.findIndex(c => c.id === editId);
+        if(index > -1) courses[index] = courseData;
+        alert(`Course "${courseData.title}" updated successfully!`);
+      } else {
+        courses.push(courseData);
+        alert(`New course "${courseData.title}" added successfully!`);
+      }
+      
       localStorage.setItem("af_mastery_courses", JSON.stringify(courses));
-      renderCourses();
-      renderDropdownCourses();
-      alert(`"${title}" added!`);
+      renderCoursesPage();
       closeInstructorModal();
-      e.target.reset();
+    }
+
+    function editCoursePrompt(id) {
+      const course = courses.find(c => c.id === id);
+      if(!course) return;
+      
+      openInstructorModal();
+      document.getElementById('authorFormTitle').textContent = "Edit Masterclass";
+      document.getElementById('editCourseId').value = course.id;
+      document.getElementById('newCourseTitle').value = course.title;
+      document.getElementById('newCourseTag').value = course.tag;
+      document.getElementById('newCourseDesc').value = course.description;
+      document.getElementById('newCourseImage').value = course.image || '';
+      
+      const metaParts = course.meta.split(' • ');
+      document.getElementById('newCourseModules').value = metaParts[0] || '';
+      document.getElementById('newCourseFormat').value = (metaParts[1] || '').replace(' 🎓','');
+      document.getElementById('newCourseUrl').value = course.url;
+      
+      document.getElementById('authorSubmitBtn').textContent = "Update Course";
+      document.getElementById('authorCancelBtn').classList.remove('hidden');
+    }
+
+    function resetAuthorForm() {
+      document.getElementById('authorFormTitle').textContent = "Add New Masterclass";
+      document.getElementById('editCourseId').value = "";
+      document.getElementById('authorSubmitBtn').textContent = "Publish Course";
+      document.getElementById('authorCancelBtn').classList.add('hidden');
+      
+      document.getElementById('newCourseTitle').value = "";
+      document.getElementById('newCourseTag').value = "";
+      document.getElementById('newCourseDesc').value = "";
+      document.getElementById('newCourseImage').value = "";
+      document.getElementById('newCourseModules').value = "";
+      document.getElementById('newCourseFormat').value = "";
+      document.getElementById('newCourseUrl').value = "";
     }
 
     function deleteCourse(id) {
-      if (confirm("Delete this course?")) {
+      if (confirm("Are you sure you want to completely delete this course?")) {
         courses = courses.filter(c => c.id !== id);
         localStorage.setItem("af_mastery_courses", JSON.stringify(courses));
-        renderCourses();
-        renderDropdownCourses();
+        renderCoursesPage();
       }
     }
 
-    const dropdownBtn = document.getElementById("coursesDropdownBtn");
-    const dropdownMenu = document.getElementById("coursesDropdownMenu");
-    const chevron = document.getElementById("coursesChevron");
-    
-    if (dropdownBtn && dropdownMenu) {
-      dropdownBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        if (!dropdownMenu.classList.contains("hidden")) {
-          closeDropdown();
-        } else {
-          dropdownMenu.classList.remove("hidden");
-          if (chevron) chevron.style.transform = "rotate(180deg)";
-        }
-      });
-      document.addEventListener("click", (e) => {
-        if (!dropdownMenu.contains(e.target) && !dropdownBtn.contains(e.target)) {
-          closeDropdown();
-        }
-      });
-    }
-
-    function closeDropdown() {
-      if (dropdownMenu) dropdownMenu.classList.add("hidden");
-      if (chevron) chevron.style.transform = "rotate(0deg)";
-    }
-
-    const mobileMenuBtn = document.getElementById("mobileMenuBtn");
-    const mobileMenu = document.getElementById("mobileMenu");
-    if (mobileMenuBtn && mobileMenu) {
-      mobileMenuBtn.addEventListener("click", () => {
-        mobileMenu.classList.toggle("hidden");
-      });
-    }
-
     function toggleMobileMenu() {
-      if (mobileMenu) mobileMenu.classList.toggle("hidden");
-    }
-
-    function refreshStats() {
-      const activeSessions = document.getElementById("metricActiveSessions");
-      if (activeSessions) activeSessions.textContent = Math.floor(180 + 30 * Math.random());
+      const menu = document.getElementById("mobileMenu");
+      if (menu) menu.classList.toggle("hidden");
     }
 
     window.addEventListener("DOMContentLoaded", () => {
