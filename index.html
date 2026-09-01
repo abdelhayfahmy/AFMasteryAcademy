@@ -43,7 +43,6 @@
     .chat-scroll::-webkit-scrollbar { width: 5px; }
     .chat-scroll::-webkit-scrollbar-thumb { background: rgba(229,192,123,0.3); border-radius: 10px; }
     
-    /* AI Typing Animation */
     .typing-dot { animation: typing 1.4s infinite ease-in-out both; }
     .typing-dot:nth-child(1) { animation-delay: -0.32s; }
     .typing-dot:nth-child(2) { animation-delay: -0.16s; }
@@ -121,7 +120,8 @@
             <div class="relative group">
               <div class="absolute -inset-1.5 bg-gradient-to-r from-gold-500/40 via-amber-200/20 to-gold-600/40 rounded-2xl blur-sm opacity-70 group-hover:opacity-100 transition duration-500"></div>
               <div class="relative w-[300px] sm:w-[350px] md:w-[380px] aspect-[4/5] rounded-xl overflow-hidden bg-[#101218] border border-gold-400/30 shadow-2xl">
-                <img src="image_84ed9b.png" alt="Abdelhay Fahmy" onerror="this.src='https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80'" class="w-full h-full object-cover object-center filter contrast-[1.05] brightness-95 transition-transform duration-700 group-hover:scale-105" />
+                <!-- تم إصلاح الصورة لمنع ظهور صورة بديلة عشوائية -->
+                <img src="image_84ed9b.png" alt="Abdelhay Fahmy" class="w-full h-full object-cover object-center filter contrast-[1.05] brightness-95 transition-transform duration-700 group-hover:scale-105 bg-slate-900" />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/20 pointer-events-none"></div>
                 <div class="absolute bottom-4 left-4 right-4 p-3 bg-black/60 backdrop-blur-md rounded-lg border border-gold-500/20 text-center">
                   <p class="font-cinzel text-sm font-bold text-gold-200 tracking-wider">Abdelhay Fahmy</p>
@@ -154,10 +154,7 @@
           </div>
         </div>
         
-        <!-- Course View Stats Container -->
-        <div id="courseStatsContainer" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
-          <!-- Populated dynamically -->
-        </div>
+        <div id="courseStatsContainer" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8"></div>
 
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
           <div class="bg-[#11131a] p-5 rounded-xl border border-gold-500/20 relative overflow-hidden">
@@ -179,7 +176,7 @@
       </div>
     </section>
 
-    <!-- REGISTRATION (Hides when logged in) -->
+    <!-- REGISTRATION -->
     <section id="register-section" class="py-12 bg-[#08090c]">
       <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="border border-gold-500/25 rounded-md p-8 md:p-10 bg-[#0e1017] text-center shadow-xl">
@@ -212,6 +209,14 @@
             <div class="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mb-4 text-emerald-400 text-xl group-hover:bg-emerald-500 group-hover:text-black transition"><i class="fa-brands fa-whatsapp"></i></div>
             <div><h4 class="text-sm font-cinzel font-bold text-white uppercase tracking-wider">WhatsApp</h4><p class="text-xs text-emerald-400 font-medium mt-2">+20 127 233 1066</p></div>
           </a>
+          <a href="tel:+201272331066" class="luxury-card p-6 rounded-lg text-center flex flex-col items-center justify-between group">
+            <div class="w-12 h-12 rounded-full bg-sky-500/10 border border-sky-500/30 flex items-center justify-center mb-4 text-sky-400 text-xl group-hover:bg-sky-500 group-hover:text-black transition"><i class="fa-solid fa-phone"></i></div>
+            <div><h4 class="text-sm font-cinzel font-bold text-white uppercase tracking-wider">Mobile Direct</h4><p class="text-xs text-sky-300 font-medium mt-2">+20 127 233 1066</p></div>
+          </a>
+          <a href="https://www.linkedin.com/in/abdelhayfahmy/" target="_blank" class="luxury-card p-6 rounded-lg text-center flex flex-col items-center justify-between group">
+            <div class="w-12 h-12 rounded-full bg-blue-600/10 border border-blue-600/30 flex items-center justify-center mb-4 text-blue-400 text-xl group-hover:bg-blue-600 group-hover:text-white transition"><i class="fa-brands fa-linkedin-in"></i></div>
+            <div><h4 class="text-sm font-cinzel font-bold text-white uppercase tracking-wider">LinkedIn</h4><p class="text-xs text-blue-300 font-medium mt-2">in/abdelhayfahmy</p></div>
+          </a>
         </div>
       </div>
     </section>
@@ -225,11 +230,7 @@
         <p class="text-slate-400 text-sm md:text-base mt-3">Select a category and open the course in fullscreen mode.</p>
         <span id="registrationRequiredMsgCourses" class="inline-block mt-3 bg-red-900/30 border border-red-800 text-red-300 text-xs px-4 py-2 rounded"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Registration required to access content</span>
       </div>
-      
-      <!-- Container for Categories and Courses -->
-      <div id="coursesCategorizedContainer" class="space-y-16">
-        <!-- Generated via JS -->
-      </div>
+      <div id="coursesCategorizedContainer" class="space-y-16"></div>
     </div>
   </div>
 
@@ -242,12 +243,11 @@
 
   <!-- ==================== MODALS & WIDGETS ==================== -->
 
-  <!-- AI ASSISTANT FLOATING WIDGET -->
+  <!-- AI ASSISTANT WIDGET -->
   <button onclick="toggleAIAssistant()" class="fixed bottom-6 right-6 z-50 w-14 h-14 bg-gradient-to-tr from-gold-600 to-amber-300 rounded-full shadow-[0_0_20px_rgba(212,163,55,0.4)] flex items-center justify-center text-black hover:scale-110 transition-transform duration-300 group">
     <i class="fa-solid fa-sparkles text-xl group-hover:rotate-12 transition-transform"></i>
   </button>
 
-  <!-- AI ASSISTANT PANEL -->
   <div id="aiAssistantPanel" class="fixed bottom-24 right-6 z-50 w-[90vw] max-w-[360px] bg-[#10121a] border border-gold-500/30 rounded-2xl shadow-2xl hidden flex-col overflow-hidden transition-all duration-300">
     <div class="bg-gradient-to-r from-[#0a0b0f] to-[#151821] p-4 border-b border-slate-800 flex justify-between items-center">
       <div class="flex items-center gap-3">
@@ -261,21 +261,20 @@
     </div>
     
     <div id="aiChatBox" class="p-4 h-80 overflow-y-auto chat-scroll flex flex-col gap-3 bg-[#0c0d12]">
-      <!-- AI Default Greeting -->
       <div class="flex flex-col gap-1 items-start">
         <div class="bg-[#151821] border border-slate-800 p-3 rounded-2xl rounded-tl-sm text-xs text-slate-200 max-w-[85%] leading-relaxed">
-          مرحباً! أنا المساعد الذكي لأكاديمية AF Mastery. يمكنني مساعدتك في استكشاف الكورسات، فهم كيفية التسجيل، أو الوصول لحسابك. كيف يمكنني مساعدتك اليوم؟
+          Hello! I am the AF Mastery AI Assistant. I can help you explore courses or report issues. How can I help? <br/><br/> مرحباً! أنا المساعد الذكي، يمكنني مساعدتك في استكشاف الكورسات أو الإبلاغ عن مشكلة. كيف أساعدك؟
         </div>
       </div>
     </div>
     
     <form onsubmit="handleAIQuery(event)" class="p-3 bg-[#0a0b0f] border-t border-slate-800 flex gap-2">
-      <input type="text" id="aiInput" placeholder="Ask something..." class="flex-1 bg-[#151821] border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:border-gold-400 outline-none transition" autocomplete="off" />
+      <input type="text" id="aiInput" placeholder="Ask something / اسألني..." class="flex-1 bg-[#151821] border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:border-gold-400 outline-none transition" autocomplete="off" />
       <button type="submit" class="luxury-btn w-9 h-9 rounded-lg flex items-center justify-center"><i class="fa-solid fa-paper-plane text-xs"></i></button>
     </form>
   </div>
 
-  <!-- CHAT COMMUNITY MODAL -->
+  <!-- COMMUNITY CHAT MODAL -->
   <div id="chatModal" class="fixed inset-0 z-[60] hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4">
     <div class="bg-[#10121a] border border-gold-500/30 rounded-xl w-full max-w-2xl h-[85vh] flex flex-col shadow-2xl relative">
       <div class="p-4 border-b border-slate-800 flex justify-between items-center bg-[#0a0b0f] rounded-t-xl">
@@ -288,11 +287,7 @@
         </div>
         <button onclick="closeChatModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
       </div>
-      
-      <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-4 chat-scroll bg-[#0c0d12]">
-        <!-- Messages rendered here -->
-      </div>
-      
+      <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-4 chat-scroll bg-[#0c0d12]"></div>
       <div class="p-4 border-t border-slate-800 bg-[#0a0b0f] rounded-b-xl">
         <form onsubmit="handleSendChat(event)" class="flex gap-2 relative">
           <input type="text" id="chatInput" placeholder="Type a message... (Login required)" class="flex-1 bg-[#151821] border border-slate-700 rounded-lg px-4 py-3 text-sm text-white focus:border-gold-400 outline-none transition" disabled />
@@ -302,24 +297,8 @@
     </div>
   </div>
 
-  <!-- FULLSCREEN COURSE -->
-  <div id="fullscreenPlayerModal" class="fixed inset-0 z-[70] hidden bg-black flex flex-col">
-    <div class="h-14 bg-[#0d0f15] border-b border-gold-500/30 px-4 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-8 h-8 rounded bg-gold-400/20 text-gold-300 flex items-center justify-center font-bold text-xs font-cinzel">AF</div>
-        <h4 id="fsCourseTitle" class="text-sm font-cinzel font-bold text-white tracking-wide">Course Player</h4>
-      </div>
-      <button onclick="closeFullscreenCourse()" class="luxury-btn px-3.5 py-1.5 rounded text-xs flex items-center gap-1.5">
-        <i class="fa-solid fa-xmark text-sm"></i><span>Exit Fullscreen</span>
-      </button>
-    </div>
-    <div class="flex-1 w-full h-full relative bg-black">
-      <iframe id="fullscreenIframe" class="w-full h-full border-0" allow="fullscreen; autoplay; clipboard-write; encrypted-media"></iframe>
-    </div>
-  </div>
-
   <!-- INSTRUCTOR MODAL -->
-  <div id="instructorModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+  <div id="instructorModal" class="fixed inset-0 z-[80] hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
     <div class="bg-[#10121a] border border-gold-500/30 rounded-xl max-w-lg w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto chat-scroll">
       <button onclick="closeInstructorModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
       
@@ -339,20 +318,30 @@
       <div id="instructorAddCourseView" class="hidden">
         <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-800">
           <h3 class="font-cinzel text-lg font-bold text-gold-300" id="authorFormTitle">Add New Masterclass</h3>
-          <button onclick="logoutInstructor()" class="text-xs text-red-400 hover:underline">Logout</button>
+          <div class="flex items-center gap-3">
+            <button onclick="openIssuesModal()" class="text-xs text-sky-400 hover:underline"><i class="fa-solid fa-bug mr-1"></i>Issues Log</button>
+            <button onclick="logoutInstructor()" class="text-xs text-red-400 hover:underline">Logout</button>
+          </div>
         </div>
         <form onsubmit="handleSaveCourse(event)" class="space-y-3 text-xs">
           <input type="hidden" id="editCourseId" value="" />
           <input type="text" id="newCourseTitle" placeholder="Course Title" required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none focus:border-gold-400" />
-          <input type="text" id="newCourseTag" placeholder="Category Tag (e.g. SALES, MANAGEMENT)" required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none focus:border-gold-400" />
+          <input type="text" id="newCourseTag" placeholder="Category Tag (e.g. SALES)" required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none focus:border-gold-400" />
           <textarea id="newCourseDesc" rows="2" placeholder="Description..." required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none focus:border-gold-400"></textarea>
-          <input type="url" id="newCourseImage" placeholder="Cover Image URL (e.g. https://...)" required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none focus:border-gold-400" />
+          
+          <div class="flex flex-col gap-1 p-2 border border-slate-800 rounded bg-[#0a0b0f]">
+            <label class="text-slate-400 text-[10px] font-bold uppercase tracking-wider">Course Thumbnail</label>
+            <input type="file" id="newCourseImageFile" accept="image/*" class="w-full bg-[#151821] border border-slate-700 rounded p-1.5 text-white outline-none" />
+            <div class="text-center text-[10px] text-slate-500">- OR -</div>
+            <input type="url" id="newCourseImage" placeholder="Paste Image URL here..." class="w-full bg-[#151821] border border-slate-700 rounded p-2 text-white outline-none focus:border-gold-400" />
+          </div>
+
           <input type="text" id="newCourseModules" placeholder="Modules Count (e.g. 10 Modules)" required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none focus:border-gold-400" />
           <input type="text" id="newCourseFormat" placeholder="Format (e.g. Self-paced)" required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none focus:border-gold-400" />
           <input type="url" id="newCourseUrl" placeholder="Live iframe URL" required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none focus:border-gold-400" />
           
           <div class="flex gap-2 pt-2">
-            <button type="submit" class="flex-1 luxury-btn py-2.5 rounded font-semibold text-xs" id="authorSubmitBtn">Publish Course</button>
+            <button type="submit" class="flex-1 luxury-btn py-2.5 rounded font-semibold text-xs" id="authorSubmitBtn">Save Course (Private by Default)</button>
             <button type="button" onclick="resetAuthorForm()" class="px-4 bg-slate-800 text-white rounded text-xs hidden" id="authorCancelBtn">Cancel</button>
           </div>
         </form>
@@ -360,8 +349,34 @@
     </div>
   </div>
 
+  <!-- ISSUES LOG MODAL (Author Only) -->
+  <div id="issuesModal" class="fixed inset-0 z-[90] hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[#10121a] border border-gold-500/30 rounded-xl w-full max-w-lg h-[70vh] flex flex-col shadow-2xl relative">
+      <div class="p-4 border-b border-slate-800 flex justify-between items-center bg-[#0a0b0f] rounded-t-xl">
+        <h3 class="font-cinzel font-bold text-white tracking-wide"><i class="fa-solid fa-bug text-red-400 mr-2"></i>Reported Issues Log</h3>
+        <button onclick="closeIssuesModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+      </div>
+      <div id="issuesContainer" class="flex-1 overflow-y-auto p-4 space-y-3 chat-scroll bg-[#0c0d12]"></div>
+      <div class="p-3 border-t border-slate-800 bg-[#0a0b0f] rounded-b-xl text-center">
+        <button onclick="clearIssues()" class="text-xs text-red-400 hover:text-red-300 underline">Clear All Issues</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FULLSCREEN COURSE -->
+  <div id="fullscreenPlayerModal" class="fixed inset-0 z-[70] hidden bg-black flex flex-col">
+    <div class="h-14 bg-[#0d0f15] border-b border-gold-500/30 px-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded bg-gold-400/20 text-gold-300 flex items-center justify-center font-bold text-xs font-cinzel">AF</div>
+        <h4 id="fsCourseTitle" class="text-sm font-cinzel font-bold text-white tracking-wide">Course Player</h4>
+      </div>
+      <button onclick="closeFullscreenCourse()" class="luxury-btn px-3.5 py-1.5 rounded text-xs flex items-center gap-1.5"><i class="fa-solid fa-xmark text-sm"></i><span>Exit Fullscreen</span></button>
+    </div>
+    <div class="flex-1 w-full h-full relative bg-black"><iframe id="fullscreenIframe" class="w-full h-full border-0" allow="fullscreen; autoplay; clipboard-write; encrypted-media"></iframe></div>
+  </div>
+
   <!-- STUDENT LOGIN MODAL -->
-  <div id="studentLoginModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+  <div id="studentLoginModal" class="fixed inset-0 z-[80] hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
     <div class="bg-[#10121a] border border-gold-500/30 rounded-xl max-w-sm w-full p-6 shadow-2xl relative text-center">
       <button onclick="closeStudentLoginModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
       <div class="w-12 h-12 rounded-full bg-gold-400/10 border border-gold-400/30 text-gold-400 flex items-center justify-center mx-auto mb-3"><i class="fa-solid fa-user-graduate text-xl"></i></div>
@@ -377,21 +392,20 @@
   </div>
 
   <script>
-    // --- Initial Data & Default Courses ---
+    // --- Initial Data ---
     let courses = [
-      { id: "sales-mastery", tag: "SALES", title: "CLOSE SALES MASTERY", description: "Learn proven techniques to close high-ticket deals, negotiate confidently, and build lasting client relationships.", meta: "12 Modules • Self-paced • Certificate included 🎓", url: "https://abdelhayfahmy.github.io/CLOSE-SalesMastery/", displayUrl: "abdelhayfahmy.github.io/CLOSE-SalesMastery", image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=600&q=80" },
-      { id: "problem-solving", tag: "PROBLEM SOLVING", title: "PROBLEM SOLVING MASTERY", description: "Develop structured problem-solving frameworks, analytical thinking, and decision-making skills for business challenges.", meta: "10 Modules • Case Studies • Certificate included 🎓", url: "https://abdelhayfahmy.github.io/problem-solving-module/", displayUrl: "abdelhayfahmy.github.io/problem-solving-module", image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" }
+      { id: "sales-mastery", status: "public", tag: "SALES", title: "CLOSE SALES MASTERY", description: "Learn proven techniques to close high-ticket deals, negotiate confidently, and build lasting client relationships.", meta: "12 Modules • Self-paced • Certificate included 🎓", url: "https://abdelhayfahmy.github.io/CLOSE-SalesMastery/", displayUrl: "abdelhayfahmy.github.io/CLOSE-SalesMastery", image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=600&q=80" },
+      { id: "problem-solving", status: "public", tag: "PROBLEM SOLVING", title: "PROBLEM SOLVING MASTERY", description: "Develop structured problem-solving frameworks, analytical thinking, and decision-making skills for business challenges.", meta: "10 Modules • Case Studies • Certificate included 🎓", url: "https://abdelhayfahmy.github.io/problem-solving-module/", displayUrl: "abdelhayfahmy.github.io/problem-solving-module", image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" }
     ];
     let isInstructorLoggedIn = false;
     let isStudentLoggedIn = false;
     let currentStudentData = null;
     
-    // Default system stats
     let baseRegisteredCount = 3842;
     let courseVisits = {}; 
     let chatMessages = [];
+    let reportedIssues = [];
 
-    // --- Initialization ---
     function initData() {
       const savedCourses = localStorage.getItem("af_mastery_courses");
       if (savedCourses) { try { courses = JSON.parse(savedCourses); } catch (e) {} }
@@ -402,6 +416,9 @@
       const savedChat = localStorage.getItem("af_community_chat");
       if (savedChat) { try { chatMessages = JSON.parse(savedChat); } catch(e){} }
 
+      const savedIssues = localStorage.getItem("af_reported_issues");
+      if (savedIssues) { try { reportedIssues = JSON.parse(savedIssues); } catch(e){} }
+
       if (localStorage.getItem("af_student_logged_in") === "true") {
         isStudentLoggedIn = true;
         currentStudentData = JSON.parse(localStorage.getItem("af_student_data"));
@@ -410,32 +427,29 @@
       updateNavbarForStudent();
       renderCoursesPage();
       refreshDashboard();
-      
       setInterval(updateLiveSimulation, 5000);
     }
 
-    // --- Views System (SPA Routing) ---
     function switchView(view) {
       document.getElementById('homeView').classList.add('hidden');
       document.getElementById('coursesView').classList.add('hidden');
-      
       if(view === 'home') document.getElementById('homeView').classList.remove('hidden');
-      if(view === 'courses') {
-        document.getElementById('coursesView').classList.remove('hidden');
-        renderCoursesPage();
-      }
+      if(view === 'courses') { document.getElementById('coursesView').classList.remove('hidden'); renderCoursesPage(); }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // --- Dynamic Courses Rendering ---
+    // --- Dynamic Courses & Privacy System ---
     function renderCoursesPage() {
       const container = document.getElementById("coursesCategorizedContainer");
       if (!container) return;
       
-      document.getElementById("navCoursesCountBadge").textContent = courses.length;
-      if (document.getElementById("mobileCount")) document.getElementById("mobileCount").textContent = courses.length;
+      // Filter out private courses for students/guests
+      const visibleCourses = courses.filter(c => isInstructorLoggedIn || c.status !== 'private');
+      
+      document.getElementById("navCoursesCountBadge").textContent = visibleCourses.length;
+      if (document.getElementById("mobileCount")) document.getElementById("mobileCount").textContent = visibleCourses.length;
 
-      const categorized = courses.reduce((acc, course) => {
+      const categorized = visibleCourses.reduce((acc, course) => {
         const tag = course.tag || "UNCATEGORIZED";
         if(!acc[tag]) acc[tag] = [];
         acc[tag].push(course);
@@ -443,18 +457,14 @@
       }, {});
 
       container.innerHTML = "";
-      
       Object.keys(categorized).forEach(category => {
         const catCourses = categorized[category];
         const sectionHTML = `
           <div>
-            <div class="flex items-center gap-4 mb-6">
-              <h3 class="text-xl md:text-2xl font-cinzel font-bold text-gold-300 uppercase tracking-widest">${category}</h3>
-              <div class="h-px bg-slate-800 flex-1"></div>
-            </div>
+            <div class="flex items-center gap-4 mb-6"><h3 class="text-xl md:text-2xl font-cinzel font-bold text-gold-300 uppercase tracking-widest">${category}</h3><div class="h-px bg-slate-800 flex-1"></div></div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               ${catCourses.map(c => `
-                <div class="luxury-card rounded-md overflow-hidden flex flex-col relative group h-full">
+                <div class="luxury-card rounded-md overflow-hidden flex flex-col relative group h-full ${c.status === 'private' ? 'opacity-75 border-slate-700' : ''}">
                   <div class="h-40 w-full bg-[#0a0b0f] relative overflow-hidden border-b border-gold-500/20">
                     <img src="${c.image || 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80'}" alt="${c.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" onerror="this.src='https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80'"/>
                     <div class="absolute inset-0 bg-gradient-to-t from-[#0f1015] via-transparent to-transparent"></div>
@@ -469,9 +479,13 @@
                   </div>
                   ${isInstructorLoggedIn ? `
                     <div class="absolute top-2 right-2 flex gap-1 z-10">
+                      <button onclick="toggleCourseStatus('${c.id}')" class="${c.status === 'private' ? 'bg-slate-700 hover:bg-slate-600' : 'bg-emerald-600 hover:bg-emerald-500'} text-white w-7 h-7 rounded flex items-center justify-center text-[10px] shadow-lg border border-white/20" title="${c.status === 'private' ? 'Make Public' : 'Make Private'}">
+                        <i class="fa-solid ${c.status === 'private' ? 'fa-eye-slash' : 'fa-eye'}"></i>
+                      </button>
                       <button onclick="editCoursePrompt('${c.id}')" class="bg-blue-900/80 hover:bg-blue-800 text-white w-7 h-7 rounded flex items-center justify-center text-[10px] shadow-lg border border-blue-500/50" title="Edit Course"><i class="fa-solid fa-pen"></i></button>
                       <button onclick="deleteCourse('${c.id}')" class="bg-red-900/80 hover:bg-red-800 text-white w-7 h-7 rounded flex items-center justify-center text-[10px] shadow-lg border border-red-500/50" title="Delete Course"><i class="fa-solid fa-trash"></i></button>
                     </div>
+                    ${c.status === 'private' ? `<div class="absolute top-2 left-2 bg-slate-900/90 border border-slate-600 text-slate-300 text-[9px] px-2 py-1 rounded font-bold tracking-wider z-10 uppercase shadow-lg"><i class="fa-solid fa-lock mr-1 text-slate-400"></i> Private</div>` : ''}
                   ` : ""}
                 </div>
               `).join("")}
@@ -482,242 +496,151 @@
       });
     }
 
-    // --- Dashboard & Analytics ---
+    function toggleCourseStatus(id) {
+      const course = courses.find(c => c.id === id);
+      if(course) {
+        course.status = course.status === 'private' ? 'public' : 'private';
+        localStorage.setItem("af_mastery_courses", JSON.stringify(courses));
+        renderCoursesPage();
+      }
+    }
+
     function refreshDashboard() {
       const storedUsers = JSON.parse(localStorage.getItem("af_all_students") || "[]");
-      const totalRegistered = baseRegisteredCount + storedUsers.length;
-      document.getElementById("metricUserCount").textContent = totalRegistered.toLocaleString();
-      
-      let totalCourseViews = Object.values(courseVisits).reduce((a, b) => a + b, 0) + 12540; 
-      document.getElementById("metricTotalViews").textContent = totalCourseViews.toLocaleString();
-
+      document.getElementById("metricUserCount").textContent = (baseRegisteredCount + storedUsers.length).toLocaleString();
+      document.getElementById("metricTotalViews").textContent = (Object.values(courseVisits).reduce((a, b) => a + b, 0) + 12540).toLocaleString();
       const statsContainer = document.getElementById("courseStatsContainer");
       if(statsContainer) {
-        statsContainer.innerHTML = courses.slice(0,4).map(c => {
+        statsContainer.innerHTML = courses.filter(c => c.status !== 'private').slice(0,4).map(c => {
           let visits = (courseVisits[c.id] || 0) + Math.floor(Math.random() * 500 + 100); 
-          return `
-          <div class="bg-[#0f1118] p-4 rounded-lg border border-slate-800 flex items-center justify-between group hover:border-gold-500/30 transition">
-            <div class="overflow-hidden pr-2"><div class="text-[10px] text-gold-400 uppercase font-bold truncate">${c.tag}</div><div class="text-xs text-white font-semibold truncate">${c.title}</div></div>
-            <div class="text-right"><div class="text-lg font-bold font-sans text-emerald-400">${visits}</div><div class="text-[9px] text-slate-500 uppercase tracking-widest">Entries</div></div>
-          </div>
-          `;
+          return `<div class="bg-[#0f1118] p-4 rounded-lg border border-slate-800 flex items-center justify-between group hover:border-gold-500/30 transition"><div class="overflow-hidden pr-2"><div class="text-[10px] text-gold-400 uppercase font-bold truncate">${c.tag}</div><div class="text-xs text-white font-semibold truncate">${c.title}</div></div><div class="text-right"><div class="text-lg font-bold font-sans text-emerald-400">${visits}</div><div class="text-[9px] text-slate-500 uppercase tracking-widest">Entries</div></div></div>`;
         }).join('');
       }
       updateLiveSimulation();
     }
-
     function updateLiveSimulation() {
-      const baseOnline = 40 + (new Date().getSeconds() % 15); 
-      document.getElementById("onlineUsersCount").textContent = baseOnline;
+      document.getElementById("onlineUsersCount").textContent = 40 + (new Date().getSeconds() % 15);
       document.getElementById("offlineUsersCount").textContent = 145 + Math.floor(Math.random()*5);
     }
 
     function launchFullscreenCourse(e) {
-      if (!isStudentLoggedIn && !isInstructorLoggedIn) {
-        alert("🔒 Access Denied!\nYou must be logged in to view courses.");
-        openStudentLoginModal();
-        return;
-      }
+      if (!isStudentLoggedIn && !isInstructorLoggedIn) { alert("🔒 Access Denied!\nYou must be logged in to view courses."); openStudentLoginModal(); return; }
       const course = courses.find(t => t.id === e);
       if (!course) return;
-      
-      courseVisits[e] = (courseVisits[e] || 0) + 1;
-      localStorage.setItem("af_course_visits", JSON.stringify(courseVisits));
-      refreshDashboard();
-
+      courseVisits[e] = (courseVisits[e] || 0) + 1; localStorage.setItem("af_course_visits", JSON.stringify(courseVisits)); refreshDashboard();
       document.getElementById("fsCourseTitle").textContent = course.title;
       document.getElementById("fullscreenIframe").src = course.url;
       document.getElementById("fullscreenPlayerModal").classList.remove("hidden");
       document.body.style.overflow = "hidden";
     }
+    function closeFullscreenCourse() { document.getElementById("fullscreenIframe").src = "about:blank"; document.getElementById("fullscreenPlayerModal").classList.add("hidden"); document.body.style.overflow = "auto"; }
 
-    function closeFullscreenCourse() {
-      document.getElementById("fullscreenIframe").src = "about:blank";
-      document.getElementById("fullscreenPlayerModal").classList.add("hidden");
-      document.body.style.overflow = "auto";
-    }
-
-    // --- AI Assistant Logic ---
-    function toggleAIAssistant() {
-      const panel = document.getElementById('aiAssistantPanel');
-      panel.classList.toggle('hidden');
-      panel.classList.toggle('flex');
-    }
-
+    // --- AI Assistant Logic (Bilingual & Dynamic) ---
+    function toggleAIAssistant() { const p = document.getElementById('aiAssistantPanel'); p.classList.toggle('hidden'); p.classList.toggle('flex'); }
+    
     function handleAIQuery(e) {
       e.preventDefault();
       const input = document.getElementById('aiInput');
       const text = input.value.trim();
       if (!text) return;
-      
-      appendAIMessage('user', text);
-      input.value = '';
-      showAITyping();
-      
-      setTimeout(() => {
-        removeAITyping();
-        const response = generateAIResponse(text);
-        appendAIMessage('ai', response);
-      }, 1500);
+      appendAIMessage('user', text); input.value = ''; showAITyping();
+      setTimeout(() => { removeAITyping(); const response = generateAIResponse(text); appendAIMessage('ai', response); }, 1200);
     }
 
     function appendAIMessage(sender, text) {
       const box = document.getElementById('aiChatBox');
       const isAI = sender === 'ai';
-      
-      const msgHTML = `
-        <div class="flex flex-col gap-1 ${isAI ? 'items-start' : 'items-end'} animate-fade-in-up">
-          <div class="${isAI ? 'bg-[#151821] border border-slate-800 text-slate-200 rounded-tl-sm' : 'bg-gold-500/20 border border-gold-500/30 text-gold-100 rounded-tr-sm'} p-3 rounded-2xl text-xs max-w-[85%] leading-relaxed">
-            ${text}
-          </div>
-        </div>
-      `;
-      box.insertAdjacentHTML('beforeend', msgHTML);
-      box.scrollTop = box.scrollHeight;
+      const msgHTML = `<div class="flex flex-col gap-1 ${isAI ? 'items-start' : 'items-end'} animate-fade-in-up"><div class="${isAI ? 'bg-[#151821] border border-slate-800 text-slate-200 rounded-tl-sm' : 'bg-gold-500/20 border border-gold-500/30 text-gold-100 rounded-tr-sm'} p-3 rounded-2xl text-xs max-w-[85%] leading-relaxed" style="white-space: pre-wrap;">${text}</div></div>`;
+      box.insertAdjacentHTML('beforeend', msgHTML); box.scrollTop = box.scrollHeight;
     }
 
     function showAITyping() {
       const box = document.getElementById('aiChatBox');
-      const typingHTML = `
-        <div id="aiTypingIndicator" class="flex flex-col gap-1 items-start">
-          <div class="bg-[#151821] border border-slate-800 p-3 rounded-2xl rounded-tl-sm flex gap-1">
-            <span class="w-1.5 h-1.5 bg-slate-400 rounded-full typing-dot"></span>
-            <span class="w-1.5 h-1.5 bg-slate-400 rounded-full typing-dot"></span>
-            <span class="w-1.5 h-1.5 bg-slate-400 rounded-full typing-dot"></span>
-          </div>
-        </div>
-      `;
-      box.insertAdjacentHTML('beforeend', typingHTML);
-      box.scrollTop = box.scrollHeight;
+      const typingHTML = `<div id="aiTypingIndicator" class="flex flex-col gap-1 items-start"><div class="bg-[#151821] border border-slate-800 p-3 rounded-2xl rounded-tl-sm flex gap-1"><span class="w-1.5 h-1.5 bg-slate-400 rounded-full typing-dot"></span><span class="w-1.5 h-1.5 bg-slate-400 rounded-full typing-dot"></span><span class="w-1.5 h-1.5 bg-slate-400 rounded-full typing-dot"></span></div></div>`;
+      box.insertAdjacentHTML('beforeend', typingHTML); box.scrollTop = box.scrollHeight;
     }
+    function removeAITyping() { const i = document.getElementById('aiTypingIndicator'); if(i) i.remove(); }
 
-    function removeAITyping() {
-      const indicator = document.getElementById('aiTypingIndicator');
-      if(indicator) indicator.remove();
+    function logIssue(text) {
+      const issue = { id: Date.now(), user: currentStudentData ? currentStudentData.email : 'Guest', text: text, date: new Date().toLocaleString() };
+      reportedIssues.unshift(issue);
+      localStorage.setItem("af_reported_issues", JSON.stringify(reportedIssues));
     }
 
     function generateAIResponse(query) {
       const lowerQ = query.toLowerCase();
-      if (lowerQ.includes('مبيعات') || lowerQ.includes('sales')) {
-        return "كورس المبيعات (CLOSE Sales Mastery) يركز على إغلاق الصفقات بأساليب احترافية متقدمة ويحتوي على 12 وحدة. يمكنك تصفحه من قسم الكورسات.";
-      } else if (lowerQ.includes('مشكلة') || lowerQ.includes('problem')) {
-        return "كورس حل المشكلات يوفر أطراً تحليلية قوية لصناع القرار والمديرين. أنصحك ببدء دراسته فوراً.";
-      } else if (lowerQ.includes('دخول') || lowerQ.includes('login') || lowerQ.includes('تسجيل') || lowerQ.includes('register')) {
-        return "للوصول للكورسات يجب التسجيل أولاً باستخدام إيميلك ورقم هاتفك، وسيتم منحك Credential ID لتسجيل الدخول.";
-      } else if (lowerQ.includes('كورس') || lowerQ.includes('دورات') || lowerQ.includes('course')) {
-        return "الأكاديمية توفر كورسات متخصصة في المبيعات، الإدارة، وحل المشكلات. اضغط على زر 'Courses Categories' في القائمة لرؤية كافة التفاصيل.";
-      } else {
-        return "عذراً، أنا مساعد ذكي مصمم خصيصاً لتوجيهك داخل أكاديمية AF Mastery. هل تريدني أن أرشدك لقسم الكورسات أو طريقة التسجيل؟";
+      const isArabic = /[\u0600-\u06FF]/.test(query); // Detect Language
+      
+      // Check for issues
+      const issueKws = ['مشكلة', 'عطل', 'لا يعمل', 'مساعدة', 'شغال', 'problem', 'issue', 'error', 'help', 'not working', 'bug'];
+      if (issueKws.some(kw => lowerQ.includes(kw))) {
+        logIssue(query);
+        return isArabic ? "لقد قمت بتسجيل المشكلة التي تواجهك وإرسال بياناتك للإدارة لحلها فوراً. هل هناك شيء آخر؟" : "I have logged your issue and notified the administration to resolve it quickly. Anything else I can assist with?";
       }
+
+      // Dynamic Courses Check
+      const courseKws = ['كورس', 'دورة', 'كورسات', 'دورات', 'تعلم', 'course', 'courses', 'learn', 'study', 'skills'];
+      if (courseKws.some(kw => lowerQ.includes(kw))) {
+        const publicCourses = courses.filter(c => c.status !== 'private');
+        if (publicCourses.length === 0) return isArabic ? "لا توجد كورسات متاحة حالياً." : "There are no public courses available right now.";
+        
+        let response = isArabic ? "إليك الكورسات المتاحة حالياً:\n\n" : "Here are the currently available courses:\n\n";
+        publicCourses.forEach(c => { response += `• ${c.title}\n`; });
+        return response + (isArabic ? "\nيمكنك تصفح التفاصيل من قسم الكورسات." : "\nYou can explore details in the Courses section.");
+      }
+
+      // Check Login/Register
+      const loginKws = ['دخول', 'تسجيل', 'حساب', 'login', 'register', 'account', 'sign in'];
+      if (loginKws.some(kw => lowerQ.includes(kw))) {
+        return isArabic ? "للوصول للكورسات يجب التسجيل لإنشاء Credential ID. إذا كنت مسجلاً، اضغط Login أعلى الشاشة." : "To access courses, register to get a Credential ID. If registered, click Login at the top.";
+      }
+
+      return isArabic ? "أنا مساعدك الذكي داخل المنصة. اسألني عن الكورسات، التسجيل، أو أبلغ عن أي مشكلة تواجهك." : "I am your Smart Assistant. Ask me about available courses, registration, or report any issue you face.";
     }
 
     // --- Community Chat Logic ---
     function openChatModal() {
-      document.getElementById('chatModal').classList.remove('hidden');
-      document.body.style.overflow = 'hidden';
-      
-      const input = document.getElementById('chatInput');
-      const btn = document.getElementById('chatSendBtn');
+      document.getElementById('chatModal').classList.remove('hidden'); document.body.style.overflow = 'hidden';
+      const input = document.getElementById('chatInput'); const btn = document.getElementById('chatSendBtn');
       if (isStudentLoggedIn || isInstructorLoggedIn) {
-        input.disabled = false;
-        btn.disabled = false;
-        input.placeholder = "Type your message...";
-        btn.classList.remove('opacity-50', 'cursor-not-allowed');
+        input.disabled = false; btn.disabled = false; input.placeholder = "Type your message..."; btn.classList.remove('opacity-50', 'cursor-not-allowed');
       } else {
-        input.disabled = true;
-        btn.disabled = true;
-        input.placeholder = "Login to participate in the chat.";
-        btn.classList.add('opacity-50', 'cursor-not-allowed');
+        input.disabled = true; btn.disabled = true; input.placeholder = "Login to participate in the chat."; btn.classList.add('opacity-50', 'cursor-not-allowed');
       }
       renderChatMessages();
     }
-    
-    function closeChatModal() {
-      document.getElementById('chatModal').classList.add('hidden');
-      document.body.style.overflow = 'auto';
-    }
+    function closeChatModal() { document.getElementById('chatModal').classList.add('hidden'); document.body.style.overflow = 'auto'; }
 
     function renderChatMessages() {
       const container = document.getElementById('chatMessages');
-      if (chatMessages.length === 0) {
-        container.innerHTML = `<div class="text-center text-slate-500 text-xs mt-10">No messages yet. Be the first to start the discussion!</div>`;
-        return;
-      }
-      
+      if (chatMessages.length === 0) { container.innerHTML = `<div class="text-center text-slate-500 text-xs mt-10">No messages yet. Start the discussion!</div>`; return; }
       container.innerHTML = chatMessages.map(msg => {
         let name = msg.sender === 'Author' ? 'Admin / Author' : msg.sender.split('@')[0];
         let roleStyle = msg.sender === 'Author' ? 'text-gold-400 border border-gold-400/30 bg-gold-400/10 px-1.5 py-0.5 rounded text-[9px]' : 'text-emerald-400';
-        
-        return `
-        <div class="mb-3 relative group">
-          <div class="flex items-baseline justify-between mb-1">
-            <span class="text-xs font-bold ${roleStyle}">${name}</span>
-            <span class="text-[9px] text-slate-600">${new Date(msg.timestamp).toLocaleTimeString([],{hour:'2-digit', minute:'2-digit'})}</span>
-          </div>
-          <div class="bg-[#151821] border border-slate-800 p-3 rounded-lg text-sm text-slate-200 shadow-sm relative">
-            ${msg.text}
-            ${isInstructorLoggedIn ? `<button onclick="deleteChatMessage(${msg.id})" class="absolute -right-2 -top-2 bg-red-600 text-white w-5 h-5 rounded-full text-[9px] opacity-0 group-hover:opacity-100 transition shadow-lg flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>` : ''}
-          </div>
-        </div>
-        `;
+        return `<div class="mb-3 relative group"><div class="flex items-baseline justify-between mb-1"><span class="text-xs font-bold ${roleStyle}">${name}</span><span class="text-[9px] text-slate-600">${new Date(msg.timestamp).toLocaleTimeString([],{hour:'2-digit', minute:'2-digit'})}</span></div><div class="bg-[#151821] border border-slate-800 p-3 rounded-lg text-sm text-slate-200 shadow-sm relative">${msg.text}${isInstructorLoggedIn ? `<button onclick="deleteChatMessage(${msg.id})" class="absolute -right-2 -top-2 bg-red-600 text-white w-5 h-5 rounded-full text-[9px] opacity-0 group-hover:opacity-100 transition shadow-lg flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>` : ''}</div></div>`;
       }).join('');
       container.scrollTop = container.scrollHeight;
     }
-
     function handleSendChat(e) {
-      e.preventDefault();
-      const input = document.getElementById('chatInput');
-      const text = input.value.trim();
-      if (!text) return;
-
-      const sender = isInstructorLoggedIn ? 'Author' : currentStudentData.email;
-      const newMsg = { id: Date.now(), text: text, sender: sender, timestamp: new Date().getTime() };
-      
-      chatMessages.push(newMsg);
-      if(chatMessages.length > 50) chatMessages.shift();
-      
-      localStorage.setItem("af_community_chat", JSON.stringify(chatMessages));
-      input.value = '';
-      renderChatMessages();
+      e.preventDefault(); const input = document.getElementById('chatInput'); const text = input.value.trim(); if (!text) return;
+      chatMessages.push({ id: Date.now(), text: text, sender: isInstructorLoggedIn ? 'Author' : currentStudentData.email, timestamp: new Date().getTime() });
+      if(chatMessages.length > 50) chatMessages.shift(); localStorage.setItem("af_community_chat", JSON.stringify(chatMessages)); input.value = ''; renderChatMessages();
     }
+    function deleteChatMessage(id) { if(!isInstructorLoggedIn) return; chatMessages = chatMessages.filter(m => m.id !== id); localStorage.setItem("af_community_chat", JSON.stringify(chatMessages)); renderChatMessages(); }
 
-    function deleteChatMessage(id) {
-      if(!isInstructorLoggedIn) return;
-      chatMessages = chatMessages.filter(m => m.id !== id);
-      localStorage.setItem("af_community_chat", JSON.stringify(chatMessages));
-      renderChatMessages();
-    }
-
-    // --- Authentication & Users ---
+    // --- Authentication ---
     function handleRegistration(e) {
-      e.preventDefault();
-      const emailInput = document.getElementById("regEmailInput").value.trim().toLowerCase();
-      const mobileInput = document.getElementById("regMobileInput").value.trim();
-      if (!emailInput || !mobileInput) return;
-      
+      e.preventDefault(); const email = document.getElementById("regEmailInput").value.trim().toLowerCase(); const mobile = document.getElementById("regMobileInput").value.trim();
       let allStudents = JSON.parse(localStorage.getItem("af_all_students") || "[]");
-      if (allStudents.find(s => s.email === emailInput)) {
-        alert("This email is already registered! Please use the Login button.");
-        return;
-      }
+      if (allStudents.find(s => s.email === email)) { alert("Email already registered! Please Login."); return; }
       
       const credId = "AF-" + Math.floor(1e5 + 9e5 * Math.random());
-      const newStudent = { email: emailInput, mobile: mobileInput, credId: credId };
-      allStudents.push(newStudent);
-      localStorage.setItem("af_all_students", JSON.stringify(allStudents));
+      const newStudent = { email, mobile, credId };
+      allStudents.push(newStudent); localStorage.setItem("af_all_students", JSON.stringify(allStudents));
       
-      isStudentLoggedIn = true;
-      currentStudentData = newStudent;
-      localStorage.setItem("af_student_logged_in", "true");
-      localStorage.setItem("af_student_data", JSON.stringify(newStudent));
-      
-      updateNavbarForStudent();
-      refreshDashboard();
-      
+      isStudentLoggedIn = true; currentStudentData = newStudent; localStorage.setItem("af_student_logged_in", "true"); localStorage.setItem("af_student_data", JSON.stringify(newStudent));
+      updateNavbarForStudent(); refreshDashboard();
       alert("Registration Successful!\nYour Credential ID is: " + credId + "\n(You are now automatically logged in)");
-      document.getElementById("regEmailInput").value = "";
-      document.getElementById("regMobileInput").value = "";
-      
       switchView('courses');
     }
 
@@ -728,118 +651,91 @@
       e.preventDefault();
       const email = document.getElementById("studentLoginEmail").value.trim().toLowerCase();
       const credId = document.getElementById("studentLoginCred").value.toUpperCase().replace(/[^A-Z0-9-]/g, '');
-      
       let allStudents = JSON.parse(localStorage.getItem("af_all_students") || "[]");
       
       if (email.includes("@") && credId.startsWith("AF-")) {
         const studentSession = { email: email, mobile: "Verified By System", credId: credId };
-        isStudentLoggedIn = true;
-        currentStudentData = studentSession;
-        localStorage.setItem("af_student_logged_in", "true");
-        localStorage.setItem("af_student_data", JSON.stringify(studentSession));
-        
-        if (!allStudents.find(s => s.email === email)) {
-            allStudents.push(studentSession);
-            localStorage.setItem("af_all_students", JSON.stringify(allStudents));
-        }
-        updateNavbarForStudent();
-        closeStudentLoginModal();
-        renderCoursesPage(); 
-        refreshDashboard();
-        alert("Login Successful!");
-      } else {
-        document.getElementById("studentLoginError").classList.remove("hidden");
-      }
+        isStudentLoggedIn = true; currentStudentData = studentSession;
+        localStorage.setItem("af_student_logged_in", "true"); localStorage.setItem("af_student_data", JSON.stringify(studentSession));
+        if (!allStudents.find(s => s.email === email)) { allStudents.push(studentSession); localStorage.setItem("af_all_students", JSON.stringify(allStudents)); }
+        updateNavbarForStudent(); closeStudentLoginModal(); renderCoursesPage(); refreshDashboard(); alert("Login Successful!");
+      } else { document.getElementById("studentLoginError").classList.remove("hidden"); }
     }
 
     function logoutStudent() {
-      isStudentLoggedIn = false;
-      currentStudentData = null;
-      localStorage.removeItem("af_student_logged_in");
-      localStorage.removeItem("af_student_data");
-      updateNavbarForStudent();
-      renderCoursesPage();
-      switchView('home');
-      alert("Successfully logged out.");
+      isStudentLoggedIn = false; currentStudentData = null;
+      localStorage.removeItem("af_student_logged_in"); localStorage.removeItem("af_student_data");
+      updateNavbarForStudent(); renderCoursesPage(); switchView('home'); alert("Logged out.");
     }
 
     function updateNavbarForStudent() {
-      const loginBtn = document.getElementById("studentLoginNavBtn");
-      const profileArea = document.getElementById("studentProfileArea");
-      const welcomeText = document.getElementById("studentWelcomeText");
-      const mobileLoginBtn = document.getElementById("mobileStudentLoginBtn");
-      const mobileLogoutBtn = document.getElementById("mobileStudentLogoutBtn");
-      const regNavBtn = document.getElementById("registerNavBtn");
-      const regSection = document.getElementById("register-section");
-      const coursesRegMsg = document.getElementById("registrationRequiredMsgCourses");
+      const els = { lBtn: 'studentLoginNavBtn', pArea: 'studentProfileArea', wText: 'studentWelcomeText', mlBtn: 'mobileStudentLoginBtn', mlOut: 'mobileStudentLogoutBtn', rNav: 'registerNavBtn', rSec: 'register-section', cReg: 'registrationRequiredMsgCourses' };
+      const get = id => document.getElementById(id);
       
       if (isStudentLoggedIn && currentStudentData) {
-        if (loginBtn) loginBtn.style.display = "none";
-        if (profileArea) { profileArea.classList.remove("hidden"); profileArea.classList.add("flex"); }
-        if (welcomeText) welcomeText.textContent = "Hi, " + currentStudentData.email.split("@")[0];
-        if (mobileLoginBtn) mobileLoginBtn.style.display = "none";
-        if (mobileLogoutBtn) mobileLogoutBtn.classList.remove("hidden");
-        if (regNavBtn) regNavBtn.style.display = "none";
-        if (regSection) regSection.style.display = "none";
-        if (coursesRegMsg) coursesRegMsg.style.display = "none";
+        if(get(els.lBtn)) get(els.lBtn).style.display = "none";
+        if(get(els.pArea)) { get(els.pArea).classList.remove("hidden"); get(els.pArea).classList.add("flex"); }
+        if(get(els.wText)) get(els.wText).textContent = "Hi, " + currentStudentData.email.split("@")[0];
+        if(get(els.mlBtn)) get(els.mlBtn).style.display = "none";
+        if(get(els.mlOut)) get(els.mlOut).classList.remove("hidden");
+        if(get(els.rNav)) get(els.rNav).style.display = "none";
+        if(get(els.rSec)) get(els.rSec).style.display = "none";
+        if(get(els.cReg)) get(els.cReg).style.display = "none";
       } else {
-        if (loginBtn) loginBtn.style.display = "block";
-        if (profileArea) { profileArea.classList.add("hidden"); profileArea.classList.remove("flex"); }
-        if (mobileLoginBtn) mobileLoginBtn.style.display = "block";
-        if (mobileLogoutBtn) mobileLogoutBtn.classList.add("hidden");
-        if (regNavBtn) regNavBtn.style.display = "flex";
-        if (regSection) regSection.style.display = "block";
-        if (coursesRegMsg) coursesRegMsg.style.display = "inline-block";
+        if(get(els.lBtn)) get(els.lBtn).style.display = "block";
+        if(get(els.pArea)) { get(els.pArea).classList.add("hidden"); get(els.pArea).classList.remove("flex"); }
+        if(get(els.mlBtn)) get(els.mlBtn).style.display = "block";
+        if(get(els.mlOut)) get(els.mlOut).classList.add("hidden");
+        if(get(els.rNav)) get(els.rNav).style.display = "flex";
+        if(get(els.rSec)) get(els.rSec).style.display = "block";
+        if(get(els.cReg)) get(els.cReg).style.display = "inline-block";
       }
     }
 
+    // --- Author Panel ---
     function openInstructorModal() {
       document.getElementById("instructorModal").classList.remove("hidden");
       if (isInstructorLoggedIn) {
-        document.getElementById("instructorLoginView").classList.add("hidden");
-        document.getElementById("instructorAddCourseView").classList.remove("hidden");
-        resetAuthorForm();
+        document.getElementById("instructorLoginView").classList.add("hidden"); document.getElementById("instructorAddCourseView").classList.remove("hidden"); resetAuthorForm();
       } else {
-        document.getElementById("instructorLoginView").classList.remove("hidden");
-        document.getElementById("instructorAddCourseView").classList.add("hidden");
+        document.getElementById("instructorLoginView").classList.remove("hidden"); document.getElementById("instructorAddCourseView").classList.add("hidden");
       }
     }
-    
     function closeInstructorModal() { document.getElementById("instructorModal").classList.add("hidden"); }
 
     function handleInstructorAuth(e) {
       e.preventDefault();
-      const email = document.getElementById("authEmail").value.trim();
-      const password = document.getElementById("authPassword").value.trim();
-      if (email === "abdelhay.mamdouh@gmail.com" && password === "19871311112023") {
-        isInstructorLoggedIn = true;
-        document.getElementById("authError").classList.add("hidden");
-        openInstructorModal();
-        document.getElementById("authorLoginBtnText").textContent = "Author Dashboard";
-        renderCoursesPage();
+      if (document.getElementById("authEmail").value.trim() === "abdelhay.mamdouh@gmail.com" && document.getElementById("authPassword").value.trim() === "19871311112023") {
+        isInstructorLoggedIn = true; document.getElementById("authError").classList.add("hidden"); openInstructorModal(); document.getElementById("authorLoginBtnText").textContent = "Author Dashboard"; renderCoursesPage();
       } else {
-        document.getElementById("authError").textContent = "Invalid credentials.";
-        document.getElementById("authError").classList.remove("hidden");
+        document.getElementById("authError").textContent = "Invalid credentials."; document.getElementById("authError").classList.remove("hidden");
       }
     }
-
-    function logoutInstructor() {
-      isInstructorLoggedIn = false;
-      document.getElementById("authorLoginBtnText").textContent = "Author Login";
-      renderCoursesPage();
-      closeInstructorModal();
-    }
+    function logoutInstructor() { isInstructorLoggedIn = false; document.getElementById("authorLoginBtnText").textContent = "Author Login"; renderCoursesPage(); closeInstructorModal(); }
 
     function handleSaveCourse(e) {
       e.preventDefault();
+      const fileInput = document.getElementById("newCourseImageFile");
+      if (fileInput.files && fileInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(event) { finalizeSaveCourse(event.target.result); };
+        reader.readAsDataURL(fileInput.files[0]);
+      } else {
+        finalizeSaveCourse(document.getElementById("newCourseImage").value.trim());
+      }
+    }
+
+    function finalizeSaveCourse(imageData) {
       const editId = document.getElementById("editCourseId").value;
+      const existing = courses.find(c => c.id === editId);
       
       const courseData = {
         id: editId || "course-" + Date.now(),
+        status: existing ? existing.status : "private", // Default Private on Add
         tag: document.getElementById("newCourseTag").value.trim().toUpperCase(),
         title: document.getElementById("newCourseTitle").value.trim().toUpperCase(),
         description: document.getElementById("newCourseDesc").value.trim(),
-        image: document.getElementById("newCourseImage").value.trim(),
+        image: imageData || (existing ? existing.image : ''),
         meta: `${document.getElementById("newCourseModules").value.trim()} • ${document.getElementById("newCourseFormat").value.trim()} 🎓`,
         url: document.getElementById("newCourseUrl").value.trim(),
         displayUrl: document.getElementById("newCourseUrl").value.trim().replace(/^https?:\/\//, "")
@@ -848,28 +744,26 @@
       if (editId) {
         const index = courses.findIndex(c => c.id === editId);
         if(index > -1) courses[index] = courseData;
-        alert(`Course "${courseData.title}" updated successfully!`);
+        alert("Course updated successfully!");
       } else {
         courses.push(courseData);
-        alert(`New course "${courseData.title}" added successfully!`);
+        alert("New course added successfully as PRIVATE! Toggle the Eye icon to publish it.");
       }
       
       localStorage.setItem("af_mastery_courses", JSON.stringify(courses));
-      renderCoursesPage();
-      closeInstructorModal();
+      renderCoursesPage(); closeInstructorModal();
     }
 
     function editCoursePrompt(id) {
-      const course = courses.find(c => c.id === id);
-      if(!course) return;
-      
+      const course = courses.find(c => c.id === id); if(!course) return;
       openInstructorModal();
       document.getElementById('authorFormTitle').textContent = "Edit Masterclass";
       document.getElementById('editCourseId').value = course.id;
       document.getElementById('newCourseTitle').value = course.title;
       document.getElementById('newCourseTag').value = course.tag;
       document.getElementById('newCourseDesc').value = course.description;
-      document.getElementById('newCourseImage').value = course.image || '';
+      document.getElementById('newCourseImage').value = course.image && course.image.startsWith('http') ? course.image : '';
+      document.getElementById('newCourseImageFile').value = '';
       
       const metaParts = course.meta.split(' • ');
       document.getElementById('newCourseModules').value = metaParts[0] || '';
@@ -883,34 +777,30 @@
     function resetAuthorForm() {
       document.getElementById('authorFormTitle').textContent = "Add New Masterclass";
       document.getElementById('editCourseId').value = "";
-      document.getElementById('authorSubmitBtn').textContent = "Publish Course";
+      document.getElementById('authorSubmitBtn').textContent = "Save Course (Private by Default)";
       document.getElementById('authorCancelBtn').classList.add('hidden');
-      
-      document.getElementById('newCourseTitle').value = "";
-      document.getElementById('newCourseTag').value = "";
-      document.getElementById('newCourseDesc').value = "";
-      document.getElementById('newCourseImage').value = "";
-      document.getElementById('newCourseModules').value = "";
-      document.getElementById('newCourseFormat').value = "";
-      document.getElementById('newCourseUrl').value = "";
+      ['newCourseTitle','newCourseTag','newCourseDesc','newCourseImage','newCourseImageFile','newCourseModules','newCourseFormat','newCourseUrl'].forEach(id => document.getElementById(id).value = '');
     }
 
-    function deleteCourse(id) {
-      if (confirm("Are you sure you want to completely delete this course?")) {
-        courses = courses.filter(c => c.id !== id);
-        localStorage.setItem("af_mastery_courses", JSON.stringify(courses));
-        renderCoursesPage();
-      }
-    }
+    function deleteCourse(id) { if (confirm("Delete this course?")) { courses = courses.filter(c => c.id !== id); localStorage.setItem("af_mastery_courses", JSON.stringify(courses)); renderCoursesPage(); } }
 
-    function toggleMobileMenu() {
-      const menu = document.getElementById("mobileMenu");
-      if (menu) menu.classList.toggle("hidden");
+    // --- Issues Log ---
+    function openIssuesModal() {
+      closeInstructorModal(); document.getElementById('issuesModal').classList.remove('hidden');
+      const container = document.getElementById('issuesContainer');
+      if (reportedIssues.length === 0) { container.innerHTML = `<p class="text-slate-400 text-center text-sm mt-5">No reported issues.</p>`; return; }
+      container.innerHTML = reportedIssues.map(issue => `
+        <div class="bg-[#151821] p-3 rounded border border-slate-700">
+          <div class="flex justify-between text-[10px] text-slate-400 mb-2"><span><i class="fa-solid fa-user mr-1"></i>${issue.user}</span><span>${issue.date}</span></div>
+          <p class="text-sm text-slate-200">${issue.text}</p>
+        </div>
+      `).join('');
     }
+    function closeIssuesModal() { document.getElementById('issuesModal').classList.add('hidden'); openInstructorModal(); }
+    function clearIssues() { if(confirm("Clear all issues?")) { reportedIssues = []; localStorage.removeItem("af_reported_issues"); openIssuesModal(); } }
 
-    window.addEventListener("DOMContentLoaded", () => {
-      initData();
-    });
+    function toggleMobileMenu() { const menu = document.getElementById("mobileMenu"); if (menu) menu.classList.toggle("hidden"); }
+    window.addEventListener("DOMContentLoaded", initData);
   </script>
 </body>
 </html>
