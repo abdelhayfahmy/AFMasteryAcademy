@@ -50,16 +50,19 @@
     @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     .animate-fade-in-up { animation: fadeInUp 0.4s ease-out forwards; }
     
+    /* Star Rating */
     .star-rating input { display: none; }
     .star-rating label { font-size: 24px; color: #334155; cursor: pointer; transition: color 0.2s; }
     .star-rating input:checked ~ label, .star-rating label:hover, .star-rating label:hover ~ label { color: #e3be5f; }
   </style>
 </head>
-<body class="font-sans antialiased selection:bg-gold-500 selection:text-black">
+<body class="font-sans antialiased selection:bg-gold-500 selection:text-black flex flex-col min-h-screen">
   
+  <!-- ==================== HEADER / NAVBAR ==================== -->
   <header class="sticky top-0 z-40 bg-[#0a0b0f]/90 backdrop-blur-md border-b border-[#232630]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-20">
+        <!-- Logo -->
         <a href="#" onclick="switchView('home')" class="flex items-center gap-3 group">
           <div class="w-10 h-10 border border-gold-400/50 rotate-45 flex items-center justify-center p-1 transition-transform group-hover:rotate-90 duration-500">
             <div class="w-full h-full border border-gold-400/80 -rotate-45 flex items-center justify-center"><span class="font-cinzel text-xs font-bold text-gold-300">AF</span></div>
@@ -70,6 +73,7 @@
           </div>
         </a>
         
+        <!-- Desktop Nav -->
         <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
           <button onclick="switchView('home')" class="text-white hover:text-gold-300 transition-colors">Home</button>
           <button onclick="switchView('courses')" class="flex items-center gap-2 text-slate-300 hover:text-gold-300 transition-colors focus:outline-none">
@@ -79,8 +83,9 @@
           <a href="#contact-section" onclick="switchView('home')" class="text-slate-300 hover:text-gold-300 transition-colors">Contact</a>
         </nav>
         
+        <!-- Controls -->
         <div class="flex items-center gap-3">
-          <!-- Author Section -->
+          <!-- Author Controls -->
           <button id="authorLoginNavBtn" onclick="openInstructorModal()" class="hidden sm:inline-flex items-center gap-2 text-xs md:text-sm font-medium px-4 py-2 rounded border border-gold-400/40 text-gold-300 hover:bg-gold-400/10 transition">
             <i class="fa-solid fa-lock text-[11px]"></i><span>Author Login</span>
           </button>
@@ -91,7 +96,7 @@
             <i class="fa-solid fa-power-off"></i>
           </button>
 
-          <!-- Student Section -->
+          <!-- Student Controls -->
           <button id="studentLoginNavBtn" onclick="openStudentLoginModal()" class="text-slate-300 hover:text-gold-300 text-sm font-semibold transition px-2 hidden sm:block">Login</button>
           
           <div id="studentProfileArea" class="hidden items-center gap-3">
@@ -103,13 +108,12 @@
           </div>
           
           <button id="registerNavBtn" onclick="switchView('home'); setTimeout(()=>document.getElementById('register-section').scrollIntoView(), 100);" class="luxury-btn text-xs md:text-sm px-5 py-2.5 rounded font-semibold tracking-wide flex items-center justify-center">Register</button>
-          
           <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="md:hidden text-slate-300 hover:text-white p-2"><i class="fa-solid fa-bars text-xl"></i></button>
         </div>
       </div>
     </div>
     
-    <!-- Mobile Menu -->
+    <!-- Mobile Menu Dropdown -->
     <div id="mobileMenu" class="hidden md:hidden bg-[#0c0e14] border-b border-slate-800 px-4 pt-3 pb-6 space-y-3 absolute w-full shadow-2xl z-50">
       <button onclick="switchView('home'); toggleMobileMenu()" class="block w-full text-left py-2 text-gold-300 font-medium">Home</button>
       <button onclick="switchView('courses'); toggleMobileMenu()" class="block w-full text-left py-2 text-slate-300 hover:text-gold-300">All Courses (<span id="mobileCount">0</span>)</button>
@@ -126,7 +130,7 @@
   </header>
 
   <!-- ==================== HOME VIEW ==================== -->
-  <div id="homeView" class="pb-24">
+  <div id="homeView" class="pb-24 flex-1">
     <section id="hero" class="relative pt-12 pb-16 md:py-20 overflow-hidden border-b border-[#1b1e28]">
       <div class="hero-glow -top-10 -left-10"></div><div class="hero-glow bottom-0 right-10"></div>
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -142,7 +146,6 @@
             <div class="relative group">
               <div class="absolute -inset-1.5 bg-gradient-to-r from-gold-500/40 via-amber-200/20 to-gold-600/40 rounded-2xl blur-sm opacity-70 group-hover:opacity-100 transition duration-500"></div>
               <div class="relative w-[300px] sm:w-[350px] md:w-[380px] aspect-[4/5] rounded-xl overflow-hidden bg-[#101218] border border-gold-400/30 shadow-2xl">
-                <!-- Fetching image dynamically from GitHub profile -->
                 <img src="https://github.com/abdelhayfahmy.png" alt="Abdelhay Fahmy" onerror="this.src='https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80'" class="w-full h-full object-cover object-center filter contrast-[1.05] brightness-95 transition-transform duration-700 group-hover:scale-105" />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/20 pointer-events-none"></div>
                 <div class="absolute bottom-4 left-4 right-4 p-3 bg-black/60 backdrop-blur-md rounded-lg border border-gold-500/20 text-center">
@@ -217,6 +220,7 @@
       </div>
     </section>
 
+    <!-- CONTACT -->
     <section id="contact-section" class="py-16 bg-[#08090c]">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-2xl mx-auto mb-12"><h2 class="font-cinzel text-2xl md:text-3xl font-bold tracking-widest uppercase text-gold-400">CONTACT US</h2></div>
@@ -243,7 +247,7 @@
   </div>
 
   <!-- ==================== COURSES PAGE VIEW ==================== -->
-  <div id="coursesView" class="hidden min-h-screen bg-[#08090c] pt-10 pb-32">
+  <div id="coursesView" class="hidden flex-1 bg-[#08090c] pt-10 pb-32">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center max-w-3xl mx-auto mb-12">
         <h2 class="font-cinzel text-3xl md:text-4xl font-bold tracking-widest uppercase gold-gradient-text">ACADEMY MASTERCLASSES</h2>
@@ -254,7 +258,7 @@
     </div>
   </div>
 
-  <footer class="bg-[#07080b] border-t border-slate-800/80 py-8 text-xs text-slate-400 mt-auto">
+  <footer class="bg-[#07080b] border-t border-slate-800/80 py-8 text-xs text-slate-400 mt-auto w-full">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
       <div>&copy; 2026 Abdelhay Fahmy &bull; Professional Courses Platform</div>
     </div>
@@ -344,7 +348,7 @@
       </div>
     </div>
     
-    <form onsubmit="handleAIQuery(event)" class="p-3 bg-[#0a0b0f] border-t border-slate-800 flex gap-2">
+    <form onsubmit="handleAIQuery(event)" class="p-3 bg-[#0a0b0f] border-t border-slate-800 flex gap-2" dir="auto">
       <input type="text" id="aiInput" placeholder="Ask a question / اطرح سؤالاً..." class="flex-1 bg-[#151821] border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:border-gold-400 outline-none transition" autocomplete="off" />
       <button type="submit" class="luxury-btn w-9 h-9 rounded-lg flex items-center justify-center"><i class="fa-solid fa-paper-plane text-xs"></i></button>
     </form>
@@ -365,7 +369,7 @@
       </div>
       <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-4 chat-scroll bg-[#0c0d12]"></div>
       <div class="p-4 border-t border-slate-800 bg-[#0a0b0f] rounded-b-xl">
-        <form onsubmit="handleSendChat(event)" class="flex gap-2 relative">
+        <form onsubmit="handleSendChat(event)" class="flex gap-2 relative" dir="auto">
           <input type="text" id="chatInput" placeholder="Type a message... (Login required)" class="flex-1 bg-[#151821] border border-slate-700 rounded-lg px-4 py-3 text-sm text-white focus:border-gold-400 outline-none transition" disabled />
           <button type="submit" id="chatSendBtn" class="luxury-btn px-5 rounded-lg flex items-center justify-center opacity-50 cursor-not-allowed" disabled><i class="fa-solid fa-paper-plane"></i></button>
         </form>
@@ -465,6 +469,22 @@
     <div class="flex-1 w-full h-full relative bg-black"><iframe id="fullscreenIframe" class="w-full h-full border-0" allow="fullscreen; autoplay; clipboard-write; encrypted-media"></iframe></div>
   </div>
 
+  <!-- STUDENT LOGIN MODAL -->
+  <div id="studentLoginModal" class="fixed inset-0 z-[80] hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-[#10121a] border border-gold-500/30 rounded-xl max-w-sm w-full p-6 shadow-2xl relative text-center">
+      <button onclick="closeStudentLoginModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+      <div class="w-12 h-12 rounded-full bg-gold-400/10 border border-gold-400/30 text-gold-400 flex items-center justify-center mx-auto mb-3"><i class="fa-solid fa-user-graduate text-xl"></i></div>
+      <h3 class="font-cinzel text-xl font-bold text-white uppercase tracking-wider mb-1">Student Login</h3>
+      <p class="text-xs text-slate-400 mb-5">Enter your email and Credential ID</p>
+      <form onsubmit="handleStudentLogin(event)" class="space-y-4">
+        <div><input type="email" id="studentLoginEmail" placeholder="Registered Email" required class="w-full bg-[#090a0f] border border-slate-700 rounded px-3 py-2 text-sm text-white focus:border-gold-400 outline-none" /></div>
+        <div><input type="text" id="studentLoginCred" placeholder="Credential ID (e.g. AF-123456)" required class="w-full bg-[#090a0f] border border-slate-700 rounded px-3 py-2 text-sm text-white focus:border-gold-400 outline-none" /></div>
+        <div id="studentLoginError" class="text-red-400 text-xs hidden">Invalid Email or Credential ID.</div>
+        <button type="submit" class="w-full luxury-btn py-2.5 rounded font-semibold text-sm">Login & Access Courses</button>
+      </form>
+    </div>
+  </div>
+
   <script>
     // --- Hardcoded Initial Data ---
     // (This array acts as the base truth for structural updates like images and titles)
@@ -519,7 +539,6 @@
 
     function getAverageRating(reviewsArr) {
       if(!reviewsArr) return 0;
-      // حساب المتوسط للتقييمات المرئية فقط
       const visibleReviews = reviewsArr.filter(r => !r.isHidden);
       if(visibleReviews.length === 0) return 0;
       const sum = visibleReviews.reduce((acc, curr) => acc + curr.rating, 0);
@@ -572,7 +591,6 @@
       // مع الاحتفاظ بالتقييمات التي دمجناها للتو
       if (localStorage.getItem("af_author_logged_in") !== "true") {
          localStorage.removeItem("af_mastery_courses"); 
-         // نحفظ النسخة المدمجة فوراً حتى لا تفقد التقييمات
          localStorage.setItem("af_mastery_courses", JSON.stringify(courses));
       }
 
@@ -752,11 +770,19 @@
         addSection.innerHTML = `<p class="text-slate-400 text-xs text-center bg-slate-900/50 py-3 rounded border border-slate-800"><i class="fa-solid fa-lock mr-1 text-gold-500"></i> You must be logged in to leave a review.</p>`;
       }
 
-      document.getElementById('reviewsModal').classList.remove('hidden');
+      const m = document.getElementById('reviewsModal');
+      m.classList.remove('hidden');
+      m.style.display = 'flex';
       document.body.style.overflow = 'hidden';
     }
 
-    function closeReviewsModal() { document.getElementById('reviewsModal').classList.add('hidden'); document.body.style.overflow = 'auto'; currentReviewCourseId = null;}
+    function closeReviewsModal() { 
+      const m = document.getElementById('reviewsModal');
+      m.classList.add('hidden'); 
+      m.style.display = 'none';
+      document.body.style.overflow = 'auto'; 
+      currentReviewCourseId = null;
+    }
 
     function submitReview(e) {
       e.preventDefault();
@@ -797,11 +823,19 @@
       courseVisits[e] = (courseVisits[e] || 0) + 1; localStorage.setItem("af_course_visits", JSON.stringify(courseVisits)); refreshDashboard();
       document.getElementById("fsCourseTitle").textContent = course.title;
       document.getElementById("fullscreenIframe").src = course.url;
-      document.getElementById("fullscreenPlayerModal").classList.remove("hidden");
+      const m = document.getElementById("fullscreenPlayerModal");
+      m.classList.remove("hidden");
+      m.style.display = "flex";
       document.body.style.overflow = "hidden";
     }
     
-    function closeFullscreenCourse() { document.getElementById("fullscreenIframe").src = "about:blank"; document.getElementById("fullscreenPlayerModal").classList.add("hidden"); document.body.style.overflow = "auto"; }
+    function closeFullscreenCourse() { 
+      document.getElementById("fullscreenIframe").src = "about:blank"; 
+      const m = document.getElementById("fullscreenPlayerModal");
+      m.classList.add("hidden"); 
+      m.style.display = "none";
+      document.body.style.overflow = "auto"; 
+    }
 
     function toggleAIAssistant() { const p = document.getElementById('aiAssistantPanel'); p.classList.toggle('hidden'); p.classList.toggle('flex'); }
     
@@ -834,7 +868,7 @@
           const response = generateAIResponse(text, isArabic); 
           appendAIMessage('ai', response);
         }
-      }, 700);
+      }, 700); 
     }
 
     function appendAIMessage(sender, text) {
@@ -913,7 +947,10 @@
     }
 
     function openChatModal() {
-      document.getElementById('chatModal').classList.remove('hidden'); document.body.style.overflow = 'hidden';
+      const m = document.getElementById('chatModal');
+      m.classList.remove('hidden'); 
+      m.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
       const input = document.getElementById('chatInput'); const btn = document.getElementById('chatSendBtn');
       if (isStudentLoggedIn || isInstructorLoggedIn) {
         input.disabled = false; btn.disabled = false; input.placeholder = "Type your message..."; btn.classList.remove('opacity-50', 'cursor-not-allowed');
@@ -923,7 +960,12 @@
       renderChatMessages();
     }
     
-    function closeChatModal() { document.getElementById('chatModal').classList.add('hidden'); document.body.style.overflow = 'auto'; }
+    function closeChatModal() { 
+      const m = document.getElementById('chatModal');
+      m.classList.add('hidden'); 
+      m.style.display = 'none';
+      document.body.style.overflow = 'auto'; 
+    }
 
     function renderChatMessages() {
       const container = document.getElementById('chatMessages');
@@ -949,10 +991,16 @@
       document.getElementById('profileNameInput').value = currentStudentData.name || currentStudentData.email.split('@')[0];
       document.getElementById('profileEmailInput').value = currentStudentData.email;
       document.getElementById('profileModalImgPreview').src = currentStudentData.profileImage || `https://ui-avatars.com/api/?name=${currentStudentData.email.split('@')[0]}&background=d4a337&color=000`;
-      document.getElementById('profileModal').classList.remove('hidden');
+      const m = document.getElementById('profileModal');
+      m.classList.remove('hidden');
+      m.style.display = 'flex';
     }
     
-    function closeProfileModal() { document.getElementById('profileModal').classList.add('hidden'); }
+    function closeProfileModal() { 
+      const m = document.getElementById('profileModal');
+      m.classList.add('hidden'); 
+      m.style.display = 'none';
+    }
 
     function handleProfileImageUpload(e) {
       const file = e.target.files[0];
@@ -1005,8 +1053,21 @@
       switchView('courses');
     }
 
-    function openStudentLoginModal() { document.getElementById("studentLoginModal").classList.remove("hidden"); }
-    function closeStudentLoginModal() { document.getElementById("studentLoginModal").classList.add("hidden"); }
+    function openStudentLoginModal() { 
+      const m = document.getElementById("studentLoginModal");
+      if(m) {
+        m.classList.remove("hidden");
+        m.style.display = "flex";
+      }
+    }
+    
+    function closeStudentLoginModal() { 
+      const m = document.getElementById("studentLoginModal");
+      if(m) {
+        m.classList.add("hidden");
+        m.style.display = "none";
+      }
+    }
 
     function handleStudentLogin(e) {
       e.preventDefault();
@@ -1115,7 +1176,10 @@
     }
 
     function openInstructorModal() {
-      document.getElementById("instructorModal").classList.remove("hidden");
+      const m = document.getElementById("instructorModal");
+      m.classList.remove("hidden");
+      m.style.display = "flex";
+      
       if (isInstructorLoggedIn) {
         document.getElementById("instructorLoginView").classList.add("hidden"); 
         document.getElementById("instructorDashboardView").classList.remove("hidden");
@@ -1126,7 +1190,11 @@
       }
     }
     
-    function closeInstructorModal() { document.getElementById("instructorModal").classList.add("hidden"); }
+    function closeInstructorModal() { 
+      const m = document.getElementById("instructorModal");
+      m.classList.add("hidden"); 
+      m.style.display = "none";
+    }
 
     function handleInstructorAuth(e) {
       e.preventDefault();
@@ -1294,7 +1362,9 @@
     function deleteCourse(id) { if (confirm("Delete this course?")) { courses = courses.filter(c => c.id !== id); localStorage.setItem("af_mastery_courses", JSON.stringify(courses)); renderCoursesPage(); } }
 
     function openIssuesModal() {
-      document.getElementById('issuesModal').classList.remove('hidden');
+      const m = document.getElementById('issuesModal');
+      m.classList.remove('hidden');
+      m.style.display = 'flex';
       const container = document.getElementById('issuesContainer');
       if (reportedIssues.length === 0) { container.innerHTML = `<p class="text-slate-400 text-center text-sm mt-5">No reported issues.</p>`; return; }
       container.innerHTML = reportedIssues.map(issue => `
@@ -1303,6 +1373,12 @@
           <p class="text-sm text-slate-200">${issue.text}</p>
         </div>
       `).join('');
+    }
+    
+    function closeIssuesModal() { 
+      const m = document.getElementById('issuesModal');
+      m.classList.add('hidden'); 
+      m.style.display = 'none';
     }
     
     function clearIssues() { if(confirm("Clear all issues?")) { reportedIssues = []; localStorage.setItem("af_reported_issues", "[]"); openIssuesModal(); } }
