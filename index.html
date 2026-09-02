@@ -142,6 +142,7 @@
             <div class="relative group">
               <div class="absolute -inset-1.5 bg-gradient-to-r from-gold-500/40 via-amber-200/20 to-gold-600/40 rounded-2xl blur-sm opacity-70 group-hover:opacity-100 transition duration-500"></div>
               <div class="relative w-[300px] sm:w-[350px] md:w-[380px] aspect-[4/5] rounded-xl overflow-hidden bg-[#101218] border border-gold-400/30 shadow-2xl">
+                <!-- Fetching image dynamically from GitHub profile -->
                 <img src="https://github.com/abdelhayfahmy.png" alt="Abdelhay Fahmy" onerror="this.src='https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80'" class="w-full h-full object-cover object-center filter contrast-[1.05] brightness-95 transition-transform duration-700 group-hover:scale-105" />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/20 pointer-events-none"></div>
                 <div class="absolute bottom-4 left-4 right-4 p-3 bg-black/60 backdrop-blur-md rounded-lg border border-gold-500/20 text-center">
@@ -685,7 +686,6 @@
       document.getElementById("offlineUsersCount").textContent = 145 + Math.floor(Math.random()*5);
     }
 
-    // --- Reviews System (Updated Tab & Cumulative) ---
     let currentReviewCourseId = null;
     
     function openCourseReviews(courseId) {
@@ -763,13 +763,13 @@
       const text = document.getElementById("reviewTextInput").value.trim();
       
       const newReview = {
-        id: Date.now(), // Generate unique ID for moderation
+        id: Date.now(), 
         user: currentStudentData.name || currentStudentData.email.split('@')[0],
         photo: currentStudentData.profileImage || `https://ui-avatars.com/api/?name=${currentStudentData.email.split('@')[0]}&background=d4a337&color=000`,
         rating: rating,
         text: text,
         date: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
-        isHidden: false // Moderation flag
+        isHidden: false 
       };
 
       if(!course.reviews) course.reviews = [];
@@ -777,12 +777,11 @@
       
       localStorage.setItem("af_mastery_courses", JSON.stringify(courses));
       
-      openCourseReviews(currentReviewCourseId); // Refresh modal
-      renderCoursesPage(); // Refresh background courses
-      refreshDashboard(); // Update global stats
+      openCourseReviews(currentReviewCourseId); 
+      renderCoursesPage(); 
+      refreshDashboard(); 
     }
 
-    // --- Fullscreen Video ---
     function launchFullscreenCourse(e) {
       if (!isStudentLoggedIn && !isInstructorLoggedIn) { alert("🔒 Access Denied!\nYou must be logged in to view courses."); openStudentLoginModal(); return; }
       const course = courses.find(t => t.id === e);
@@ -796,7 +795,6 @@
     
     function closeFullscreenCourse() { document.getElementById("fullscreenIframe").src = "about:blank"; document.getElementById("fullscreenPlayerModal").classList.add("hidden"); document.body.style.overflow = "auto"; }
 
-    // --- Smart AI Assistant (Thinking Model) ---
     function toggleAIAssistant() { const p = document.getElementById('aiAssistantPanel'); p.classList.toggle('hidden'); p.classList.toggle('flex'); }
     
     function handleAIQuery(e) {
@@ -808,7 +806,6 @@
       appendAIMessage('user', text); 
       input.value = ''; 
       
-      // Simulate "Thinking" Process
       showAITyping();
       const box = document.getElementById('aiChatBox');
       const isArabic = /[\u0600-\u06FF]/.test(text);
@@ -829,7 +826,7 @@
           const response = generateAIResponse(text, isArabic); 
           appendAIMessage('ai', response);
         }
-      }, 700); // 700ms per "thought" step
+      }, 700); 
     }
 
     function appendAIMessage(sender, text) {
@@ -907,7 +904,6 @@
       return isArabic ? "أهلاً بك في نظام التوجيه الذكي لأكاديمية AF Mastery.\nأنا هنا لإرشادك حول مساراتنا التدريبية (المبيعات، القيادة، والذكاء الاصطناعي)، أو لتسجيل أي مشكلة تقنية تواجهك. كيف يمكنني إفادتك؟" : "Welcome to the AF Mastery Smart Guidance System.\nI am here to guide you through our training tracks (Sales, Leadership, and AI) or to log any technical issues you might face. How can I assist you?";
     }
 
-    // --- Community Chat Logic ---
     function openChatModal() {
       document.getElementById('chatModal').classList.remove('hidden'); document.body.style.overflow = 'hidden';
       const input = document.getElementById('chatInput'); const btn = document.getElementById('chatSendBtn');
@@ -918,6 +914,7 @@
       }
       renderChatMessages();
     }
+    
     function closeChatModal() { document.getElementById('chatModal').classList.add('hidden'); document.body.style.overflow = 'auto'; }
 
     function renderChatMessages() {
@@ -930,14 +927,15 @@
       }).join('');
       container.scrollTop = container.scrollHeight;
     }
+    
     function handleSendChat(e) {
       e.preventDefault(); const input = document.getElementById('chatInput'); const text = input.value.trim(); if (!text) return;
       chatMessages.push({ id: Date.now(), text: text, sender: isInstructorLoggedIn ? 'Author' : currentStudentData.email, timestamp: new Date().getTime() });
       if(chatMessages.length > 50) chatMessages.shift(); localStorage.setItem("af_community_chat", JSON.stringify(chatMessages)); input.value = ''; renderChatMessages();
     }
+    
     function deleteChatMessage(id) { if(!isInstructorLoggedIn) return; chatMessages = chatMessages.filter(m => m.id !== id); localStorage.setItem("af_community_chat", JSON.stringify(chatMessages)); renderChatMessages(); }
 
-    // --- Student Profile & Auth ---
     function openProfileModal() {
       if(!isStudentLoggedIn || !currentStudentData) return;
       document.getElementById('profileNameInput').value = currentStudentData.name || currentStudentData.email.split('@')[0];
@@ -945,6 +943,7 @@
       document.getElementById('profileModalImgPreview').src = currentStudentData.profileImage || `https://ui-avatars.com/api/?name=${currentStudentData.email.split('@')[0]}&background=d4a337&color=000`;
       document.getElementById('profileModal').classList.remove('hidden');
     }
+    
     function closeProfileModal() { document.getElementById('profileModal').classList.add('hidden'); }
 
     function handleProfileImageUpload(e) {
@@ -1004,21 +1003,45 @@
     function handleStudentLogin(e) {
       e.preventDefault();
       const email = document.getElementById("studentLoginEmail").value.trim().toLowerCase();
-      const credId = document.getElementById("studentLoginCred").value.toUpperCase().replace(/[^A-Z0-9-]/g, '');
-      let allStudents = JSON.parse(localStorage.getItem("af_all_students") || "[]");
+      let rawCred = document.getElementById("studentLoginCred").value.toUpperCase().replace(/[^A-Z0-9-]/g, '');
       
-      if (email.includes("@") && credId.startsWith("AF-")) {
+      if (!rawCred.startsWith("AF-")) {
+        rawCred = "AF-" + rawCred.replace(/-/g, '');
+      }
+
+      let allStudents = JSON.parse(localStorage.getItem("af_all_students") || "[]");
+      let errorDiv = document.getElementById("studentLoginError");
+      
+      if (email.includes("@") && rawCred.length > 4) {
         let studentSession = allStudents.find(s => s.email === email);
-        if(!studentSession) {
-          studentSession = { email: email, mobile: "Verified By System", credId: credId, name: email.split('@')[0] };
-          allStudents.push(studentSession); localStorage.setItem("af_all_students", JSON.stringify(allStudents));
+        
+        if (studentSession) {
+          if (studentSession.credId !== rawCred) {
+            errorDiv.textContent = "Incorrect Credential ID. Please verify your ID.";
+            errorDiv.classList.remove("hidden");
+            return;
+          }
+        } else {
+          studentSession = { email: email, mobile: "Verified By System", credId: rawCred, name: email.split('@')[0] };
+          allStudents.push(studentSession); 
+          localStorage.setItem("af_all_students", JSON.stringify(allStudents));
         }
         
-        isStudentLoggedIn = true; currentStudentData = studentSession;
-        localStorage.setItem("af_student_logged_in", "true"); localStorage.setItem("af_student_data", JSON.stringify(studentSession));
+        isStudentLoggedIn = true; 
+        currentStudentData = studentSession;
+        localStorage.setItem("af_student_logged_in", "true"); 
+        localStorage.setItem("af_student_data", JSON.stringify(studentSession));
         
-        updateNavbarState(); closeStudentLoginModal(); renderCoursesPage(); refreshDashboard(); alert("Login Successful!");
-      } else { document.getElementById("studentLoginError").classList.remove("hidden"); }
+        errorDiv.classList.add("hidden");
+        updateNavbarState(); 
+        closeStudentLoginModal(); 
+        renderCoursesPage(); 
+        refreshDashboard(); 
+        alert("Login Successful! Welcome back.");
+      } else { 
+        errorDiv.textContent = "Invalid Email or Credential ID Format.";
+        errorDiv.classList.remove("hidden"); 
+      }
     }
 
     function logoutStudent() {
@@ -1049,9 +1072,9 @@
         if(get(els.mlOut)) get(els.mlOut).classList.remove("hidden");
         if(get(els.pBtn)) get(els.pBtn).classList.remove("hidden");
       } else {
-        if(get(els.sLoginBtn)) get(els.sLoginBtn).style.display = "block";
+        if(get(els.sLoginBtn)) get(els.sLoginBtn).style.display = "";
         if(get(els.pArea)) { get(els.pArea).classList.add("hidden"); get(els.pArea).classList.remove("flex"); }
-        if(get(els.mlBtn)) get(els.mlBtn).style.display = "block";
+        if(get(els.mlBtn)) get(els.mlBtn).style.display = "";
         if(get(els.mlOut)) get(els.mlOut).classList.add("hidden");
         if(get(els.pBtn)) get(els.pBtn).classList.add("hidden");
       }
@@ -1083,7 +1106,6 @@
       }
     }
 
-    // --- Author Panel ---
     function openInstructorModal() {
       document.getElementById("instructorModal").classList.remove("hidden");
       if (isInstructorLoggedIn) {
