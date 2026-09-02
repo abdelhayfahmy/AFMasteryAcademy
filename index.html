@@ -469,42 +469,39 @@
 
   <script>
     // --- Initial Data ---
-    let courses = [
-      {
-        "id": "sales-mastery",
-        "status": "public",
-        "tag": "SALES",
-        "title": "CLOSE SALES MASTERY",
-        "description": "Learn proven techniques to close high-ticket deals, negotiate confidently, and build lasting client relationships.",
-        "image": "sales-cover.jpg",
-        "meta": "4 Modules • Interactive Self-paced  (ISPT) 🎓",
-        "url": "https://abdelhayfahmy.github.io/CLOSE-SalesMastery/",
-        "displayUrl": "abdelhayfahmy.github.io/CLOSE-SalesMastery/"
-      },
-      {
-        "id": "problem-solving",
-        "status": "public",
-        "tag": "LEADERSHIP",
-        "title": "PROBLEM SOLVING MASTERY",
-        "description": "Develop structured problem-solving frameworks, analytical thinking, and decision-making skills for business challenges.",
-        "image": "leadership-cover.jpg",
-        "meta": "2 Modules • Micro-Learning 🎓",
-        "url": "https://abdelhayfahmy.github.io/problem-solving-module/",
-        "displayUrl": "abdelhayfahmy.github.io/problem-solving-module/"
-      },
-      {
-        "id": "course-1788217742476",
-        "status": "public",
-        "tag": "AI",
-        "title": "AI-POWERED PHARMA OPERATIONS",
-        "description": "A comprehensive, interactive Self Paced Training (SPT) designed to upskill pharmaceutical operations teams in deploying and utilizing Enterprise AI tools.",
-        "image": "ai-cover.jpg",
-        "meta": "5 Modules • Self Paced 🎓",
-        "url": "https://abdelhayfahmy.github.io/Interactive_Pharma_AI/",
-        "displayUrl": "abdelhayfahmy.github.io/Interactive_Pharma_AI/"
-      }
-    ];
-
+let courses = [
+  {
+    "id": "sales-mastery",
+    "status": "public",
+    "tag": "SALES",
+    "title": "CLOSE SALES MASTERY",
+    "description": "Learn proven techniques to close high-ticket deals, negotiate confidently, and build lasting client relationships.",
+    "image": "sales-cover.jpg",
+    "meta": "4 Modules • Interactive Self-paced  (ISPT) 🎓",
+    "url": "https://abdelhayfahmy.github.io/CLOSE-SalesMastery/",
+    "displayUrl": "abdelhayfahmy.github.io/CLOSE-SalesMastery/"
+  },
+  {
+    "id": "problem-solving",
+    "tag": "LEADERSHIP",
+    "title": "PROBLEM SOLVING MASTERY",
+    "description": "Develop structured problem-solving frameworks, analytical thinking, and decision-making skills for business challenges.",
+    "image": "leadership-cover.jpg",
+    "meta": "2 Modules • Micro-Learning 🎓",
+    "url": "https://abdelhayfahmy.github.io/problem-solving-module/",
+    "displayUrl": "abdelhayfahmy.github.io/problem-solving-module/"
+  },
+  {
+    "id": "course-1788217742476",
+    "tag": "AI",
+    "title": "AI-POWERED PHARMA OPERATIONS",
+    "description": "A comprehensive, interactive Self Paced Training (SPT) designed to upskill pharmaceutical operations teams in deploying and utilizing Enterprise AI tools. This training corse  bridges the gap between theoretical AI concepts and practical, compliant execution in highly regulated healthcare environments.",
+    "image": "ai-cover.jpg",
+    "meta": "5 Modules • 5 Modules 🎓",
+    "url": "https://abdelhayfahmy.github.io/Interactive_Pharma_AI/",
+    "displayUrl": "abdelhayfahmy.github.io/Interactive_Pharma_AI/"
+  }
+];
     let isInstructorLoggedIn = false;
     let isStudentLoggedIn = false;
     let currentStudentData = null;
