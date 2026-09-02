@@ -603,8 +603,8 @@
                       <button onclick="launchFullscreenCourse('${c.id}')" class="flex-1 luxury-btn py-2.5 rounded font-semibold text-xs flex items-center justify-center gap-2">
                         <span>Open</span><i class="fa-solid ${isStudentLoggedIn || isInstructorLoggedIn ? "fa-arrow-right" : "fa-lock"} text-[10px]"></i>
                       </button>
-                      <button onclick="openCourseReviews('${c.id}')" class="bg-slate-800 hover:bg-slate-700 text-white px-3 rounded flex items-center justify-center text-xs transition border border-slate-600" title="Reviews">
-                        <i class="fa-solid fa-comment-dots"></i>
+                      <button onclick="openCourseReviews('${c.id}')" class="bg-slate-800 hover:bg-slate-700 text-white px-4 rounded flex items-center justify-center text-xs transition border border-slate-600" title="Participant Reviews & Ratings">
+                        <i class="fa-solid fa-star text-gold-400 mr-1.5"></i> <span class="font-bold text-gold-100">${avgRating > 0 ? avgRating : 'Rate'}</span>
                       </button>
                     </div>
                   </div>
@@ -674,23 +674,27 @@
 
       document.getElementById("reviewCourseTitle").textContent = course.title;
       const avg = getAverageRating(course.reviews);
-      document.getElementById("reviewCourseBigRating").textContent = avg > 0 ? avg : '-';
-      document.getElementById("reviewCourseOverall").innerHTML = avg > 0 ? `<i class="fa-solid fa-star text-gold-400"></i> ${course.reviews.length} Reviews` : "No reviews yet";
+      
+      document.getElementById("reviewCourseBigRating").innerHTML = avg > 0 ? `${avg} <i class="fa-solid fa-star text-gold-400 text-xl"></i>` : '-';
+      document.getElementById("reviewCourseOverall").innerHTML = avg > 0 ? `<span class="text-emerald-400 font-bold">${course.reviews.length}</span> Participants Rated` : "No reviews yet";
 
       const listContainer = document.getElementById("reviewsListContainer");
       if (!course.reviews || course.reviews.length === 0) {
-        listContainer.innerHTML = `<p class="text-slate-500 text-sm text-center py-4">Be the first to review this course!</p>`;
+        listContainer.innerHTML = `<p class="text-slate-500 text-sm text-center py-6 border border-dashed border-slate-700 rounded-lg">Be the first to rate and review this course!</p>`;
       } else {
         listContainer.innerHTML = course.reviews.map(r => `
-          <div class="bg-[#151821] border border-slate-800 p-4 rounded-lg">
-            <div class="flex items-center gap-3 mb-2">
-              <img src="${r.photo || 'https://ui-avatars.com/api/?name='+r.user+'&background=random'}" class="w-8 h-8 rounded-full object-cover border border-slate-600" />
-              <div>
-                <div class="text-white text-xs font-bold">${r.user}</div>
-                <div class="text-gold-400 text-[10px]">${'<i class="fa-solid fa-star"></i>'.repeat(r.rating)}${'<i class="fa-regular fa-star text-slate-600"></i>'.repeat(5-r.rating)}</div>
+          <div class="bg-[#151821] border border-slate-800 p-4 rounded-lg relative">
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center gap-3">
+                <img src="${r.photo || 'https://ui-avatars.com/api/?name='+r.user+'&background=random'}" class="w-8 h-8 rounded-full object-cover border border-slate-600" />
+                <div>
+                  <div class="text-white text-xs font-bold capitalize">${r.user}</div>
+                  <div class="text-gold-400 text-[10px] mt-0.5">${'<i class="fa-solid fa-star"></i>'.repeat(r.rating)}${'<i class="fa-regular fa-star text-slate-600"></i>'.repeat(5-r.rating)}</div>
+                </div>
               </div>
+              <div class="text-[9px] text-slate-500 bg-slate-800/50 px-2 py-1 rounded">${r.date || 'Recently'}</div>
             </div>
-            <p class="text-slate-300 text-xs leading-relaxed">${r.text}</p>
+            <p class="text-slate-300 text-xs leading-relaxed mt-3 bg-[#0a0b0f] p-3 rounded border border-slate-800/50">${r.text}</p>
           </div>
         `).join('');
       }
@@ -699,8 +703,8 @@
       if(isStudentLoggedIn && currentStudentData) {
         addSection.innerHTML = `
           <form onsubmit="submitReview(event)" class="space-y-3">
-            <div class="flex items-center gap-2 mb-2">
-              <span class="text-xs text-slate-400 uppercase font-bold">Your Rating:</span>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs text-slate-400 uppercase font-bold">Add Your Rating:</span>
               <div class="star-rating flex flex-row-reverse justify-end">
                 <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 stars"><i class="fa-solid fa-star"></i></label>
                 <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 stars"><i class="fa-solid fa-star"></i></label>
@@ -709,12 +713,12 @@
                 <input type="radio" id="star1" name="rating" value="1" required /><label for="star1" title="1 star"><i class="fa-solid fa-star"></i></label>
               </div>
             </div>
-            <textarea id="reviewTextInput" rows="2" placeholder="Write your review here..." required class="w-full bg-[#151821] border border-slate-700 rounded p-2 text-white outline-none text-sm focus:border-gold-400"></textarea>
-            <button type="submit" class="luxury-btn px-4 py-2 rounded font-semibold text-xs">Submit Review</button>
+            <textarea id="reviewTextInput" rows="2" placeholder="Write your experience..." required class="w-full bg-[#151821] border border-slate-700 rounded p-3 text-white outline-none text-sm focus:border-gold-400 transition"></textarea>
+            <button type="submit" class="luxury-btn w-full py-2.5 rounded font-semibold text-xs uppercase tracking-widest">Submit Review</button>
           </form>
         `;
       } else {
-        addSection.innerHTML = `<p class="text-slate-400 text-xs text-center"><i class="fa-solid fa-lock mr-1"></i> You must be logged in to leave a review.</p>`;
+        addSection.innerHTML = `<p class="text-slate-400 text-xs text-center bg-slate-900/50 py-3 rounded border border-slate-800"><i class="fa-solid fa-lock mr-1 text-gold-500"></i> You must be logged in to leave a review.</p>`;
       }
 
       document.getElementById('reviewsModal').classList.remove('hidden');
@@ -739,11 +743,13 @@
         user: currentStudentData.name || currentStudentData.email.split('@')[0],
         photo: currentStudentData.profileImage || `https://ui-avatars.com/api/?name=${currentStudentData.email.split('@')[0]}&background=d4a337&color=000`,
         rating: rating,
-        text: text
+        text: text,
+        date: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
       };
 
       if(!course.reviews) course.reviews = [];
       course.reviews.push(newReview);
+      
       localStorage.setItem("af_mastery_courses", JSON.stringify(courses));
       
       openCourseReviews(currentReviewCourseId); 
