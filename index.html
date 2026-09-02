@@ -142,7 +142,6 @@
             <div class="relative group">
               <div class="absolute -inset-1.5 bg-gradient-to-r from-gold-500/40 via-amber-200/20 to-gold-600/40 rounded-2xl blur-sm opacity-70 group-hover:opacity-100 transition duration-500"></div>
               <div class="relative w-[300px] sm:w-[350px] md:w-[380px] aspect-[4/5] rounded-xl overflow-hidden bg-[#101218] border border-gold-400/30 shadow-2xl">
-                <!-- Fetching image dynamically from GitHub profile -->
                 <img src="https://github.com/abdelhayfahmy.png" alt="Abdelhay Fahmy" onerror="this.src='https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80'" class="w-full h-full object-cover object-center filter contrast-[1.05] brightness-95 transition-transform duration-700 group-hover:scale-105" />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/20 pointer-events-none"></div>
                 <div class="absolute bottom-4 left-4 right-4 p-3 bg-black/60 backdrop-blur-md rounded-lg border border-gold-500/20 text-center">
@@ -292,7 +291,7 @@
     </div>
   </div>
 
-  <!-- COURSE REVIEWS MODAL -->
+  <!-- COURSE REVIEWS MODAL (Student View) -->
   <div id="reviewsModal" class="fixed inset-0 z-[80] hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-2 sm:p-4">
     <div class="bg-[#10121a] border border-gold-500/30 rounded-xl w-full max-w-3xl max-h-[90vh] flex flex-col shadow-2xl relative">
       <div class="p-4 border-b border-slate-800 flex justify-between items-center bg-[#0a0b0f] rounded-t-xl">
@@ -309,7 +308,7 @@
           <div class="text-3xl font-bold text-gold-400" id="reviewCourseBigRating"></div>
         </div>
         
-        <h5 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 border-b border-slate-800 pb-2">Student Feedback</h5>
+        <h5 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 border-b border-slate-800 pb-2">Participant Feedback</h5>
         <div id="reviewsListContainer" class="space-y-4"></div>
       </div>
       
@@ -378,6 +377,7 @@
     <div class="bg-[#10121a] border border-gold-500/30 rounded-xl max-w-lg w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto chat-scroll">
       <button onclick="closeInstructorModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
       
+      <!-- Login View -->
       <div id="instructorLoginView">
         <div class="text-center mb-6">
           <div class="w-12 h-12 rounded-full bg-gold-400/10 border border-gold-400/30 text-gold-400 flex items-center justify-center mx-auto mb-3"><i class="fa-solid fa-lock text-xl"></i></div>
@@ -391,36 +391,49 @@
         </form>
       </div>
       
-      <div id="instructorAddCourseView" class="hidden">
-        <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-800">
-          <h3 class="font-cinzel text-lg font-bold text-gold-300" id="authorFormTitle">Add New Masterclass</h3>
-          <div class="flex items-center gap-3">
-            <button type="button" onclick="exportCoursesCode()" class="text-[10px] text-emerald-400 hover:underline"><i class="fa-solid fa-code mr-1"></i>Export Code</button>
-            <button type="button" onclick="openIssuesModal()" class="text-[10px] text-sky-400 hover:underline"><i class="fa-solid fa-bug mr-1"></i>Issues Log</button>
-          </div>
+      <!-- Dashboard Wrapper -->
+      <div id="instructorDashboardView" class="hidden flex-col">
+        <!-- Top Nav Menu inside Modal -->
+        <div class="flex items-center gap-2 mb-5 border-b border-slate-800 pb-4 overflow-x-auto whitespace-nowrap">
+          <button onclick="showAuthorView('add')" class="text-xs bg-slate-800 hover:bg-slate-700 transition px-3 py-1.5 rounded text-white font-medium"><i class="fa-solid fa-plus mr-1"></i> Add Course</button>
+          <button onclick="showAuthorView('reviews')" class="text-xs bg-slate-800 hover:bg-slate-700 transition px-3 py-1.5 rounded text-white font-medium"><i class="fa-solid fa-star mr-1 text-gold-400"></i> Manage Reviews</button>
+          <button onclick="openIssuesModal()" class="text-xs bg-slate-800 hover:bg-slate-700 transition px-3 py-1.5 rounded text-white font-medium"><i class="fa-solid fa-bug mr-1 text-red-400"></i> Issues</button>
+          <button onclick="exportCoursesCode()" class="text-xs bg-blue-900/80 hover:bg-blue-800 transition px-3 py-1.5 rounded text-white font-medium ml-auto"><i class="fa-solid fa-code mr-1"></i> Export Data</button>
         </div>
-        <form onsubmit="handleSaveCourse(event)" class="space-y-3 text-xs">
-          <input type="hidden" id="editCourseId" value="" />
-          <input type="text" id="newCourseTitle" placeholder="Course Title" required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none focus:border-gold-400" />
-          <input type="text" id="newCourseTag" placeholder="Category Tag (e.g. SALES)" required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none focus:border-gold-400" />
-          <textarea id="newCourseDesc" rows="2" placeholder="Description..." required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none focus:border-gold-400"></textarea>
-          
-          <div class="flex flex-col gap-1 p-2 border border-slate-800 rounded bg-[#0a0b0f]">
-            <label class="text-slate-400 text-[10px] font-bold uppercase tracking-wider">Course Thumbnail</label>
-            <input type="file" id="newCourseImageFile" accept="image/*" class="w-full bg-[#151821] border border-slate-700 rounded p-1.5 text-white outline-none" />
-            <div class="text-center text-[10px] text-slate-500">- OR -</div>
-            <input type="text" id="newCourseImage" placeholder="Paste Image URL (e.g., sales-cover2.jpg)" class="w-full bg-[#151821] border border-slate-700 rounded p-2 text-white outline-none focus:border-gold-400" />
-          </div>
 
-          <input type="text" id="newCourseModules" placeholder="Modules Count (e.g. 10 Modules)" required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none focus:border-gold-400" />
-          <input type="text" id="newCourseFormat" placeholder="Format (e.g. Self-paced)" required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none focus:border-gold-400" />
-          <input type="url" id="newCourseUrl" placeholder="Live iframe URL" required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none focus:border-gold-400" />
-          
-          <div class="flex gap-2 pt-2">
-            <button type="submit" class="flex-1 luxury-btn py-2.5 rounded font-semibold text-xs" id="authorSubmitBtn">Save Course (Private by Default)</button>
-            <button type="button" onclick="resetAuthorForm()" class="px-4 bg-slate-800 text-white rounded text-xs hidden" id="authorCancelBtn">Cancel</button>
-          </div>
-        </form>
+        <!-- Add/Edit Course View -->
+        <div id="instructorAddCourseView">
+          <h3 class="font-cinzel text-lg font-bold text-gold-300 mb-4" id="authorFormTitle">Add New Masterclass</h3>
+          <form onsubmit="handleSaveCourse(event)" class="space-y-3 text-xs">
+            <input type="hidden" id="editCourseId" value="" />
+            <input type="text" id="newCourseTitle" placeholder="Course Title" required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none focus:border-gold-400" />
+            <input type="text" id="newCourseTag" placeholder="Category Tag (e.g. SALES)" required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none focus:border-gold-400" />
+            <textarea id="newCourseDesc" rows="2" placeholder="Description..." required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none focus:border-gold-400"></textarea>
+            
+            <div class="flex flex-col gap-1 p-2 border border-slate-800 rounded bg-[#0a0b0f]">
+              <label class="text-slate-400 text-[10px] font-bold uppercase tracking-wider">Course Thumbnail</label>
+              <input type="file" id="newCourseImageFile" accept="image/*" class="w-full bg-[#151821] border border-slate-700 rounded p-1.5 text-white outline-none" />
+              <div class="text-center text-[10px] text-slate-500">- OR -</div>
+              <input type="text" id="newCourseImage" placeholder="Paste Image URL (e.g., sales-cover2.jpg)" class="w-full bg-[#151821] border border-slate-700 rounded p-2 text-white outline-none focus:border-gold-400" />
+            </div>
+
+            <input type="text" id="newCourseModules" placeholder="Modules Count (e.g. 10 Modules)" required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none focus:border-gold-400" />
+            <input type="text" id="newCourseFormat" placeholder="Format (e.g. Self-paced)" required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none focus:border-gold-400" />
+            <input type="url" id="newCourseUrl" placeholder="Live iframe URL" required class="w-full bg-[#090a0f] border border-slate-700 rounded p-2 text-white outline-none focus:border-gold-400" />
+            
+            <div class="flex gap-2 pt-2">
+              <button type="submit" class="flex-1 luxury-btn py-2.5 rounded font-semibold text-xs" id="authorSubmitBtn">Save Course (Private by Default)</button>
+              <button type="button" onclick="resetAuthorForm()" class="px-4 bg-slate-800 text-white rounded text-xs hidden" id="authorCancelBtn">Cancel</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Manage Reviews View -->
+        <div id="instructorReviewsView" class="hidden">
+          <h3 class="font-cinzel text-lg font-bold text-gold-300 mb-4">Moderate Reviews</h3>
+          <div id="authorReviewsContainer" class="space-y-4"></div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -430,7 +443,7 @@
     <div class="bg-[#10121a] border border-gold-500/30 rounded-xl w-full max-w-lg h-[70vh] flex flex-col shadow-2xl relative">
       <div class="p-4 border-b border-slate-800 flex justify-between items-center bg-[#0a0b0f] rounded-t-xl">
         <h3 class="font-cinzel font-bold text-white tracking-wide"><i class="fa-solid fa-bug text-red-400 mr-2"></i>Reported Issues Log</h3>
-        <button onclick="closeIssuesModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+        <button onclick="document.getElementById('issuesModal').classList.add('hidden');" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
       </div>
       <div id="issuesContainer" class="flex-1 overflow-y-auto p-4 space-y-3 chat-scroll bg-[#0c0d12]"></div>
       <div class="p-3 border-t border-slate-800 bg-[#0a0b0f] rounded-b-xl text-center">
@@ -451,24 +464,9 @@
     <div class="flex-1 w-full h-full relative bg-black"><iframe id="fullscreenIframe" class="w-full h-full border-0" allow="fullscreen; autoplay; clipboard-write; encrypted-media"></iframe></div>
   </div>
 
-  <!-- STUDENT LOGIN MODAL -->
-  <div id="studentLoginModal" class="fixed inset-0 z-[80] hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-    <div class="bg-[#10121a] border border-gold-500/30 rounded-xl max-w-sm w-full p-6 shadow-2xl relative text-center">
-      <button onclick="closeStudentLoginModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
-      <div class="w-12 h-12 rounded-full bg-gold-400/10 border border-gold-400/30 text-gold-400 flex items-center justify-center mx-auto mb-3"><i class="fa-solid fa-user-graduate text-xl"></i></div>
-      <h3 class="font-cinzel text-xl font-bold text-white uppercase tracking-wider mb-1">Student Login</h3>
-      <p class="text-xs text-slate-400 mb-5">Enter your email and Credential ID</p>
-      <form onsubmit="handleStudentLogin(event)" class="space-y-4">
-        <div><input type="email" id="studentLoginEmail" placeholder="Registered Email" required class="w-full bg-[#090a0f] border border-slate-700 rounded px-3 py-2 text-sm text-white focus:border-gold-400 outline-none" /></div>
-        <div><input type="text" id="studentLoginCred" placeholder="Credential ID (e.g. AF-123456)" required class="w-full bg-[#090a0f] border border-slate-700 rounded px-3 py-2 text-sm text-white focus:border-gold-400 outline-none" /></div>
-        <div id="studentLoginError" class="text-red-400 text-xs hidden">Invalid Email or Credential ID.</div>
-        <button type="submit" class="w-full luxury-btn py-2.5 rounded font-semibold text-sm">Login & Access Courses</button>
-      </form>
-    </div>
-  </div>
-
   <script>
-    // --- Initial Data ---
+    // --- Hardcoded Initial Data ---
+    // (This array acts as the base truth for structural updates like images and titles)
     let courses = [
       {
         "id": "sales-mastery",
@@ -479,7 +477,8 @@
         "image": "sales-cover2.jpg",
         "meta": "4 Modules • Interactive Self-paced  (ISPT) 🎓",
         "url": "https://abdelhayfahmy.github.io/CLOSE-SalesMastery/",
-        "displayUrl": "abdelhayfahmy.github.io/CLOSE-SalesMastery/"
+        "displayUrl": "abdelhayfahmy.github.io/CLOSE-SalesMastery/",
+        "reviews": []
       },
       {
         "id": "problem-solving",
@@ -490,7 +489,8 @@
         "image": "leadership-cover2.jpg",
         "meta": "2 Modules • Micro-Learning 🎓",
         "url": "https://abdelhayfahmy.github.io/problem-solving-module/",
-        "displayUrl": "abdelhayfahmy.github.io/problem-solving-module/"
+        "displayUrl": "abdelhayfahmy.github.io/problem-solving-module/",
+        "reviews": []
       },
       {
         "id": "course-1788217742476",
@@ -501,7 +501,8 @@
         "image": "ai-cover2.jpg",
         "meta": "5 Modules • Self Paced 🎓",
         "url": "https://abdelhayfahmy.github.io/Interactive_Pharma_AI/",
-        "displayUrl": "abdelhayfahmy.github.io/Interactive_Pharma_AI/"
+        "displayUrl": "abdelhayfahmy.github.io/Interactive_Pharma_AI/",
+        "reviews": []
       }
     ];
 
@@ -516,19 +517,37 @@
     let aiState = 'normal';
 
     function getAverageRating(reviewsArr) {
-      if(!reviewsArr || reviewsArr.length === 0) return 0;
-      const sum = reviewsArr.reduce((acc, curr) => acc + curr.rating, 0);
-      return (sum / reviewsArr.length).toFixed(1);
+      if(!reviewsArr) return 0;
+      // حساب المتوسط للتقييمات المرئية فقط
+      const visibleReviews = reviewsArr.filter(r => !r.isHidden);
+      if(visibleReviews.length === 0) return 0;
+      const sum = visibleReviews.reduce((acc, curr) => acc + curr.rating, 0);
+      return (sum / visibleReviews.length).toFixed(1);
     }
 
     function initData() {
-      // تنظيف الذاكرة للزوار الجدد لإجبار الموقع على جلب التحديثات فوراً
-      if (localStorage.getItem("af_author_logged_in") !== "true") {
-         localStorage.removeItem("af_mastery_courses"); 
-      }
+      // 1. Smart Merge Logic: دمج التقييمات المحفوظة محلياً مع الكورسات المحدثة في الكود
+      const savedCoursesJSON = localStorage.getItem("af_mastery_courses");
+      if (savedCoursesJSON) { 
+        try { 
+          let localCourses = JSON.parse(savedCoursesJSON);
+          
+          // دمج المراجعات من الذاكرة المحلية إلى الكود الأساسي للحفاظ عليها
+          courses.forEach(hcCourse => {
+             let lcCourse = localCourses.find(c => c.id === hcCourse.id);
+             if(lcCourse && lcCourse.reviews) {
+                 hcCourse.reviews = lcCourse.reviews;
+             }
+          });
 
-      const savedCourses = localStorage.getItem("af_mastery_courses");
-      if (savedCourses) { try { courses = JSON.parse(savedCourses); } catch (e) {} }
+          // إضافة أي كورسات جديدة تم إنشاؤها عبر لوحة التحكم ولم يتم تصدير كودها بعد
+          localCourses.forEach(lcCourse => {
+             if(!courses.find(hcCourse => hcCourse.id === lcCourse.id)) {
+                 courses.push(lcCourse);
+             }
+          });
+        } catch (e) {} 
+      }
       
       const savedVisits = localStorage.getItem("af_course_visits");
       if (savedVisits) { try { courseVisits = JSON.parse(savedVisits); } catch(e){} }
@@ -587,13 +606,13 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               ${catCourses.map(c => {
                 const avgRating = getAverageRating(c.reviews);
-                const starsDisplay = avgRating > 0 ? `<i class="fa-solid fa-star text-gold-400 mr-1"></i>${avgRating}` : `<i class="fa-regular fa-star mr-1"></i>New`;
+                const starsDisplay = avgRating > 0 ? `<i class="fa-solid fa-star text-gold-400 mr-1"></i>${avgRating}` : `<i class="fa-regular fa-star text-slate-500 mr-1"></i>New`;
                 return `
                 <div class="luxury-card rounded-md overflow-hidden flex flex-col relative group h-full ${c.status === 'private' ? 'opacity-75 border-slate-700' : ''}">
                   <div class="h-44 w-full bg-[#0a0b0f] relative overflow-hidden border-b border-gold-500/20">
                     <img src="${c.image || 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80'}" alt="${c.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" onerror="this.src='https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80'"/>
                     <div class="absolute inset-0 bg-gradient-to-t from-[#0f1015] via-transparent to-transparent"></div>
-                    <div class="absolute bottom-3 left-3 bg-black/70 backdrop-blur border border-gold-500/30 px-2 py-1 rounded text-gold-300 text-[10px] font-bold flex items-center shadow-lg">${starsDisplay}</div>
+                    <div class="absolute bottom-3 left-3 bg-black/80 backdrop-blur border border-gold-500/30 px-2.5 py-1 rounded text-gold-200 text-xs font-bold flex items-center shadow-lg">${starsDisplay}</div>
                   </div>
                   <div class="p-5 flex flex-col flex-1">
                     <h4 class="font-sans font-bold text-lg text-white tracking-wide uppercase mb-2 leading-tight">${c.title}</h4>
@@ -642,7 +661,7 @@
       document.getElementById("metricTotalViews").textContent = (Object.values(courseVisits).reduce((a, b) => a + b, 0) + 12540).toLocaleString();
       
       let allRatings = [];
-      courses.forEach(c => { if(c.reviews) c.reviews.forEach(r => allRatings.push(r.rating)); });
+      courses.forEach(c => { if(c.reviews) c.reviews.filter(r => !r.isHidden).forEach(r => allRatings.push(r.rating)); });
       let globalRating = "4.9"; 
       if(allRatings.length > 0) {
           globalRating = (allRatings.reduce((a,b)=>a+b,0) / allRatings.length).toFixed(1);
@@ -666,23 +685,27 @@
       document.getElementById("offlineUsersCount").textContent = 145 + Math.floor(Math.random()*5);
     }
 
+    // --- Reviews System (Updated Tab & Cumulative) ---
     let currentReviewCourseId = null;
+    
     function openCourseReviews(courseId) {
       currentReviewCourseId = courseId;
       const course = courses.find(c => c.id === courseId);
       if(!course) return;
 
       document.getElementById("reviewCourseTitle").textContent = course.title;
-      const avg = getAverageRating(course.reviews);
+      
+      const visibleReviews = (course.reviews || []).filter(r => !r.isHidden);
+      const avg = getAverageRating(course.reviews); // It filters internally
       
       document.getElementById("reviewCourseBigRating").innerHTML = avg > 0 ? `${avg} <i class="fa-solid fa-star text-gold-400 text-xl"></i>` : '-';
-      document.getElementById("reviewCourseOverall").innerHTML = avg > 0 ? `<span class="text-emerald-400 font-bold">${course.reviews.length}</span> Participants Rated` : "No reviews yet";
+      document.getElementById("reviewCourseOverall").innerHTML = avg > 0 ? `<span class="text-emerald-400 font-bold">${visibleReviews.length}</span> Participants Rated` : "No reviews yet";
 
       const listContainer = document.getElementById("reviewsListContainer");
-      if (!course.reviews || course.reviews.length === 0) {
+      if (visibleReviews.length === 0) {
         listContainer.innerHTML = `<p class="text-slate-500 text-sm text-center py-6 border border-dashed border-slate-700 rounded-lg">Be the first to rate and review this course!</p>`;
       } else {
-        listContainer.innerHTML = course.reviews.map(r => `
+        listContainer.innerHTML = visibleReviews.map(r => `
           <div class="bg-[#151821] border border-slate-800 p-4 rounded-lg relative">
             <div class="flex items-center justify-between mb-2">
               <div class="flex items-center gap-3">
@@ -740,11 +763,13 @@
       const text = document.getElementById("reviewTextInput").value.trim();
       
       const newReview = {
+        id: Date.now(), // Generate unique ID for moderation
         user: currentStudentData.name || currentStudentData.email.split('@')[0],
         photo: currentStudentData.profileImage || `https://ui-avatars.com/api/?name=${currentStudentData.email.split('@')[0]}&background=d4a337&color=000`,
         rating: rating,
         text: text,
-        date: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+        date: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
+        isHidden: false // Moderation flag
       };
 
       if(!course.reviews) course.reviews = [];
@@ -752,11 +777,12 @@
       
       localStorage.setItem("af_mastery_courses", JSON.stringify(courses));
       
-      openCourseReviews(currentReviewCourseId); 
-      renderCoursesPage(); 
-      refreshDashboard(); 
+      openCourseReviews(currentReviewCourseId); // Refresh modal
+      renderCoursesPage(); // Refresh background courses
+      refreshDashboard(); // Update global stats
     }
 
+    // --- Fullscreen Video ---
     function launchFullscreenCourse(e) {
       if (!isStudentLoggedIn && !isInstructorLoggedIn) { alert("🔒 Access Denied!\nYou must be logged in to view courses."); openStudentLoginModal(); return; }
       const course = courses.find(t => t.id === e);
@@ -770,6 +796,7 @@
     
     function closeFullscreenCourse() { document.getElementById("fullscreenIframe").src = "about:blank"; document.getElementById("fullscreenPlayerModal").classList.add("hidden"); document.body.style.overflow = "auto"; }
 
+    // --- Smart AI Assistant (Thinking Model) ---
     function toggleAIAssistant() { const p = document.getElementById('aiAssistantPanel'); p.classList.toggle('hidden'); p.classList.toggle('flex'); }
     
     function handleAIQuery(e) {
@@ -781,6 +808,7 @@
       appendAIMessage('user', text); 
       input.value = ''; 
       
+      // Simulate "Thinking" Process
       showAITyping();
       const box = document.getElementById('aiChatBox');
       const isArabic = /[\u0600-\u06FF]/.test(text);
@@ -801,7 +829,7 @@
           const response = generateAIResponse(text, isArabic); 
           appendAIMessage('ai', response);
         }
-      }, 700);
+      }, 700); // 700ms per "thought" step
     }
 
     function appendAIMessage(sender, text) {
@@ -879,6 +907,7 @@
       return isArabic ? "أهلاً بك في نظام التوجيه الذكي لأكاديمية AF Mastery.\nأنا هنا لإرشادك حول مساراتنا التدريبية (المبيعات، القيادة، والذكاء الاصطناعي)، أو لتسجيل أي مشكلة تقنية تواجهك. كيف يمكنني إفادتك؟" : "Welcome to the AF Mastery Smart Guidance System.\nI am here to guide you through our training tracks (Sales, Leadership, and AI) or to log any technical issues you might face. How can I assist you?";
     }
 
+    // --- Community Chat Logic ---
     function openChatModal() {
       document.getElementById('chatModal').classList.remove('hidden'); document.body.style.overflow = 'hidden';
       const input = document.getElementById('chatInput'); const btn = document.getElementById('chatSendBtn');
@@ -889,7 +918,6 @@
       }
       renderChatMessages();
     }
-    
     function closeChatModal() { document.getElementById('chatModal').classList.add('hidden'); document.body.style.overflow = 'auto'; }
 
     function renderChatMessages() {
@@ -902,15 +930,14 @@
       }).join('');
       container.scrollTop = container.scrollHeight;
     }
-    
     function handleSendChat(e) {
       e.preventDefault(); const input = document.getElementById('chatInput'); const text = input.value.trim(); if (!text) return;
       chatMessages.push({ id: Date.now(), text: text, sender: isInstructorLoggedIn ? 'Author' : currentStudentData.email, timestamp: new Date().getTime() });
       if(chatMessages.length > 50) chatMessages.shift(); localStorage.setItem("af_community_chat", JSON.stringify(chatMessages)); input.value = ''; renderChatMessages();
     }
-    
     function deleteChatMessage(id) { if(!isInstructorLoggedIn) return; chatMessages = chatMessages.filter(m => m.id !== id); localStorage.setItem("af_community_chat", JSON.stringify(chatMessages)); renderChatMessages(); }
 
+    // --- Student Profile & Auth ---
     function openProfileModal() {
       if(!isStudentLoggedIn || !currentStudentData) return;
       document.getElementById('profileNameInput').value = currentStudentData.name || currentStudentData.email.split('@')[0];
@@ -918,7 +945,6 @@
       document.getElementById('profileModalImgPreview').src = currentStudentData.profileImage || `https://ui-avatars.com/api/?name=${currentStudentData.email.split('@')[0]}&background=d4a337&color=000`;
       document.getElementById('profileModal').classList.remove('hidden');
     }
-    
     function closeProfileModal() { document.getElementById('profileModal').classList.add('hidden'); }
 
     function handleProfileImageUpload(e) {
@@ -1057,12 +1083,16 @@
       }
     }
 
+    // --- Author Panel ---
     function openInstructorModal() {
       document.getElementById("instructorModal").classList.remove("hidden");
       if (isInstructorLoggedIn) {
-        document.getElementById("instructorLoginView").classList.add("hidden"); document.getElementById("instructorAddCourseView").classList.remove("hidden"); resetAuthorForm();
+        document.getElementById("instructorLoginView").classList.add("hidden"); 
+        document.getElementById("instructorDashboardView").classList.remove("hidden");
+        showAuthorView('add');
       } else {
-        document.getElementById("instructorLoginView").classList.remove("hidden"); document.getElementById("instructorAddCourseView").classList.add("hidden");
+        document.getElementById("instructorLoginView").classList.remove("hidden"); 
+        document.getElementById("instructorDashboardView").classList.add("hidden");
       }
     }
     
@@ -1088,6 +1118,70 @@
       updateNavbarState();
       renderCoursesPage(); 
       closeInstructorModal(); 
+    }
+
+    function showAuthorView(view) {
+      document.getElementById('instructorAddCourseView').classList.add('hidden');
+      document.getElementById('instructorReviewsView').classList.add('hidden');
+      
+      if(view === 'add') {
+        document.getElementById('instructorAddCourseView').classList.remove('hidden');
+        resetAuthorForm();
+      } else if (view === 'reviews') {
+        document.getElementById('instructorReviewsView').classList.remove('hidden');
+        renderAuthorReviews();
+      }
+    }
+
+    function renderAuthorReviews() {
+      const container = document.getElementById("authorReviewsContainer");
+      let html = "";
+      
+      courses.forEach(c => {
+        if(c.reviews && c.reviews.length > 0) {
+          html += `<div class="mb-6"><h4 class="text-white text-sm font-bold border-b border-slate-700 pb-1 mb-3">${c.title}</h4><div class="space-y-2">`;
+          c.reviews.forEach(r => {
+             const hiddenStyle = r.isHidden ? "opacity-50" : "";
+             const iconClass = r.isHidden ? "fa-eye-slash text-red-400" : "fa-eye text-emerald-400";
+             html += `
+               <div class="bg-[#0a0b0f] border border-slate-700 p-3 rounded flex justify-between items-center ${hiddenStyle}">
+                 <div class="flex-1">
+                   <div class="flex items-center gap-2 mb-1">
+                     <span class="text-xs text-white font-bold">${r.user}</span>
+                     <span class="text-gold-400 text-[10px]">${'<i class="fa-solid fa-star"></i>'.repeat(r.rating)}</span>
+                     <span class="text-slate-500 text-[9px] ml-auto">${r.date}</span>
+                   </div>
+                   <p class="text-xs text-slate-300">${r.text}</p>
+                 </div>
+                 <button onclick="toggleReviewVisibility('${c.id}', ${r.id})" class="ml-4 p-2 bg-slate-800 hover:bg-slate-700 rounded transition" title="Toggle Visibility">
+                   <i class="fa-solid ${iconClass}"></i>
+                 </button>
+               </div>
+             `;
+          });
+          html += `</div></div>`;
+        }
+      });
+      
+      if(html === "") {
+        container.innerHTML = `<p class="text-slate-500 text-sm">No reviews submitted yet across any courses.</p>`;
+      } else {
+        container.innerHTML = html;
+      }
+    }
+
+    function toggleReviewVisibility(courseId, reviewId) {
+      const course = courses.find(c => c.id === courseId);
+      if(course) {
+        const review = course.reviews.find(r => r.id === reviewId);
+        if(review) {
+          review.isHidden = !review.isHidden;
+          localStorage.setItem("af_mastery_courses", JSON.stringify(courses));
+          renderAuthorReviews();
+          renderCoursesPage(); // update stars on main screen
+          refreshDashboard();
+        }
+      }
     }
 
     function exportCoursesCode() {
@@ -1170,7 +1264,7 @@
     function deleteCourse(id) { if (confirm("Delete this course?")) { courses = courses.filter(c => c.id !== id); localStorage.setItem("af_mastery_courses", JSON.stringify(courses)); renderCoursesPage(); } }
 
     function openIssuesModal() {
-      closeInstructorModal(); document.getElementById('issuesModal').classList.remove('hidden');
+      document.getElementById('issuesModal').classList.remove('hidden');
       const container = document.getElementById('issuesContainer');
       if (reportedIssues.length === 0) { container.innerHTML = `<p class="text-slate-400 text-center text-sm mt-5">No reported issues.</p>`; return; }
       container.innerHTML = reportedIssues.map(issue => `
@@ -1180,8 +1274,6 @@
         </div>
       `).join('');
     }
-    
-    function closeIssuesModal() { document.getElementById('issuesModal').classList.add('hidden'); }
     
     function clearIssues() { if(confirm("Clear all issues?")) { reportedIssues = []; localStorage.setItem("af_reported_issues", "[]"); openIssuesModal(); } }
 
