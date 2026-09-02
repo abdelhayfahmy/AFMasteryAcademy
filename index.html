@@ -519,7 +519,13 @@
       return (sum / reviewsArr.length).toFixed(1);
     }
 
-    function initData() {
+function initData() {
+      // 1. Force update courses for all users to ensure they see the latest changes
+      // unless the Instructor is actively logged in (to protect their drafted/private courses).
+      if (localStorage.getItem("af_author_logged_in") !== "true") {
+         localStorage.removeItem("af_mastery_courses"); 
+      }
+
       const savedCourses = localStorage.getItem("af_mastery_courses");
       if (savedCourses) { try { courses = JSON.parse(savedCourses); } catch (e) {} }
       
@@ -536,6 +542,16 @@
         isStudentLoggedIn = true;
         currentStudentData = JSON.parse(localStorage.getItem("af_student_data"));
       }
+
+      if (localStorage.getItem("af_author_logged_in") === "true") {
+        isInstructorLoggedIn = true;
+      }
+      
+      updateNavbarState();
+      renderCoursesPage();
+      refreshDashboard();
+      setInterval(updateLiveSimulation, 5000);
+    }
 
       if (localStorage.getItem("af_author_logged_in") === "true") {
         isInstructorLoggedIn = true;
