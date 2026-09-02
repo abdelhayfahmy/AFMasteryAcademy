@@ -469,23 +469,7 @@
 
   <script>
     // --- Initial Data ---
-
-    let isInstructorLoggedIn = false;
-    let isStudentLoggedIn = false;
-    let currentStudentData = null;
-    
-    let baseRegisteredCount = 3842;
-    let courseVisits = {}; 
-    let chatMessages = [];
-    let reportedIssues = [];
-    let aiState = 'normal';
-
-    function getAverageRating(reviewsArr) {
-      if(!reviewsArr || reviewsArr.length === 0) return 0;
-      const sum = reviewsArr.reduce((acc, curr) => acc + curr.rating, 0);
-      return (sum / reviewsArr.length).toFixed(1);
-    }
-let courses = [
+    let courses = [
   {
     "id": "sales-mastery",
     "status": "public",
@@ -518,6 +502,23 @@ let courses = [
     "displayUrl": "abdelhayfahmy.github.io/Interactive_Pharma_AI/"
   }
 ];
+    
+    let isInstructorLoggedIn = false;
+    let isStudentLoggedIn = false;
+    let currentStudentData = null;
+    
+    let baseRegisteredCount = 3842;
+    let courseVisits = {}; 
+    let chatMessages = [];
+    let reportedIssues = [];
+    let aiState = 'normal';
+
+    function getAverageRating(reviewsArr) {
+      if(!reviewsArr || reviewsArr.length === 0) return 0;
+      const sum = reviewsArr.reduce((acc, curr) => acc + curr.rating, 0);
+      return (sum / reviewsArr.length).toFixed(1);
+    }
+
     function initData() {
       const savedCourses = localStorage.getItem("af_mastery_courses");
       if (savedCourses) { try { courses = JSON.parse(savedCourses); } catch (e) {} }
