@@ -568,6 +568,14 @@
         isInstructorLoggedIn = true;
       }
       
+      // تفريغ الذاكرة المحلية للطلاب والزوار لإجبار المتصفح على جلب صور وتفاصيل الكورسات المحدثة
+      // مع الاحتفاظ بالتقييمات التي دمجناها للتو
+      if (localStorage.getItem("af_author_logged_in") !== "true") {
+         localStorage.removeItem("af_mastery_courses"); 
+         // نحفظ النسخة المدمجة فوراً حتى لا تفقد التقييمات
+         localStorage.setItem("af_mastery_courses", JSON.stringify(courses));
+      }
+
       updateNavbarState();
       renderCoursesPage();
       refreshDashboard();
@@ -826,7 +834,7 @@
           const response = generateAIResponse(text, isArabic); 
           appendAIMessage('ai', response);
         }
-      }, 700); 
+      }, 700);
     }
 
     function appendAIMessage(sender, text) {
