@@ -62,7 +62,6 @@
   <header class="sticky top-0 z-40 bg-[#0a0b0f]/90 backdrop-blur-md border-b border-[#232630]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-20">
-        <!-- Logo -->
         <a href="#" onclick="switchView('home')" class="flex items-center gap-3 group">
           <div class="w-10 h-10 border border-gold-400/50 rotate-45 flex items-center justify-center p-1 transition-transform group-hover:rotate-90 duration-500">
             <div class="w-full h-full border border-gold-400/80 -rotate-45 flex items-center justify-center"><span class="font-cinzel text-xs font-bold text-gold-300">AF</span></div>
@@ -73,7 +72,6 @@
           </div>
         </a>
         
-        <!-- Desktop Nav -->
         <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
           <button onclick="switchView('home')" class="text-white hover:text-gold-300 transition-colors">Home</button>
           <button onclick="switchView('courses')" class="flex items-center gap-2 text-slate-300 hover:text-gold-300 transition-colors focus:outline-none">
@@ -83,7 +81,6 @@
           <a href="#contact-section" onclick="switchView('home')" class="text-slate-300 hover:text-gold-300 transition-colors">Contact</a>
         </nav>
         
-        <!-- Controls -->
         <div class="flex items-center gap-3">
           <!-- Author Controls -->
           <button id="authorLoginNavBtn" onclick="openInstructorModal()" class="hidden sm:inline-flex items-center gap-2 text-xs md:text-sm font-medium px-4 py-2 rounded border border-gold-400/40 text-gold-300 hover:bg-gold-400/10 transition">
@@ -220,7 +217,6 @@
       </div>
     </section>
 
-    <!-- CONTACT -->
     <section id="contact-section" class="py-16 bg-[#08090c]">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-2xl mx-auto mb-12"><h2 class="font-cinzel text-2xl md:text-3xl font-bold tracking-widest uppercase text-gold-400">CONTACT US</h2></div>
@@ -264,12 +260,12 @@
     </div>
   </footer>
 
-  <!-- ==================== MODALS & WIDGETS ==================== -->
+  <!-- ==================== MODALS ==================== -->
 
   <!-- STUDENT PROFILE MODAL -->
   <div id="profileModal" class="fixed inset-0 z-[80] hidden bg-black/80 backdrop-blur-md items-center justify-center p-4">
     <div class="bg-[#10121a] border border-gold-500/30 rounded-xl max-w-sm w-full p-6 shadow-2xl relative">
-      <button onclick="closeProfileModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+      <button onclick="closeModal('profileModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
       <h3 class="font-cinzel text-xl font-bold text-white uppercase tracking-wider mb-5 text-center">My Profile</h3>
       
       <div class="flex flex-col items-center gap-4 mb-6">
@@ -301,7 +297,7 @@
     <div class="bg-[#10121a] border border-gold-500/30 rounded-xl w-full max-w-3xl max-h-[90vh] flex flex-col shadow-2xl relative">
       <div class="p-4 border-b border-slate-800 flex justify-between items-center bg-[#0a0b0f] rounded-t-xl">
         <h3 class="font-cinzel font-bold text-white tracking-wide flex items-center gap-2"><i class="fa-solid fa-star text-gold-400"></i> Course Reviews & Ratings</h3>
-        <button onclick="closeReviewsModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+        <button onclick="closeCourseReviews()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
       </div>
       
       <div class="flex-1 overflow-y-auto p-4 chat-scroll bg-[#0c0d12]">
@@ -377,6 +373,22 @@
     </div>
   </div>
 
+  <!-- STUDENT LOGIN MODAL -->
+  <div id="studentLoginModal" class="fixed inset-0 z-[80] hidden bg-black/80 backdrop-blur-md items-center justify-center p-4">
+    <div class="bg-[#10121a] border border-gold-500/30 rounded-xl max-w-sm w-full p-6 shadow-2xl relative text-center">
+      <button onclick="closeStudentLoginModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+      <div class="w-12 h-12 rounded-full bg-gold-400/10 border border-gold-400/30 text-gold-400 flex items-center justify-center mx-auto mb-3"><i class="fa-solid fa-user-graduate text-xl"></i></div>
+      <h3 class="font-cinzel text-xl font-bold text-white uppercase tracking-wider mb-1">Student Login</h3>
+      <p class="text-xs text-slate-400 mb-5">Enter your email and Credential ID</p>
+      <form onsubmit="handleStudentLogin(event)" class="space-y-4">
+        <div><input type="email" id="studentLoginEmail" placeholder="Registered Email" required class="w-full bg-[#090a0f] border border-slate-700 rounded px-3 py-2 text-sm text-white focus:border-gold-400 outline-none" /></div>
+        <div><input type="text" id="studentLoginCred" placeholder="Credential ID (e.g. AF-123456)" required class="w-full bg-[#090a0f] border border-slate-700 rounded px-3 py-2 text-sm text-white focus:border-gold-400 outline-none" /></div>
+        <div id="studentLoginError" class="text-red-400 text-xs hidden">Invalid Email or Credential ID.</div>
+        <button type="submit" class="w-full luxury-btn py-2.5 rounded font-semibold text-sm">Login & Access Courses</button>
+      </form>
+    </div>
+  </div>
+
   <!-- INSTRUCTOR MODAL -->
   <div id="instructorModal" class="fixed inset-0 z-[80] hidden bg-black/80 backdrop-blur-md items-center justify-center p-4">
     <div class="bg-[#10121a] border border-gold-500/30 rounded-xl max-w-lg w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto chat-scroll">
@@ -448,7 +460,7 @@
     <div class="bg-[#10121a] border border-gold-500/30 rounded-xl w-full max-w-lg h-[70vh] flex flex-col shadow-2xl relative">
       <div class="p-4 border-b border-slate-800 flex justify-between items-center bg-[#0a0b0f] rounded-t-xl">
         <h3 class="font-cinzel font-bold text-white tracking-wide"><i class="fa-solid fa-bug text-red-400 mr-2"></i>Reported Issues Log</h3>
-        <button onclick="closeIssuesModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+        <button onclick="closeModal('issuesModal')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
       </div>
       <div id="issuesContainer" class="flex-1 overflow-y-auto p-4 space-y-3 chat-scroll bg-[#0c0d12]"></div>
       <div class="p-3 border-t border-slate-800 bg-[#0a0b0f] rounded-b-xl text-center">
@@ -470,7 +482,7 @@
   </div>
 
   <script>
-    // --- Hardcoded Initial Data (Includes mock reviews so Author Panel is never empty) ---
+    // --- CORE LOGIC & INITIALIZATION ---
     let courses = [
       {
         "id": "sales-mastery",
@@ -483,15 +495,7 @@
         "url": "https://abdelhayfahmy.github.io/CLOSE-SalesMastery/",
         "displayUrl": "abdelhayfahmy.github.io/CLOSE-SalesMastery/",
         "reviews": [
-          {
-            "id": 1704067200000,
-            "user": "Tarek Hassan",
-            "photo": "https://ui-avatars.com/api/?name=Tarek+Hassan&background=d4a337&color=000",
-            "rating": 5,
-            "text": "This course provided immense value. The strategies are very practical and the AI assistant is a game changer.",
-            "date": "24 Jan 2026",
-            "isHidden": false
-          }
+          { "id": 1704067200000, "user": "Tarek Hassan", "photo": "https://ui-avatars.com/api/?name=Tarek+Hassan&background=d4a337&color=000", "rating": 5, "text": "This course provided immense value. The strategies are very practical and the AI assistant is a game changer.", "date": "24 Jan 2026", "isHidden": false }
         ]
       },
       {
@@ -505,15 +509,7 @@
         "url": "https://abdelhayfahmy.github.io/problem-solving-module/",
         "displayUrl": "abdelhayfahmy.github.io/problem-solving-module/",
         "reviews": [
-          {
-            "id": 1704153600000,
-            "user": "Nouran E.",
-            "photo": "https://ui-avatars.com/api/?name=Nouran+E.&background=151821&color=fff",
-            "rating": 4,
-            "text": "Great insights, well-structured modules.",
-            "date": "26 Jan 2026",
-            "isHidden": false
-          }
+          { "id": 1704153600000, "user": "Nouran E.", "photo": "https://ui-avatars.com/api/?name=Nouran+E.&background=151821&color=fff", "rating": 4, "text": "Great insights, well-structured modules.", "date": "26 Jan 2026", "isHidden": false }
         ]
       },
       {
@@ -533,39 +529,43 @@
     let isInstructorLoggedIn = false;
     let isStudentLoggedIn = false;
     let currentStudentData = null;
-    
     let baseRegisteredCount = 3842;
     let courseVisits = {}; 
     let chatMessages = [];
     let reportedIssues = [];
     let aiState = 'normal';
 
-    function getAverageRating(reviewsArr) {
-      if(!reviewsArr) return 0;
-      const visibleReviews = reviewsArr.filter(r => !r.isHidden);
-      if(visibleReviews.length === 0) return 0;
-      const sum = visibleReviews.reduce((acc, curr) => acc + curr.rating, 0);
-      return (sum / visibleReviews.length).toFixed(1);
+    // --- MODAL CONTROLLER (Guarantees immediate visibility across all devices) ---
+    function openModal(id) {
+        const m = document.getElementById(id);
+        if(m) {
+            m.classList.remove('hidden');
+            m.style.display = 'flex'; // Force bypass CSS conflicts
+        }
+    }
+    
+    function closeModal(id) {
+        const m = document.getElementById(id);
+        if(m) {
+            m.classList.add('hidden');
+            m.style.display = 'none'; // Force hide
+        }
     }
 
     function initData() {
-      // 1. Smart Merge Logic
+      // Data recovery with try/catch to prevent JSON crashes
       const savedCoursesJSON = localStorage.getItem("af_mastery_courses");
       if (savedCoursesJSON) { 
         try { 
           let localCourses = JSON.parse(savedCoursesJSON);
           courses.forEach(hcCourse => {
              let lcCourse = localCourses.find(c => c.id === hcCourse.id);
-             if(lcCourse && lcCourse.reviews) {
-                 hcCourse.reviews = lcCourse.reviews;
-             }
+             if(lcCourse && lcCourse.reviews) hcCourse.reviews = lcCourse.reviews;
           });
           localCourses.forEach(lcCourse => {
-             if(!courses.find(hcCourse => hcCourse.id === lcCourse.id)) {
-                 courses.push(lcCourse);
-             }
+             if(!courses.find(hcCourse => hcCourse.id === lcCourse.id)) courses.push(lcCourse);
           });
-        } catch (e) {} 
+        } catch (e) { console.error("Courses sync error", e); } 
       }
       
       const savedVisits = localStorage.getItem("af_course_visits");
@@ -578,17 +578,27 @@
       if (savedIssues) { try { reportedIssues = JSON.parse(savedIssues); } catch(e){} }
 
       if (localStorage.getItem("af_student_logged_in") === "true") {
-        isStudentLoggedIn = true;
-        currentStudentData = JSON.parse(localStorage.getItem("af_student_data"));
+        try {
+            const data = localStorage.getItem("af_student_data");
+            if (data && data !== "undefined") {
+                currentStudentData = JSON.parse(data);
+                isStudentLoggedIn = true;
+            } else {
+                isStudentLoggedIn = false;
+                localStorage.removeItem("af_student_logged_in");
+            }
+        } catch(e) {
+            isStudentLoggedIn = false;
+            localStorage.removeItem("af_student_logged_in");
+            localStorage.removeItem("af_student_data");
+        }
       }
 
       if (localStorage.getItem("af_author_logged_in") === "true") {
         isInstructorLoggedIn = true;
       }
       
-      // Auto-cache clear for non-authors to see updates instantly while preserving merged reviews
       if (localStorage.getItem("af_author_logged_in") !== "true") {
-         localStorage.removeItem("af_mastery_courses"); 
          localStorage.setItem("af_mastery_courses", JSON.stringify(courses));
       }
 
@@ -606,12 +616,199 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    // --- STUDENT AUTHENTICATION ---
+    function openStudentLoginModal() { openModal('studentLoginModal'); }
+    function closeStudentLoginModal() { closeModal('studentLoginModal'); }
+
+    function handleStudentLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById("studentLoginEmail").value.trim().toLowerCase();
+      let rawCred = document.getElementById("studentLoginCred").value.toUpperCase().replace(/[^A-Z0-9-]/g, '');
+      
+      // Auto formatting to handle missing AF-
+      if (!rawCred.startsWith("AF-")) {
+        rawCred = "AF-" + rawCred.replace(/-/g, '');
+      }
+
+      let allStudents = JSON.parse(localStorage.getItem("af_all_students") || "[]");
+      let errorDiv = document.getElementById("studentLoginError");
+      
+      if (email.includes("@") && rawCred.length > 4) {
+        let studentSession = allStudents.find(s => s.email === email);
+        
+        if (studentSession) {
+          if (studentSession.credId !== rawCred) {
+            errorDiv.textContent = "Incorrect Credential ID. Please verify your ID.";
+            errorDiv.classList.remove("hidden");
+            return;
+          }
+        } else {
+          studentSession = { email: email, mobile: "Verified By System", credId: rawCred, name: email.split('@')[0] };
+          allStudents.push(studentSession); 
+          localStorage.setItem("af_all_students", JSON.stringify(allStudents));
+        }
+        
+        isStudentLoggedIn = true; 
+        currentStudentData = studentSession;
+        localStorage.setItem("af_student_logged_in", "true"); 
+        localStorage.setItem("af_student_data", JSON.stringify(studentSession));
+        
+        errorDiv.classList.add("hidden");
+        updateNavbarState(); 
+        closeStudentLoginModal(); 
+        renderCoursesPage(); 
+        refreshDashboard(); 
+        alert("Login Successful! Welcome back.");
+      } else { 
+        errorDiv.textContent = "Invalid Email or Credential ID Format.";
+        errorDiv.classList.remove("hidden"); 
+      }
+    }
+
+    function logoutStudent() {
+      isStudentLoggedIn = false; currentStudentData = null;
+      localStorage.removeItem("af_student_logged_in"); localStorage.removeItem("af_student_data");
+      updateNavbarState(); renderCoursesPage(); switchView('home'); alert("Logged out.");
+    }
+
+    function handleRegistration(e) {
+      e.preventDefault(); const email = document.getElementById("regEmailInput").value.trim().toLowerCase(); const mobile = document.getElementById("regMobileInput").value.trim();
+      let allStudents = JSON.parse(localStorage.getItem("af_all_students") || "[]");
+      if (allStudents.find(s => s.email === email)) { alert("Email already registered! Please Login."); return; }
+      
+      const credId = "AF-" + Math.floor(1e5 + 9e5 * Math.random());
+      const newStudent = { email, mobile, credId, name: email.split('@')[0] };
+      allStudents.push(newStudent); localStorage.setItem("af_all_students", JSON.stringify(allStudents));
+      
+      isStudentLoggedIn = true; currentStudentData = newStudent; localStorage.setItem("af_student_logged_in", "true"); localStorage.setItem("af_student_data", JSON.stringify(newStudent));
+      updateNavbarState(); refreshDashboard();
+      
+      if (typeof confetti === "function") confetti({ particleCount: 60, spread: 70, origin: { y: 0.7 }, colors: ["#e5c07b", "#ffffff", "#b88426"] });
+      alert("Registration Successful!\nYour Credential ID is: " + credId + "\n(You are now automatically logged in)");
+      document.getElementById("regEmailInput").value = "";
+      document.getElementById("regMobileInput").value = "";
+      
+      switchView('courses');
+    }
+
+    // --- AUTHOR AUTHENTICATION & DASHBOARD ---
+    function openInstructorModal() {
+      openModal('instructorModal');
+      
+      if (isInstructorLoggedIn) {
+        document.getElementById("instructorLoginView").style.display = "none";
+        document.getElementById("instructorDashboardView").style.display = "flex";
+        showAuthorView('add');
+      } else {
+        document.getElementById("instructorLoginView").style.display = "block";
+        document.getElementById("instructorDashboardView").style.display = "none";
+      }
+    }
+    
+    function closeInstructorModal() { closeModal('instructorModal'); }
+
+    function handleInstructorAuth(e) {
+      e.preventDefault();
+      if (document.getElementById("authEmail").value.trim() === "abdelhay.mamdouh@gmail.com" && document.getElementById("authPassword").value.trim() === "19871311112023") {
+        isInstructorLoggedIn = true;
+        localStorage.setItem("af_author_logged_in", "true");
+        document.getElementById("authError").classList.add("hidden"); 
+        openInstructorModal(); 
+        updateNavbarState();
+        renderCoursesPage();
+      } else {
+        document.getElementById("authError").textContent = "Invalid credentials."; document.getElementById("authError").classList.remove("hidden");
+      }
+    }
+    
+    function logoutInstructor() { 
+      isInstructorLoggedIn = false; 
+      localStorage.removeItem("af_author_logged_in");
+      updateNavbarState();
+      renderCoursesPage(); 
+      closeInstructorModal(); 
+    }
+
+    // --- NAVBAR & MOBILE MENU UPDATES ---
+    function updateNavbarState() {
+      const get = id => document.getElementById(id);
+      
+      const sLogin = get('studentLoginNavBtn');
+      const pArea = get('studentProfileArea');
+      const sLoginMob = get('mobileStudentLoginBtn');
+      const mlOut = get('mobileStudentLogoutBtn');
+      const pBtnMob = get('mobileProfileBtn');
+      
+      const aLogin = get('authorLoginNavBtn');
+      const aDash = get('authorDashboardNavBtn');
+      const aLogout = get('authorLogoutNavBtn');
+      const maLogin = get('mobileAuthorLoginBtn');
+      const maDash = get('mobileAuthorDashboardBtn');
+      const maLogout = get('mobileAuthorLogoutBtn');
+      
+      if (isStudentLoggedIn && currentStudentData) {
+        if(sLogin) sLogin.style.display = "none";
+        if(pArea) { pArea.classList.remove("hidden"); pArea.classList.add("flex"); }
+        if(get('studentWelcomeText')) get('studentWelcomeText').textContent = currentStudentData.name || currentStudentData.email.split("@")[0];
+        if(get('navProfileImg')) get('navProfileImg').src = currentStudentData.profileImage || `https://ui-avatars.com/api/?name=${currentStudentData.name || currentStudentData.email.split('@')[0]}&background=d4a337&color=000`;
+        
+        if(sLoginMob) sLoginMob.style.display = "none";
+        if(mlOut) mlOut.classList.remove("hidden");
+        if(pBtnMob) pBtnMob.classList.remove("hidden");
+      } else {
+        if(sLogin) sLogin.style.display = "";
+        if(pArea) { pArea.classList.add("hidden"); pArea.classList.remove("flex"); }
+        if(sLoginMob) sLoginMob.style.display = "";
+        if(mlOut) mlOut.classList.add("hidden");
+        if(pBtnMob) pBtnMob.classList.add("hidden");
+      }
+
+      if (isInstructorLoggedIn) {
+        if(aLogin) { aLogin.classList.add("hidden"); aLogin.classList.remove("sm:inline-flex"); }
+        if(aDash) { aDash.classList.remove("hidden"); aDash.classList.add("sm:inline-flex"); }
+        if(aLogout) { aLogout.classList.remove("hidden"); aLogout.classList.add("sm:inline-flex"); }
+        if(maLogin) maLogin.classList.add("hidden");
+        if(maDash) maDash.classList.remove("hidden");
+        if(maLogout) maLogout.classList.remove("hidden");
+      } else {
+        if(aLogin) { aLogin.classList.remove("hidden"); aLogin.classList.add("sm:inline-flex"); }
+        if(aDash) { aDash.classList.add("hidden"); aDash.classList.remove("sm:inline-flex"); }
+        if(aLogout) { aLogout.classList.add("hidden"); aLogout.classList.remove("sm:inline-flex"); }
+        if(maLogin) maLogin.classList.remove("hidden");
+        if(maDash) maDash.classList.add("hidden");
+        if(maLogout) maLogout.classList.add("hidden");
+      }
+
+      if (isStudentLoggedIn || isInstructorLoggedIn) {
+        if(get('registerNavBtn')) get('registerNavBtn').style.display = "none";
+        if(get('register-section')) get('register-section').style.display = "none";
+        if(get('registrationRequiredMsgCourses')) get('registrationRequiredMsgCourses').style.display = "none";
+      } else {
+        if(get('registerNavBtn')) get('registerNavBtn').style.display = "flex";
+        if(get('register-section')) get('register-section').style.display = "block";
+        if(get('registrationRequiredMsgCourses')) get('registrationRequiredMsgCourses').style.display = "inline-block";
+      }
+    }
+
+    function toggleMobileMenu() { 
+        const m = document.getElementById('mobileMenu');
+        if(m) m.classList.toggle('hidden'); 
+    }
+
+    // --- REVIEWS & COURSE LOGIC ---
+    function getAverageRating(reviewsArr) {
+      if(!reviewsArr) return 0;
+      const visibleReviews = reviewsArr.filter(r => !r.isHidden);
+      if(visibleReviews.length === 0) return 0;
+      const sum = visibleReviews.reduce((acc, curr) => acc + curr.rating, 0);
+      return (sum / visibleReviews.length).toFixed(1);
+    }
+
     function renderCoursesPage() {
       const container = document.getElementById("coursesCategorizedContainer");
       if (!container) return;
       
       const visibleCourses = courses.filter(c => isInstructorLoggedIn || c.status !== 'private');
-      
       document.getElementById("navCoursesCountBadge").textContent = visibleCourses.length;
       if (document.getElementById("mobileCount")) document.getElementById("mobileCount").textContent = visibleCourses.length;
 
@@ -669,45 +866,6 @@
         `;
         container.innerHTML += sectionHTML;
       });
-    }
-
-    function toggleCourseStatus(id) {
-      const course = courses.find(c => c.id === id);
-      if(course) {
-        course.status = course.status === 'private' ? 'public' : 'private';
-        localStorage.setItem("af_mastery_courses", JSON.stringify(courses));
-        renderCoursesPage();
-      }
-    }
-
-    function refreshDashboard() {
-      const storedUsers = JSON.parse(localStorage.getItem("af_all_students") || "[]");
-      document.getElementById("metricUserCount").textContent = (baseRegisteredCount + storedUsers.length).toLocaleString();
-      document.getElementById("metricTotalViews").textContent = (Object.values(courseVisits).reduce((a, b) => a + b, 0) + 12540).toLocaleString();
-      
-      let allRatings = [];
-      courses.forEach(c => { if(c.reviews) c.reviews.filter(r => !r.isHidden).forEach(r => allRatings.push(r.rating)); });
-      let globalRating = "4.9"; 
-      if(allRatings.length > 0) {
-          globalRating = (allRatings.reduce((a,b)=>a+b,0) / allRatings.length).toFixed(1);
-      }
-      document.getElementById("metricGlobalRating").innerHTML = `${globalRating}<span class="text-lg text-gold-400 ml-1">/5</span>`;
-
-      const statsContainer = document.getElementById("courseStatsContainer");
-      if(statsContainer) {
-        statsContainer.innerHTML = courses.filter(c => c.status !== 'private').slice(0,4).map(c => {
-          let visits = (courseVisits[c.id] || 0) + Math.floor(Math.random() * 500 + 100); 
-          let rat = getAverageRating(c.reviews);
-          let star = rat > 0 ? `<i class="fa-solid fa-star text-gold-400 text-[9px]"></i> ${rat}` : '';
-          return `<div class="bg-[#0f1118] p-4 rounded-lg border border-slate-800 flex items-center justify-between group hover:border-gold-500/30 transition"><div class="overflow-hidden pr-2"><div class="text-[10px] text-gold-400 uppercase font-bold truncate">${c.tag} ${star}</div><div class="text-xs text-white font-semibold truncate">${c.title}</div></div><div class="text-right"><div class="text-lg font-bold font-sans text-emerald-400">${visits}</div><div class="text-[9px] text-slate-500 uppercase tracking-widest">Entries</div></div></div>`;
-        }).join('');
-      }
-      updateLiveSimulation();
-    }
-    
-    function updateLiveSimulation() {
-      document.getElementById("onlineUsersCount").textContent = 40 + (new Date().getSeconds() % 15);
-      document.getElementById("offlineUsersCount").textContent = 145 + Math.floor(Math.random()*5);
     }
 
     let currentReviewCourseId = null;
@@ -768,16 +926,12 @@
         addSection.innerHTML = `<p class="text-slate-400 text-xs text-center bg-slate-900/50 py-3 rounded border border-slate-800"><i class="fa-solid fa-lock mr-1 text-gold-500"></i> You must be logged in to leave a review.</p>`;
       }
 
-      const m = document.getElementById('reviewsModal');
-      m.classList.remove('hidden');
-      m.style.display = 'flex';
+      openModal('reviewsModal');
       document.body.style.overflow = 'hidden';
     }
 
-    function closeReviewsModal() { 
-      const m = document.getElementById('reviewsModal');
-      m.classList.add('hidden'); 
-      m.style.display = 'none';
+    function closeCourseReviews() { 
+      closeModal('reviewsModal');
       document.body.style.overflow = 'auto'; 
       currentReviewCourseId = null;
     }
@@ -805,7 +959,7 @@
       };
 
       if(!course.reviews) course.reviews = [];
-      course.reviews.push(newReview);
+      course.reviews.unshift(newReview); // Add to top
       
       localStorage.setItem("af_mastery_courses", JSON.stringify(courses));
       
@@ -814,50 +968,86 @@
       refreshDashboard(); 
     }
 
-    // --- Author Panel ---
-    function openInstructorModal() {
-      const m = document.getElementById("instructorModal");
-      m.classList.remove("hidden");
-      m.style.display = "flex";
-      
-      if (isInstructorLoggedIn) {
-        document.getElementById("instructorLoginView").classList.add("hidden"); 
-        document.getElementById("instructorDashboardView").classList.remove("hidden");
-        document.getElementById("instructorDashboardView").classList.add("flex");
-        showAuthorView('add');
-      } else {
-        document.getElementById("instructorLoginView").classList.remove("hidden"); 
-        document.getElementById("instructorDashboardView").classList.add("hidden");
-        document.getElementById("instructorDashboardView").classList.remove("flex");
-      }
+    // --- OTHER MODALS ---
+    function openProfileModal() {
+      if(!isStudentLoggedIn || !currentStudentData) return;
+      document.getElementById('profileNameInput').value = currentStudentData.name || currentStudentData.email.split('@')[0];
+      document.getElementById('profileEmailInput').value = currentStudentData.email;
+      document.getElementById('profileModalImgPreview').src = currentStudentData.profileImage || `https://ui-avatars.com/api/?name=${currentStudentData.email.split('@')[0]}&background=d4a337&color=000`;
+      openModal("profileModal");
     }
     
-    function closeInstructorModal() { 
-      const m = document.getElementById("instructorModal");
-      m.classList.add("hidden"); 
-      m.style.display = "none";
+    function closeProfileModal() { closeModal("profileModal"); }
+
+    function openChatModal() {
+      openModal("chatModal");
+      document.body.style.overflow = 'hidden';
+      const input = document.getElementById('chatInput'); const btn = document.getElementById('chatSendBtn');
+      if (isStudentLoggedIn || isInstructorLoggedIn) {
+        input.disabled = false; btn.disabled = false; input.placeholder = "Type your message..."; btn.classList.remove('opacity-50', 'cursor-not-allowed');
+      } else {
+        input.disabled = true; btn.disabled = true; input.placeholder = "Login to participate in the chat."; btn.classList.add('opacity-50', 'cursor-not-allowed');
+      }
+      renderChatMessages();
+    }
+    
+    function closeChatModal() { closeModal("chatModal"); document.body.style.overflow = 'auto'; }
+
+    function openIssuesModal() {
+      openModal("issuesModal");
+      const container = document.getElementById('issuesContainer');
+      if (reportedIssues.length === 0) { container.innerHTML = `<p class="text-slate-400 text-center text-sm mt-5">No reported issues.</p>`; return; }
+      container.innerHTML = reportedIssues.map(issue => `
+        <div class="bg-[#151821] p-3 rounded border border-slate-700">
+          <div class="flex justify-between text-[10px] text-slate-400 mb-2"><span><i class="fa-solid fa-user mr-1"></i>${issue.user}</span><span>${issue.date}</span></div>
+          <p class="text-sm text-slate-200">${issue.text}</p>
+        </div>
+      `).join('');
+    }
+    
+    function closeIssuesModal() { closeModal("issuesModal"); }
+
+    function launchFullscreenCourse(e) {
+      if (!isStudentLoggedIn && !isInstructorLoggedIn) { alert("🔒 Access Denied!\nYou must be logged in to view courses."); openStudentLoginModal(); return; }
+      const course = courses.find(t => t.id === e);
+      if (!course) return;
+      courseVisits[e] = (courseVisits[e] || 0) + 1; localStorage.setItem("af_course_visits", JSON.stringify(courseVisits)); refreshDashboard();
+      document.getElementById("fsCourseTitle").textContent = course.title;
+      document.getElementById("fullscreenIframe").src = course.url;
+      openModal("fullscreenPlayerModal");
+      document.body.style.overflow = "hidden";
+    }
+    
+    function closeFullscreenCourse() { 
+      document.getElementById("fullscreenIframe").src = "about:blank"; 
+      closeModal("fullscreenPlayerModal");
+      document.body.style.overflow = "auto"; 
     }
 
-    function handleInstructorAuth(e) {
-      e.preventDefault();
-      if (document.getElementById("authEmail").value.trim() === "abdelhay.mamdouh@gmail.com" && document.getElementById("authPassword").value.trim() === "19871311112023") {
-        isInstructorLoggedIn = true;
-        localStorage.setItem("af_author_logged_in", "true");
-        document.getElementById("authError").classList.add("hidden"); 
-        openInstructorModal(); 
-        updateNavbarState();
-        renderCoursesPage();
-      } else {
-        document.getElementById("authError").textContent = "Invalid credentials."; document.getElementById("authError").classList.remove("hidden");
+    // --- UTILITIES & DASHBOARD ---
+    function refreshDashboard() {
+      const storedUsers = JSON.parse(localStorage.getItem("af_all_students") || "[]");
+      document.getElementById("metricUserCount").textContent = (baseRegisteredCount + storedUsers.length).toLocaleString();
+      document.getElementById("metricTotalViews").textContent = (Object.values(courseVisits).reduce((a, b) => a + b, 0) + 12540).toLocaleString();
+      
+      let allRatings = [];
+      courses.forEach(c => { if(c.reviews) c.reviews.filter(r => !r.isHidden).forEach(r => allRatings.push(r.rating)); });
+      let globalRating = "4.9"; 
+      if(allRatings.length > 0) {
+          globalRating = (allRatings.reduce((a,b)=>a+b,0) / allRatings.length).toFixed(1);
       }
-    }
-    
-    function logoutInstructor() { 
-      isInstructorLoggedIn = false; 
-      localStorage.removeItem("af_author_logged_in");
-      updateNavbarState();
-      renderCoursesPage(); 
-      closeInstructorModal(); 
+      document.getElementById("metricGlobalRating").innerHTML = `${globalRating}<span class="text-lg text-gold-400 ml-1">/5</span>`;
+
+      const statsContainer = document.getElementById("courseStatsContainer");
+      if(statsContainer) {
+        statsContainer.innerHTML = courses.filter(c => c.status !== 'private').slice(0,4).map(c => {
+          let visits = (courseVisits[c.id] || 0) + Math.floor(Math.random() * 500 + 100); 
+          let rat = getAverageRating(c.reviews);
+          let star = rat > 0 ? `<i class="fa-solid fa-star text-gold-400 text-[9px]"></i> ${rat}` : '';
+          return `<div class="bg-[#0f1118] p-4 rounded-lg border border-slate-800 flex items-center justify-between group hover:border-gold-500/30 transition"><div class="overflow-hidden pr-2"><div class="text-[10px] text-gold-400 uppercase font-bold truncate">${c.tag} ${star}</div><div class="text-xs text-white font-semibold truncate">${c.title}</div></div><div class="text-right"><div class="text-lg font-bold font-sans text-emerald-400">${visits}</div><div class="text-[9px] text-slate-500 uppercase tracking-widest">Entries</div></div></div>`;
+        }).join('');
+      }
+      updateLiveSimulation();
     }
 
     function showAuthorView(view) {
@@ -903,11 +1093,8 @@
         }
       });
       
-      if(html === "") {
-        container.innerHTML = `<p class="text-slate-500 text-sm">No reviews submitted yet across any courses.</p>`;
-      } else {
-        container.innerHTML = html;
-      }
+      if(html === "") container.innerHTML = `<p class="text-slate-500 text-sm">No reviews submitted yet across any courses.</p>`;
+      else container.innerHTML = html;
     }
 
     function toggleReviewVisibility(courseId, reviewId) {
@@ -918,17 +1105,10 @@
           review.isHidden = !review.isHidden;
           localStorage.setItem("af_mastery_courses", JSON.stringify(courses));
           renderAuthorReviews();
-          renderCoursesPage(); // update stars on main screen
+          renderCoursesPage();
           refreshDashboard();
         }
       }
-    }
-
-    function exportCoursesCode() {
-      const data = JSON.stringify(courses, null, 2);
-      navigator.clipboard.writeText(`let courses = ${data};`).then(() => {
-        alert("The course code has been copied! Paste it into your HTML file to make updates visible to everyone.");
-      });
     }
 
     function handleSaveCourse(e) {
@@ -1001,51 +1181,37 @@
       ['newCourseTitle','newCourseTag','newCourseDesc','newCourseImage','newCourseImageFile','newCourseModules','newCourseFormat','newCourseUrl'].forEach(id => document.getElementById(id).value = '');
     }
 
-    function deleteCourse(id) { if (confirm("Delete this course?")) { courses = courses.filter(c => c.id !== id); localStorage.setItem("af_mastery_courses", JSON.stringify(courses)); renderCoursesPage(); } }
-
-    function openIssuesModal() {
-      const m = document.getElementById('issuesModal');
-      m.classList.remove('hidden');
-      m.style.display = 'flex';
-      const container = document.getElementById('issuesContainer');
-      if (reportedIssues.length === 0) { container.innerHTML = `<p class="text-slate-400 text-center text-sm mt-5">No reported issues.</p>`; return; }
-      container.innerHTML = reportedIssues.map(issue => `
-        <div class="bg-[#151821] p-3 rounded border border-slate-700">
-          <div class="flex justify-between text-[10px] text-slate-400 mb-2"><span><i class="fa-solid fa-user mr-1"></i>${issue.user}</span><span>${issue.date}</span></div>
-          <p class="text-sm text-slate-200">${issue.text}</p>
-        </div>
-      `).join('');
+    function toggleCourseStatus(id) {
+      const course = courses.find(c => c.id === id);
+      if(course) {
+        course.status = course.status === 'private' ? 'public' : 'private';
+        localStorage.setItem("af_mastery_courses", JSON.stringify(courses));
+        renderCoursesPage();
+      }
     }
     
-    function closeIssuesModal() { 
-      const m = document.getElementById('issuesModal');
-      m.classList.add('hidden'); 
-      m.style.display = 'none';
+    function deleteCourse(id) { if (confirm("Delete this course?")) { courses = courses.filter(c => c.id !== id); localStorage.setItem("af_mastery_courses", JSON.stringify(courses)); renderCoursesPage(); } }
+    
+    function exportCoursesCode() {
+      const data = JSON.stringify(courses, null, 2);
+      navigator.clipboard.writeText(`let courses = ${data};`).then(() => { alert("The course code has been copied! Paste it into your HTML file."); });
+    }
+
+    // --- OTHER HELPERS ---
+    function updateLiveSimulation() {
+      document.getElementById("onlineUsersCount").textContent = 40 + (new Date().getSeconds() % 15);
+      document.getElementById("offlineUsersCount").textContent = 145 + Math.floor(Math.random()*5);
+    }
+
+    function handleProfileImageUpload(e) {
+      const file = e.target.files[0];
+      if(!file) return;
+      const reader = new FileReader();
+      reader.onload = function(event) { document.getElementById('profileModalImgPreview').src = event.target.result; };
+      reader.readAsDataURL(file);
     }
     
     function clearIssues() { if(confirm("Clear all issues?")) { reportedIssues = []; localStorage.setItem("af_reported_issues", "[]"); openIssuesModal(); } }
-
-    // --- General Features ---
-    function launchFullscreenCourse(e) {
-      if (!isStudentLoggedIn && !isInstructorLoggedIn) { alert("🔒 Access Denied!\nYou must be logged in to view courses."); openStudentLoginModal(); return; }
-      const course = courses.find(t => t.id === e);
-      if (!course) return;
-      courseVisits[e] = (courseVisits[e] || 0) + 1; localStorage.setItem("af_course_visits", JSON.stringify(courseVisits)); refreshDashboard();
-      document.getElementById("fsCourseTitle").textContent = course.title;
-      document.getElementById("fullscreenIframe").src = course.url;
-      const m = document.getElementById("fullscreenPlayerModal");
-      m.classList.remove("hidden");
-      m.style.display = "flex";
-      document.body.style.overflow = "hidden";
-    }
-    
-    function closeFullscreenCourse() { 
-      document.getElementById("fullscreenIframe").src = "about:blank"; 
-      const m = document.getElementById("fullscreenPlayerModal");
-      m.classList.add("hidden"); 
-      m.style.display = "none";
-      document.body.style.overflow = "auto"; 
-    }
 
     function toggleAIAssistant() { const p = document.getElementById('aiAssistantPanel'); p.classList.toggle('hidden'); p.classList.toggle('flex'); }
     
@@ -1057,7 +1223,6 @@
       
       appendAIMessage('user', text); 
       input.value = ''; 
-      
       showAITyping();
       const isArabic = /[\u0600-\u06FF]/.test(text);
       
@@ -1066,7 +1231,6 @@
         ["🧠 Analyzing user intent...", "🔍 Scanning AF Mastery database...", "💡 Formulating expert response..."];
         
       let stepIndex = 0;
-      
       const thinkingInterval = setInterval(() => {
         if(stepIndex < thoughtSteps.length) {
           updateAITypingText(thoughtSteps[stepIndex]);
@@ -1101,11 +1265,7 @@
       box.insertAdjacentHTML('beforeend', typingHTML); box.scrollTop = box.scrollHeight;
     }
     
-    function updateAITypingText(text) {
-      const el = document.getElementById('aiThinkingText');
-      if(el) { el.textContent = text; }
-    }
-    
+    function updateAITypingText(text) { const el = document.getElementById('aiThinkingText'); if(el) el.textContent = text; }
     function removeAITyping() { const i = document.getElementById('aiTypingContainer'); if(i) i.remove(); }
 
     function logIssue(text) {
@@ -1116,47 +1276,39 @@
 
     function generateAIResponse(query, isArabic) {
       const lowerQ = query.toLowerCase();
-      
       if (aiState === 'awaiting_issue') {
         logIssue(query);
         aiState = 'normal';
-        return isArabic ? "✅ تمت المهمة بنجاح! تم تسجيل مشكلتك في السجلات (Issues Log) الخاصة بالإدارة. سيتم التعامل معها ومتابعتها. هل هناك أي استفسار آخر؟" : "✅ Success! Your issue has been logged into the management's Issues Log. Our technical support will address it shortly. Is there anything else I can assist with?";
+        return isArabic ? "✅ تمت المهمة بنجاح! تم تسجيل مشكلتك. سيتم التعامل معها ومتابعتها. هل هناك أي استفسار آخر؟" : "✅ Success! Your issue has been logged. Our technical support will address it shortly. Is there anything else I can assist with?";
       }
 
       const intents = {
         issue: ['مشكلة', 'عطل', 'لا يعمل', 'مساعدة', 'شغال', 'استفسار', 'طلب', 'problem', 'issue', 'error', 'help', 'not working', 'bug', 'request'],
         courses: ['كورس', 'دورة', 'كورسات', 'دورات', 'تعلم', 'تفاصيل', 'course', 'courses', 'learn', 'study', 'skills', 'details'],
         login: ['دخول', 'تسجيل', 'حساب', 'login', 'register', 'account', 'sign in', 'credential'],
-        author: ['abdelhay', 'fahmy', 'عبدالحي', 'فهمي', 'instructor', 'author', 'من صمم']
+        author: ['abdelhay', 'fahmy', 'عبدالحي', 'فهمي', 'instructor', 'author']
       };
 
       if (intents.issue.some(kw => lowerQ.includes(kw))) {
         aiState = 'awaiting_issue';
-        return isArabic ? "أهلاً بك، يؤسفني جداً أنك تواجه صعوبة أو لديك استفسار. بصفتي مساعدك الذكي، أنا هنا لخدمتك.\n\n👉 برجاء كتابة تفاصيل المشكلة أو طلبك بالكامل في رسالة واحدة لكي أقوم بتوثيقها فوراً في سجلات الأكاديمية (Issues Log)." : "Hello, I apologize that you are facing an issue or have an inquiry. As your Smart Assistant, I am here to help.\n\n👉 Please type the full details of your request or issue in one message so I can log it immediately into the Academy's Issues Log.";
+        return isArabic ? "أهلاً بك، برجاء كتابة تفاصيل المشكلة أو طلبك بالكامل في رسالة واحدة لتوثيقها فوراً في سجلات الأكاديمية." : "Hello, Please type the full details of your request or issue in one message so I can log it immediately.";
       }
-
       if (intents.courses.some(kw => lowerQ.includes(kw))) {
         const publicCourses = courses.filter(c => c.status !== 'private');
-        if (publicCourses.length === 0) return isArabic ? "لا توجد كورسات متاحة حالياً. جاري تحديث المحتوى من قبل الإدارة." : "There are no public courses available right now. Content is being updated by management.";
-        
-        let response = isArabic ? "بالتأكيد! تعتمد أكاديميتنا على منهجيات L&D متقدمة لتسريع منحنى التعلم. إليك ملخص لمساراتنا التدريبية المتاحة:\n\n" : "Absolutely! Our academy relies on advanced L&D methodologies to accelerate the time-to-proficiency. Here is a summary of our available tracks:\n\n";
+        if (publicCourses.length === 0) return isArabic ? "لا توجد كورسات متاحة حالياً." : "There are no public courses available right now.";
+        let response = isArabic ? "إليك ملخص لمساراتنا التدريبية المتاحة:\n\n" : "Here is a summary of our available tracks:\n\n";
         publicCourses.forEach(c => { response += `📌 **${c.title}** (${c.tag}):\n   ${c.description}\n\n`; });
-        return response + (isArabic ? "💡 *نصيحة:* توجه لقسم (Courses) للتسجيل والبدء فوراً." : "💡 *Tip:* Head to the Courses section to register and start immediately.");
+        return response;
       }
-
       if (intents.login.some(kw => lowerQ.includes(kw))) {
-        return isArabic ? "للوصول للمحتوى التفاعلي والمجتمع، لديك خياران:\n\n1. **مستخدم جديد:** اضغط على (Register) في الأعلى للحصول على (Credential ID) خاص بك.\n2. **مستخدم حالي:** اضغط على (Login) وأدخل بريدك والـ Credential ID للعودة لدراستك." : "To access the interactive content and community, you have two options:\n\n1. **New User:** Click (Register) at the top to get your free Credential ID.\n2. **Existing User:** Click (Login) and enter your email and Credential ID to resume your studies.";
+        return isArabic ? "اضغط على (Register) للحصول على (Credential ID). ثم اضغط على (Login) وأدخل بريدك والـ Credential ID للبدء." : "Click (Register) to get your free Credential ID, then (Login) to start your studies.";
       }
-      
       if (intents.author.some(kw => lowerQ.includes(kw))) {
-        return isArabic ? "تم تصميم وتطوير هذه الأكاديمية بالكامل بواسطة **أ. عبدالحي فهمي** (Senior L&D Leader & EdTech Architect)، لتقديم محتوى تعليمي يعتمد على أحدث تقنيات الذكاء الاصطناعي والمحاكاة لرفع الكفاءة التشغيلية." : "This academy was designed and developed entirely by **Abdelhay Fahmy** (Senior L&D Leader & EdTech Architect), to provide educational content based on the latest AI and simulation technologies for operational excellence.";
+        return isArabic ? "تم تصميم الأكاديمية بواسطة **أ. عبدالحي فهمي** لتقديم محتوى تعليمي تفاعلي." : "This academy was designed by **Abdelhay Fahmy** to provide interactive educational content.";
       }
-
-      return isArabic ? "أهلاً بك في نظام التوجيه الذكي لأكاديمية AF Mastery.\nأنا هنا لإرشادك حول مساراتنا التدريبية (المبيعات، القيادة، والذكاء الاصطناعي)، أو لتسجيل أي مشكلة تقنية تواجهك. كيف يمكنني إفادتك؟" : "Welcome to the AF Mastery Smart Guidance System.\nI am here to guide you through our training tracks (Sales, Leadership, and AI) or to log any technical issues you might face. How can I assist you?";
+      return isArabic ? "أهلاً بك في نظام التوجيه الذكي لأكاديمية AF Mastery. كيف يمكنني إفادتك؟" : "Welcome to the AF Mastery Smart Guidance System. How can I assist you?";
     }
 
-    function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
-    
     // Auto-init
     window.onload = initData;
   </script>
